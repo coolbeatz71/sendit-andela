@@ -36,12 +36,12 @@
         <div class="container" id="all-parcels">
             <!-- display number of each parcel categories  -->
             <ul class="parcel-number">
-                <li class="numbers" id="all">All parcels: <span>27</span></li>
-                <li class="numbers" id="delivered">Delivered: <span>12</span></li>
-                <li class="numbers" id="transit">In transit: <span>3</span></li>
-                <li class="numbers" id="cancelled">Cancelled: <span>12</span></li>
+                    <li class="numbers" id="all">All parcels: <span>27</span></li>
+                    <li class="numbers" id="delivered">Delivered: <span>12</span></li>
+                    <li class="numbers" id="transit">In transit: <span>3</span></li>
+                    <li class="numbers" id="cancelled">Cancelled: <span>12</span></li>
             </ul>
-            <button class="btn-create" id="btn-create">New Parcel</button>
+            <button class="btn-create">New Parcel</button>
             <h2>All my parcels</h2>
             <hr>
             <div class="table-area">
@@ -346,36 +346,44 @@
                     <h2>Parcel creation</h2>
                     <!-- parcel name input -->
                     <label>Parcel name</label>
-                    <input type="text" id="parcelName" name="parcelName">
+                    <input type="text" id="parcelName" name="parcelName" placeholder="parcel name" required />
                     <!-- description input  -->
                     <label>Description</label>
-                    <input type="text" id="desc" name="desc">
+                    <input type="text" id="desc" name="desc" placeholder="short description of the order">
                     <div class="inline-input">
                         <!-- location input -->
                         <label for="from">Location</label>
-                        <select id="from">
-                            <option>From here </option>
+                        <select id="from" required>
+                            <option value=""> -- select country --</option>
+                            <option value="rwanda">Rwanda</option>
+                            <option value="nigeria">Nigeria</option>
+                            <option value="kenya">Kenya</option>
+                            <option value="uganda">Uganda</option>
                         </select>
                     </div>
                     <div class="inline-input">
                         <!-- destination input -->
                         <label for="to">Destination</label>
-                        <select id="to">
-                            <option>To here </option>
+                        <select id="to" required>
+                            <option value=""> -- select country --</option>
+                            <option value="rwanda">Rwanda</option>
+                            <option value="nigeria">Nigeria</option>
+                            <option value="kenya">Kenya</option>
+                            <option value="uganda">Uganda</option>
                         </select>
                     </div>
                     <div class="inline-input">
                         <!-- parcel weight input -->
-                        <label for="weight">Weight (Kg)</label>
-                        <input type="number" id="weight" name="weight">
+                        <label for="weight">Weight</label>
+                        <input type="number" id="weight" name="weight" placeholder="In kilogram" required />
                     </div>
                     <div class="inline-input">
                         <!-- parcel price input -->
-                        <label for="price">Price 500 Rwf/Kg</label>
-                        <input type="number" id="price" name="price">
+                        <label for="price">Price</label>
+                        <input type="number" id="price" name="price" placeholder="500rwf per Kg" disabled /> 
                     </div>
                     <!-- button submit  -->                        
-                    <button id="btn-sign-up" class="btn-submit" name="submit">Send parcel</button>
+                    <button id="btn-sign-up" class="btn-submit" name="submit">Send Order</button>
                 </form>
             </div>
         </div>
