@@ -355,6 +355,107 @@ footer{
     background: #5a6c77;
 }
 
+/*section main*/
+.main{
+    position: absolute;
+    padding-top: 5px;
+    top: 58px;
+    bottom: 0;
+    left: 190px;
+    right: 0;
+}
+
+.btn-create{
+    display: inline;
+    float: right;
+    padding: 14px;
+    padding-left: 40px;
+    padding-right: 40px;
+    background: #00e676;
+    border: 0;
+    margin-top: -10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+}
+
+.btn-create:hover{
+   background: #00c853;
+   text-shadow: 0px 0px 2px black;
+}
+
+.table-area{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: groove 1px #fff;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #eee;
+}
+
+tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+table #id-parcel{
+    width: 8%;
+}
+
+table #action-parcel{
+   width: 30%; 
+}
+
+table .btn-group-action{
+    margin: auto;
+    padding-left:9%;
+}
+
+table .btn-group-action button{
+    width: 60px;
+    font-weight: bold;
+    color: #fff;
+    padding: 5px;
+}
+
+.btn-group-action #btn-details{
+    background: #ffab40;
+    border: 2px solid rgba(255, 145, 0, .4);
+}
+
+.btn-group-action #btn-edit{
+    background: #00e676;
+    border: 2px solid rgba(0, 200, 83, .4);
+}
+
+.btn-group-action #btn-cancel{
+    background: #ff1744;
+    border: 2px solid rgba(213, 0, 0, .4);
+}
+
+.btn-group-action #btn-details:hover{
+    background: #ff6d00;
+}
+
+.btn-group-action #btn-edit:hover{
+    background: #00c853;
+}
+
+.btn-group-action #btn-cancel:hover{
+    background: #d60000;
+}
+
 /***************************************************************************************/
 /*page/userProfile*/
 /*parcel-number*/
