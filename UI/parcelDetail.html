@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>SendIT - User profile</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- here the header containing the navbar -->
+    <header>
+        <div class="container">
+            <!-- brand name -->
+            <div id="branding">
+                <h1>Send<span class="highlight">IT</span></h1>
+            </div>
+            <!-- here the nav containing links-->
+            <nav>
+                <ul>
+                    <li><a>Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- section for displaying the parcel details -->
+    <div class="container">
+        <section class="parcel-detail">
+            <h2>Parcel details</h2>
+            <hr>
+            <table id="info">
+                <tr>
+                    <th>Id N°</th>
+                    <td>454253</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>Nike Shoes</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. </td>
+                </tr>
+                <tr>
+                    <th>Location</th>
+                    <td>Rwanda</td>
+                </tr>
+                <tr>
+                    <th>Destination</th>
+                    <td>D.R.Congo</td>
+                </tr>
+                <tr>
+                    <th>Weight</th>
+                    <td>600 Kg</td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>300 000 Rwf</td>
+                </tr>
+            </table>
+        </section>
+        <!-- section for displaying the the parcel using google map -->
+        <section class="parcel-detail">
+            <div id="map"></div>
+        </section>
+    </div>
+    <script>
+        function initMap(){
+            var options = {
+                zoom: 8,
+                center: {
+                    lat: 42.36801,
+                    lng: -71.0589
+                }
+            }
+
+            var map = new google.maps.Map(document.getElementById('map'), options);
+        }
+    </script>
+    <script src="build/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcVoZuP6eeamWtSEaWgY_yzqf_oFUMi9U&callback=initMap"
+    async defer></script>
+</body>
+</html>
