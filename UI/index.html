@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>SendIT - Welcome page</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- here the header containing the navbar -->
+    <header>
+        <div class="container">
+            <!-- brand name -->
+            <div id="branding">
+                <h1>Send<span class="highlight">IT</span></h1>
+            </div>
+            <!-- here the nav containing links-->
+            <nav>
+                <ul>
+                    <li class="current"><a href="index.html">Home</a></li>
+                    <li><a id="sign-in-link">Sign-In</a></li>
+                    <li><a id="sign-in-admin">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- #section of the showcase -->
+    <section id="showcase">
+        <div class="container">
+            <h1>Deliver parcels to different destinations</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. </p>
+            <button type="submit" class="btn-start">Click to get started</button>
+        </div>
+    </section>
+    <!-- #section of the about us section-->
+    <section id="about-us">
+        <div class="container">
+            <div class="panel">
+                <img src="./img/services.png" alt="services picture">
+                <h2>Quick delivery</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+            </div>
+            <div class="panel">
+                <img src="./img/security.png" alt="security picture">
+                <h2>High security</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+            </div>
+            <div class="panel">
+                <img src="./img/assistant.png" alt="assistant picture">
+                <h2>24/7 assistance</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+            </div>
+        </div>
+    </section>
+    <!-- modal page containing the sign-up forms (registration) -->
+    <div id="modal-sign-up" class="modal">
+        <div class="modal-content">
+            <span class="btn-close-modal">&times;</span>
+            <div class="form-container">
+                <form id="sign-up-form">
+                    <h2>User Sign-Up</h2>
+                    <!-- firstName input -->
+                    <label>First name</label>
+                    <input type="text" id="firstName" name="firstName">
+                    <!-- lastName input  -->
+                    <label>Last name</label>
+                    <input type="text" id="lastName" name="lastName">
+                    <!-- email input -->
+                    <label>Email</label>
+                    <input type="email" id="emailSignUp" name="email">
+                    <!-- password input -->
+                    <label>Password</label>
+                    <input type="password" id="passwordSignUp" name="password">
+                    <!-- button submit  -->
+                    <button id="btn-sign-up" class="btn-submit" name="submit">Sign-Up</button>
+                    <p id="goto-sign-in">Already a member? Sign-In</p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>SendIT by Mutombo Jean-Vincent copyright &copy; 2018</p>
+    </footer>
+    <script src="build/app.js"></script>
+</body>
+</html>
