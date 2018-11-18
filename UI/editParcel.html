@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>SendIT - Edit parcel</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- here the header containing the navbar -->
+    <header>
+        <div class="container">
+            <!-- brand name -->
+            <div id="branding">
+                <h1>Send<span class="highlight">IT</span></h1>
+            </div>
+            <!-- here the nav containing links-->
+            <nav>
+                <ul>
+                    <li><a>Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- sidenav bar  -->
+    <aside class="sidenav" id="sidebar">
+        <ul>
+            <li id="link-all-parcels"><a href="userProfile.html">All parcels</a></li>
+        </ul>
+    </aside>
+    <!-- section for tables -->
+    <section class="main">
+        <div class="container" id="all-parcels">
+            <button class="btn-cancel">Cancel</button>
+            <button class="btn-save">Save</button>
+            <h2>Edit Parcel</h2>
+            <hr>
+            <div class="form-container" id="create-parcel">
+                <form id="create-parcel-form">
+                    <!-- destination input -->
+                        <label for="to">Destination</label>
+                        <select id="to" required>
+                            <option value=""> -- select country --</option>
+                            <option value="rwanda">Rwanda</option>
+                            <option value="nigeria">Nigeria</option>
+                            <option value="kenya">Kenya</option>
+                            <option value="uganda">Uganda</option>
+                        </select>
+                </form>
+            </div>
+        </div>
+     <script src="build/app.js"></script>
+</body>
+</html>
