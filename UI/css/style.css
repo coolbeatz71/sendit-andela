@@ -219,3 +219,244 @@ header a:hover{
     color: #ffd;
     text-shadow: 1px 1px 2px black;
 }
+
+/***************************************************************************************/
+/*showcase style*/
+#showcase{
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    min-height: 440px;
+    background-image: linear-gradient(to top right,
+                                      rgb(0, 0, 0),
+                                      rgba(0, 0, 25, 0.8),
+                                      rgba(255, 90, 0, .6)), url("./../img/showcase.jpg");
+    background-repeat:  no-repeat;
+    background-size: contain bottom;
+    background-attachment: local, fixed;
+    text-align: center;
+    color: white;
+}
+
+#showcase h1{
+    margin-top: 140px;
+    font-size: 50px;
+    margin-bottom: 20px;
+    text-shadow: 4px 2px 2px black;
+}
+
+#showcase p{
+    font-size: 18px;
+    width: 70%;
+    margin: auto;
+    text-shadow: 2px 2px 2px black;
+}
+
+#showcase .btn-start{
+    padding: 12px;
+    padding-right: 60px;
+    padding-left: 60px;
+    background: #ff9329;
+    border: 4px solid rgba(255, 126, 0, .3);
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    margin: auto;
+    margin-top: 40px;
+    width: 280px;
+}
+
+#showcase .btn-start:hover{
+    background: #ff6000;
+}
+
+/***************************************************************************************/
+/*about us*/
+#about-us{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 500px;
+    margin-bottom: 50px;
+}
+
+#about-us .container{
+    width: 90%;
+    padding-left: 120px;
+    padding-right: 120px;
+}
+
+#about-us .panel{
+    float: left;
+    width: 24%;
+    padding: 20px;
+    text-align: center;
+    margin: 12px;
+    box-shadow: 2px 2px 4px rgba(212, 212, 212, .7);
+    background: #fff;
+}
+
+#about-us .panel img{
+    width: 170px;
+    height: 150px;
+    border-radius: 80px;
+    margin: auto;
+    background: rgba(15, 158, 158, .2);
+}
+
+/***************************************************************************************/
+/*footer*/
+footer{
+    position: absolute;
+    top: 680px;
+    margin-top: 270px;
+    left: 0;
+    right: 0;
+    background: #c0c0c0;
+    text-align: center;
+    font-weight: bold;
+}
+
+/***************************************************************************************/
+/*page/userProfile*/
+/*sidenav*/
+.sidenav{
+    position: fixed;
+    left: 0;
+    padding-top: 52px;
+    z-index: 1;
+    width: 15%;
+    background: rgb(124, 124, 170, .4);
+    box-shadow: 0px 2px 1px black;
+    height: 100%;
+}
+
+.sidenav li{
+    display: block;
+    border-bottom: 2px solid rgba(255, 255, 255, .4);
+    font-size: 16px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.sidenav a{
+    display: block;
+    text-decoration: none;
+    color: black;
+    text-transform: capitalize;
+    font-weight: bold;
+    padding: 14px;
+    padding-left: 40px;
+}
+
+.sidenav li:hover, .sidenav a:hover{
+    color: #ff7e00;
+    background: #5a6c77;
+}
+
+/***************************************************************************************/
+/*page/userProfile*/
+/*parcel-number*/
+.parcel-number{
+    text-align: center;
+    list-style: none;
+    margin-bottom: 30px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.parcel-number .numbers{
+    width: 20%;
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.parcel-number .numbers:hover{
+    cursor: pointer;
+    border-left:solid 1px #ccc;
+    border-right:solid 1px #ccc; 
+}
+
+.parcel-number #all{
+    background: #15c336;
+}
+
+.parcel-number #delivered{
+    background: #003cff;
+}
+
+.parcel-number #transit{
+    background: #a4a0a0;
+}
+
+.parcel-number #cancelled{
+    background: #ff046e;
+}
+
+/************************************************************************************/
+/*create parcel form*/
+#create-parcel{
+    display: block;
+    margin: auto;
+    width: 70%;
+    border-radius: 4px;
+}
+
+#create-parcel-form{
+    display: block;
+    margin: auto;
+    padding: 40px;
+    width: 70%;
+}
+
+#create-parcel-form label{
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#create-parcel-form input{
+    display: block;
+    padding: 14px;
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+.inline-input{
+    display: inline-block;
+    width: 44%;
+    margin-right: 5%;
+}
+
+.inline-input #from{
+    padding: 14px;
+    width: 106%;
+    margin-bottom: 20px;
+}
+
+.inline-input #to{
+    padding: 14px;
+    width: 106%;
+    margin-bottom: 20px;
+}
+
+#create-parcel-form .btn-submit{
+    display: block;
+    padding: 14px;
+    margin-bottom: 10px;
+    width: 97%;
+    background: #007bff !important;
+    border: 3px solid #007bff !important;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+#create-parcel-form .btn-submit:hover{
+    background: #0069d9 !important;
+    border: 3px solid rgba(0, 98, 204, .4) !important;
+}
