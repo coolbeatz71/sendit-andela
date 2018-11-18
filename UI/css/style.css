@@ -30,19 +30,18 @@ ul{
     height: 100%;
     width: 100%;
     overflow: auto;
-    background: rgba(0, 0, 0, .6);
+    background: rgba(0, 0, 0, .9);
 }
 
 .modal-content{
-    background: #f4f4f4;
     margin: 2% auto;
     padding: 20px;
     width: 70%;
     height: 86%;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, .2), 0 7px 20px rgba(0, 0, 0, .1);
 }
 
 .modal-content h2{
+    color: #fff;
     text-align: center;
     text-transform: uppercase;
 }
@@ -50,11 +49,11 @@ ul{
 .btn-close-modal{
     color: #ccc;
     float: right;
-    font-size: 30px;
+    font-size: 80px;
 }
 
 .btn-close-modal:hover, .btn-close-modal:focus{
-    color: rgba(0, 0, 0, .7);
+    color: #fff;
     text-decoration: none;
     cursor: pointer;
     font-weight: bold;
@@ -62,7 +61,7 @@ ul{
 
 .form-container p{
     cursor: pointer;
-    color: #0042ff;
+    color: #eee;
     font-weight: bold;
     text-decoration: underline;
     text-align: center;
@@ -74,6 +73,8 @@ ul{
 /***************************************************************************************/
 /*sign-up form*/
 .form-container {
+    background: rgba(51 , 51, 51, .9);
+    color: #fff;
     display: block;
     margin: auto;
     margin-top: 20px;
@@ -219,7 +220,6 @@ header a:hover{
     color: #ffd;
     text-shadow: 1px 1px 2px black;
 }
-
 /***************************************************************************************/
 /*showcase style*/
 #showcase{
@@ -434,7 +434,7 @@ table .btn-group-action button{
     border: 2px solid rgba(255, 145, 0, .4);
 }
 
-.btn-group-action #btn-edit{
+.btn-group-action #btn-edit, .btn-group-action #btn-edit-admin{
     background: #00e676;
     border: 2px solid rgba(0, 200, 83, .4);
 }
@@ -448,54 +448,12 @@ table .btn-group-action button{
     background: #ff6d00;
 }
 
-.btn-group-action #btn-edit:hover{
+.btn-group-action #btn-edit:hover, #btn-edit-admin:hover{
     background: #00c853;
 }
 
 .btn-group-action #btn-cancel:hover{
     background: #d60000;
-}
-
-/***************************************************************************************/
-/*page/userProfile*/
-/*parcel-number*/
-.parcel-number{
-    text-align: center;
-    list-style: none;
-    margin-bottom: 30px;
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.parcel-number .numbers{
-    width: 20%;
-    display: inline-block;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 20px;
-}
-
-.parcel-number .numbers:hover{
-    cursor: pointer;
-    border-left:solid 1px #ccc;
-    border-right:solid 1px #ccc; 
-}
-
-.parcel-number #all{
-    background: #15c336;
-}
-
-.parcel-number #delivered{
-    background: #003cff;
-}
-
-.parcel-number #transit{
-    background: #a4a0a0;
-}
-
-.parcel-number #cancelled{
-    background: #ff046e;
 }
 
 /************************************************************************************/
@@ -560,4 +518,131 @@ table .btn-group-action button{
 #create-parcel-form .btn-submit:hover{
     background: #0069d9 !important;
     border: 3px solid rgba(0, 98, 204, .4) !important;
+}
+
+.btn-save{
+    display: inline;
+    float: right;
+    padding: 14px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background: #00e676;
+    border: 0;
+    margin-right: 15px;
+    margin-top: -10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+}
+
+.btn-cancel{
+    display: inline;
+    float: right;
+    text-decoration: none;
+    padding: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: #ff1744;
+    border: 0;
+    margin-top: -10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+}
+
+.btn-save:hover{
+    background: #00c853;
+}
+
+.btn-cancel:hover{
+    background: #d60000;
+}
+
+.parcel-number{
+    text-align: center;
+    list-style: none;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.parcel-number span{
+    font-size: 30px;
+    margin: 5px;
+    padding: 5px;
+    color: #000;
+    background:#fff;
+    border-radius: 40px;
+}
+
+.parcel-number .numbers{
+    width: 20%;
+    display: inline-block;
+    text-decoration: none;
+    padding: 18px;
+}
+
+.parcel-number .numbers:hover{
+    cursor: pointer;
+}
+
+.parcel-number #all{
+    background: #15c336;
+}
+
+.parcel-number #delivered{
+    background: #003cff;
+}
+
+.parcel-number #transit{
+    background: #a4a0a0;
+}
+
+.parcel-number #cancelled{
+    background: #ff046e;
+}
+
+select{
+    padding: 18px;
+    width: 97%;
+    margin-bottom: 20px;
+}
+
+select option{
+    color: #555;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.parcel-detail{
+    margin-top: 120px;
+}
+
+.parcel-detail #info{
+    float: left;
+    width: 50%;
+    margin-right: 10px;
+}
+
+.parcel-detail #map{
+    margin-top: -112px;
+    height: 427px;
+    float: right;
+    width: 46%;
+}
+
+#info td, th {
+    border: groove 1px #fff;
+    text-align: left;
+    padding: 16px;
+}
+
+#info tr:nth-child(even) {
+    background-color: #eee;
+}
+
+#info tr:nth-child(odd) {
+    background-color: #fff;
 }
