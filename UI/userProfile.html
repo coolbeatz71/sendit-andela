@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>SendIT - User profile</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- here the header containing the navbar -->
+    <header>
+        <div class="container">
+            <!-- brand name -->
+            <div id="branding">
+                <h1>Send<span class="highlight">IT</span></h1>
+            </div>
+            <!-- here the nav containing links-->
+            <nav>
+                <ul>
+                    <li><a>Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- sidenav bar  -->
+    <aside class="sidenav" id="sidebar">
+        <ul>
+            <li id="link-all-parcels"><a>All parcels</a></li>
+            <li id="link-transit-parcels"><a>In transit</a></li>
+            <li id="link-delivered-parcels"><a>Delivered</a></li>
+            <li id="link-cancelled-parcels"><a>Canceled</a></li>
+        </ul>
+    </aside>
+    <!-- section for tables -->
+    <section class="main">
+        <div class="container" id="all-parcels">
+            <!-- display number of each parcel categories  -->
+            <ul class="parcel-number">
+                <li class="numbers" id="all">All parcels: <span>27</span></li>
+                <li class="numbers" id="delivered">Delivered: <span>12</span></li>
+                <li class="numbers" id="transit">In transit: <span>3</span></li>
+                <li class="numbers" id="cancelled">Cancelled: <span>12</span></li>
+            </ul>
+    </section>
+     <script src="build/app.js"></script>
+</body>
+</html>
