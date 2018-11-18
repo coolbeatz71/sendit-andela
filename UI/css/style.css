@@ -1,0 +1,120 @@
+/************************************************************************************************ 
+    * global styles for all the pages
+ ***********************************************************************************************/
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    line-height: 1.5; space between each line
+    margin: 0;
+    padding: 0;
+    background: rgba(244, 244, 244, 1);
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    width: 80%;
+    margin: auto;
+}
+/***************************************************************************************/
+/*modal for the signUp and signIn pages*/
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 4;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background: rgba(0, 0, 0, .6);
+}
+
+.modal-content{
+    background: #f4f4f4;
+    margin: 2% auto;
+    padding: 20px;
+    width: 70%;
+    height: 86%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, .2), 0 7px 20px rgba(0, 0, 0, .1);
+}
+
+.modal-content h2{
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.btn-close-modal{
+    color: #ccc;
+    float: right;
+    font-size: 30px;
+}
+
+.btn-close-modal:hover, .btn-close-modal:focus{
+    color: rgba(0, 0, 0, .7);
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.form-container p{
+    cursor: pointer;
+    color: #0042ff;
+    font-weight: bold;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.form-container p:hover{
+   color: #0090ff; 
+}
+/***************************************************************************************/
+/*sign-up form*/
+.form-container {
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    width: 70%;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#sign-up-form{
+    display: block;
+    margin: auto;
+    padding: 40px;
+    width: 70%;
+}
+
+#sign-up-form label{
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#sign-up-form input{
+    display: block;
+    padding: 14px;
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+#sign-up-form .btn-submit{
+    display: block;
+    padding: 14px;
+    margin-bottom: 10px;
+    width: 97%;
+    background: #007bff !important;
+    border: 3px solid #007bff !important;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+#sign-up-form .btn-submit:hover{
+    background: #0069d9 !important;
+    border: 3px solid rgba(0, 98, 204, .4) !important;
+}
