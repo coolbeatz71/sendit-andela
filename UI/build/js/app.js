@@ -1,6 +1,6 @@
-/* eslint-disable */
 'use strict';
 
+/* eslint-disable */
 var modal = document.querySelector('#modal-sign-up');
 var btnStart = document.querySelector('.btn-start');
 var btnClose = document.querySelector('.btn-close-modal');
