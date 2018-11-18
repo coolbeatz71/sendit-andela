@@ -396,3 +396,67 @@ footer{
 .parcel-number #cancelled{
     background: #ff046e;
 }
+
+/************************************************************************************/
+/*create parcel form*/
+#create-parcel{
+    display: block;
+    margin: auto;
+    width: 70%;
+    border-radius: 4px;
+}
+
+#create-parcel-form{
+    display: block;
+    margin: auto;
+    padding: 40px;
+    width: 70%;
+}
+
+#create-parcel-form label{
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#create-parcel-form input{
+    display: block;
+    padding: 14px;
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+.inline-input{
+    display: inline-block;
+    width: 44%;
+    margin-right: 5%;
+}
+
+.inline-input #from{
+    padding: 14px;
+    width: 106%;
+    margin-bottom: 20px;
+}
+
+.inline-input #to{
+    padding: 14px;
+    width: 106%;
+    margin-bottom: 20px;
+}
+
+#create-parcel-form .btn-submit{
+    display: block;
+    padding: 14px;
+    margin-bottom: 10px;
+    width: 97%;
+    background: #007bff !important;
+    border: 3px solid #007bff !important;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+#create-parcel-form .btn-submit:hover{
+    background: #0069d9 !important;
+    border: 3px solid rgba(0, 98, 204, .4) !important;
+}
