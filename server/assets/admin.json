@@ -1,0 +1,10 @@
+[
+    {
+        "id": "001",
+        "firstName": "Mutombo Admin",
+        "lastName": "Good Admin",
+        "password": "12345678",
+        "email": "admin@gmail.com",
+        "token": "a47aa345465ef64919f8a268803f9f389bdb5986ecf8eaf61b3004e18644c9ca"
+    }
+]
