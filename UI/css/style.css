@@ -1,0 +1,648 @@
+/************************************************************************************************ 
+    * global styles for all the pages
+ ***********************************************************************************************/
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    line-height: 1.5; space between each line
+    margin: 0;
+    padding: 0;
+    background: rgba(244, 244, 244, 1);
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    width: 80%;
+    margin: auto;
+}
+/***************************************************************************************/
+/*modal for the signUp and signIn pages*/
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 4;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background: rgba(0, 0, 0, .9);
+}
+
+.modal-content{
+    margin: 2% auto;
+    padding: 20px;
+    width: 70%;
+    height: 86%;
+}
+
+.modal-content h2{
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.btn-close-modal{
+    color: #ccc;
+    float: right;
+    font-size: 80px;
+}
+
+.btn-close-modal:hover, .btn-close-modal:focus{
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.form-container p{
+    cursor: pointer;
+    color: #eee;
+    font-weight: bold;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.form-container p:hover{
+   color: #0090ff; 
+}
+/***************************************************************************************/
+/*sign-up form*/
+.form-container {
+    background: rgba(51 , 51, 51, .9);
+    color: #fff;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    width: 70%;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#sign-up-form{
+    display: block;
+    margin: auto;
+    padding: 40px;
+    width: 70%;
+}
+
+#sign-up-form label{
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#sign-up-form input{
+    display: block;
+    padding: 14px;
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+#sign-up-form .btn-submit{
+    display: block;
+    padding: 14px;
+    margin-bottom: 10px;
+    width: 97%;
+    background: #007bff !important;
+    border: 3px solid #007bff !important;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+#sign-up-form .btn-submit:hover{
+    background: #0069d9 !important;
+    border: 3px solid rgba(0, 98, 204, .4) !important;
+}
+
+/***************************************************************************************/
+/*sign-in form*/
+#sign-in-form, #sign-in-form-admin{
+    display: none;
+    margin: auto;
+    padding: 80px;
+    width: 70%;
+}
+
+#sign-in-form label, #sign-in-form-admin label{
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#sign-in-form input, #sign-in-form-admin input{
+    display: block;
+    padding: 14px;
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+#sign-in-form .btn-submit, #sign-in-form-admin .btn-submit{
+    display: block;
+    padding: 14px;
+    margin-bottom: 10px;
+    width: 97%;
+    background: #007bff !important;
+    border: 3px solid #007bff !important;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+#sign-in-form .btn-submit:hover, #sign-in-form-admin .btn-submit:hover{
+    background: #0069d9 !important;
+    border: 3px solid rgba(0, 98, 204, .4) !important;
+}
+
+/***************************************************************************************/
+/*header*/
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: #5a6c77;
+    color: #fff;
+    min-height: 45px;
+    border-bottom: 4px solid rgba(255, 126 , 0, 1);
+    overflow: hidden;
+}
+
+header a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+    text-transform: uppercase;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+header ul{
+    position: absolute;
+    right: 120px;
+    top: 13px;
+    padding-top: 4px;
+}
+
+header li{
+    display: inline;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+header #branding{
+    float: left;
+    margin: auto;
+    margin-top: 4px;
+}
+
+header #branding h1{
+    margin: 0;
+    font-size: 25px;
+}
+
+/*hightlight and current style*/
+header .highlight,
+header .current a {
+    color: #ff7e00;
+    font-weight: bold;
+}
+
+header a:hover{
+    color: #ffd;
+    text-shadow: 1px 1px 2px black;
+}
+/***************************************************************************************/
+/*showcase style*/
+#showcase{
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    min-height: 440px;
+    background-image: linear-gradient(to top right,
+                                      rgb(0, 0, 0),
+                                      rgba(0, 0, 25, 0.8),
+                                      rgba(255, 90, 0, .6)), url("./../img/showcase.jpg");
+    background-repeat:  no-repeat;
+    background-size: contain bottom;
+    background-attachment: local, fixed;
+    text-align: center;
+    color: white;
+}
+
+#showcase h1{
+    margin-top: 140px;
+    font-size: 50px;
+    margin-bottom: 20px;
+    text-shadow: 4px 2px 2px black;
+}
+
+#showcase p{
+    font-size: 18px;
+    width: 70%;
+    margin: auto;
+    text-shadow: 2px 2px 2px black;
+}
+
+#showcase .btn-start{
+    padding: 12px;
+    padding-right: 60px;
+    padding-left: 60px;
+    background: #ff9329;
+    border: 4px solid rgba(255, 126, 0, .3);
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    margin: auto;
+    margin-top: 40px;
+    width: 280px;
+}
+
+#showcase .btn-start:hover{
+    background: #ff6000;
+}
+
+/***************************************************************************************/
+/*about us*/
+#about-us{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 500px;
+    margin-bottom: 50px;
+}
+
+#about-us .container{
+    width: 90%;
+    padding-left: 120px;
+    padding-right: 120px;
+}
+
+#about-us .panel{
+    float: left;
+    width: 24%;
+    padding: 20px;
+    text-align: center;
+    margin: 12px;
+    box-shadow: 2px 2px 4px rgba(212, 212, 212, .7);
+    background: #fff;
+}
+
+#about-us .panel img{
+    width: 170px;
+    height: 150px;
+    border-radius: 80px;
+    margin: auto;
+    background: rgba(15, 158, 158, .2);
+}
+
+/***************************************************************************************/
+/*footer*/
+footer{
+    position: absolute;
+    top: 680px;
+    margin-top: 270px;
+    left: 0;
+    right: 0;
+    background: #c0c0c0;
+    text-align: center;
+    font-weight: bold;
+}
+
+/***************************************************************************************/
+/*page/userProfile*/
+/*sidenav*/
+.sidenav{
+    position: fixed;
+    left: 0;
+    padding-top: 52px;
+    z-index: 1;
+    width: 15%;
+    background: rgb(124, 124, 170, .4);
+    box-shadow: 0px 2px 1px black;
+    height: 100%;
+}
+
+.sidenav li{
+    display: block;
+    border-bottom: 2px solid rgba(255, 255, 255, .4);
+    font-size: 16px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.sidenav a{
+    display: block;
+    text-decoration: none;
+    color: black;
+    text-transform: capitalize;
+    font-weight: bold;
+    padding: 14px;
+    padding-left: 40px;
+}
+
+.sidenav li:hover, .sidenav a:hover{
+    color: #ff7e00;
+    background: #5a6c77;
+}
+
+/*section main*/
+.main{
+    position: absolute;
+    padding-top: 5px;
+    top: 58px;
+    bottom: 0;
+    left: 190px;
+    right: 0;
+}
+
+.btn-create{
+    display: inline;
+    float: right;
+    padding: 14px;
+    padding-left: 40px;
+    padding-right: 40px;
+    background: #00e676;
+    border: 0;
+    margin-top: -10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+}
+
+.btn-create:hover{
+   background: #00c853;
+   text-shadow: 0px 0px 2px black;
+}
+
+.table-area{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: groove 1px #fff;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #eee;
+}
+
+tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+table #id-parcel{
+    width: 8%;
+}
+
+table #action-parcel{
+   width: 30%; 
+}
+
+table .btn-group-action{
+    margin: auto;
+    padding-left:9%;
+}
+
+table .btn-group-action button{
+    width: 60px;
+    font-weight: bold;
+    color: #fff;
+    padding: 5px;
+}
+
+.btn-group-action #btn-details{
+    background: #ffab40;
+    border: 2px solid rgba(255, 145, 0, .4);
+}
+
+.btn-group-action #btn-edit, .btn-group-action #btn-edit-admin{
+    background: #00e676;
+    border: 2px solid rgba(0, 200, 83, .4);
+}
+
+.btn-group-action #btn-cancel{
+    background: #ff1744;
+    border: 2px solid rgba(213, 0, 0, .4);
+}
+
+.btn-group-action #btn-details:hover{
+    background: #ff6d00;
+}
+
+.btn-group-action #btn-edit:hover, #btn-edit-admin:hover{
+    background: #00c853;
+}
+
+.btn-group-action #btn-cancel:hover{
+    background: #d60000;
+}
+
+/************************************************************************************/
+/*create parcel form*/
+#create-parcel{
+    display: block;
+    margin: auto;
+    width: 70%;
+    border-radius: 4px;
+}
+
+#create-parcel-form{
+    display: block;
+    margin: auto;
+    padding: 40px;
+    width: 70%;
+}
+
+#create-parcel-form label{
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#create-parcel-form input{
+    display: block;
+    padding: 14px;
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+.inline-input{
+    display: inline-block;
+    width: 44%;
+    margin-right: 5%;
+}
+
+.inline-input #from{
+    padding: 14px;
+    width: 106%;
+    margin-bottom: 20px;
+}
+
+.inline-input #to{
+    padding: 14px;
+    width: 106%;
+    margin-bottom: 20px;
+}
+
+#create-parcel-form .btn-submit{
+    display: block;
+    padding: 14px;
+    margin-bottom: 10px;
+    width: 97%;
+    background: #007bff !important;
+    border: 3px solid #007bff !important;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+#create-parcel-form .btn-submit:hover{
+    background: #0069d9 !important;
+    border: 3px solid rgba(0, 98, 204, .4) !important;
+}
+
+.btn-save{
+    display: inline;
+    float: right;
+    padding: 14px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background: #00e676;
+    border: 0;
+    margin-right: 15px;
+    margin-top: -10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+}
+
+.btn-cancel{
+    display: inline;
+    float: right;
+    text-decoration: none;
+    padding: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: #ff1744;
+    border: 0;
+    margin-top: -10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+}
+
+.btn-save:hover{
+    background: #00c853;
+}
+
+.btn-cancel:hover{
+    background: #d60000;
+}
+
+.parcel-number{
+    text-align: center;
+    list-style: none;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.parcel-number span{
+    font-size: 30px;
+    margin: 5px;
+    padding: 5px;
+    color: #000;
+    background:#fff;
+    border-radius: 40px;
+}
+
+.parcel-number .numbers{
+    width: 20%;
+    display: inline-block;
+    text-decoration: none;
+    padding: 18px;
+}
+
+.parcel-number .numbers:hover{
+    cursor: pointer;
+}
+
+.parcel-number #all{
+    background: #15c336;
+}
+
+.parcel-number #delivered{
+    background: #003cff;
+}
+
+.parcel-number #transit{
+    background: #a4a0a0;
+}
+
+.parcel-number #cancelled{
+    background: #ff046e;
+}
+
+select{
+    padding: 18px;
+    width: 97%;
+    margin-bottom: 20px;
+}
+
+select option{
+    color: #555;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.parcel-detail{
+    margin-top: 120px;
+}
+
+.parcel-detail #info{
+    float: left;
+    width: 50%;
+    margin-right: 10px;
+}
+
+.parcel-detail #map{
+    margin-top: -112px;
+    height: 427px;
+    float: right;
+    width: 46%;
+}
+
+#info td, th {
+    border: groove 1px #fff;
+    text-align: left;
+    padding: 16px;
+}
+
+#info tr:nth-child(even) {
+    background-color: #eee;
+}
+
+#info tr:nth-child(odd) {
+    background-color: #fff;
+}

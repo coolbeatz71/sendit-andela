@@ -1,0 +1,13 @@
+language: node_js
+node_js: 
+  - "stable"
+cache:
+  directories:
+    - "node_modules"
+after_success:
+  - npm run coveralls
+  - codeclimate-test-reporter < ./coverage/lcov.info
+addons:
+  code_climate:
+    repo_token:
+      secure: "b4bdc30c3eb17cec1c05af3c046405f624d88e2af4065887be9e221fab9a0507"
