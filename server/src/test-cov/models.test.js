@@ -1,11 +1,11 @@
 /* eslint-disable */
 import chai from 'chai';
 import path from 'path';
-
 // importing models
-import User from '../models/user';
+import User from './../models/user';
 
 const { expect, assert } = chai;
+const should = chai.should();
 
 const user = new User();
 
