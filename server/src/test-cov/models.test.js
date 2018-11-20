@@ -1,9 +1,11 @@
 /* eslint-disable */
 import chai from 'chai';
 import path from 'path';
+
 // importing models
-import User from './../models/user';
 import Parcel from './../models/parcel';
+import User from './../models/user';
+import Admin from './../models/admin';
 import App from './../models/app';
 
 const { expect, assert } = chai;
@@ -11,7 +13,8 @@ const should = chai.should();
 
 const user = new User();
 const parcel = new Parcel();
-const app = new App(); 
+const admin = new Admin();
+const app = new App();
 
 const userInfo = {
   firstName: '',
@@ -24,7 +27,32 @@ const userInfo = {
 // Testing params for each classes  //
 //////////////////////////////////////
 
-describe('Testing params of each functions in classes without params', () => {
+describe('#### Testing params of each functions in classes without params', () => {
+  describe('Admin class', () => {
+    it('should return undefined', () => {
+      expect(admin.getAdmin()).to.be.undefined;
+    });
+
+    it('should return undefined', () => {
+      expect(admin.getAdminIdByEmail()).to.be.undefined;
+    });
+
+    it('should return false', () => {
+      expect(admin.isTokenValid()).to.be.false;
+    });
+
+    it('should return false', () => {
+      expect(admin.getAdminIdByToken()).to.be.false;
+    });
+
+    it('should return false', () => {
+      expect(admin.editParcel()).to.be.false;
+    });
+
+    it('should return a number', () => {
+      expect(admin.getParcelNumber()).to.be.a('number');
+    });
+  });
 
   describe('App class', () => {
     it('should throw an error or Exception', () => {
@@ -100,10 +128,11 @@ describe('Testing params of each functions in classes without params', () => {
 });
 
 
+
 // //////////////////////////////////
 // Testing instance of classes     //
 // //////////////////////////////////
-describe(" Test instance of Each Class", () => {
+describe("#### Test instance of Each Class", () => {
   it('should be an instance of User', () => {
     expect(user).to.be.an.instanceof(User);
   });
@@ -111,10 +140,14 @@ describe(" Test instance of Each Class", () => {
   it('should be an instance of Parcel', () => {
     expect(parcel).to.be.an.instanceof(Parcel);
   });
+
+  it('should be an instance of Admin', () => {
+    expect(admin).to.be.an.instanceof(Admin);
+  });
 });
 
 //testing length of getUserId
-describe(' length of the getUserId()', () => {
+describe('#### length of the getUserId()', () => {
   it('should have length of 3', () => {
     user.setUserId();
     const userId = user.getUserId();
@@ -122,7 +155,7 @@ describe(' length of the getUserId()', () => {
   });
 });
 
-describe(' Testing methods[function] for User class', () => {
+describe('#### Testing methods[function] for User class', () => {
   it('should be a function', () => {
     user.createUser.should.be.a('function');
     user.getUser.should.be.a('function');
@@ -135,6 +168,22 @@ describe(' Testing methods[function] for User class', () => {
     user.editParcelDestination.should.be.a('function');
     user.cancelParcel.should.be.a('function');
     user.getParcelNumber.should.be.a('function');
+  });
+});
+
+describe('#### Testing methods[function] for Admin class', () => {
+  it('should be a function', () => {
+    admin.getAdmin.should.be.a('function');
+    admin.getAdminIdByEmail.should.be.a('function');
+    admin.isTokenValid.should.be.a('function');
+    admin.getAdminIdByToken.should.be.a('function');
+    admin.editParcel.should.be.a('function');
+  });
+});
+
+describe('#### Testing methods[function] for Admin class', () => {
+  it('should be a function', () => {
+    admin.getParcelNumber.should.be.a('function');
   });
 });
 
@@ -310,6 +359,87 @@ describe('##### Parcel class', () => {
     it('should return a number', () => {
       const price = parcel.getParcelPrice('500');
       assert.isNumber(price);
+    });
+  });
+});
+
+// ////////////////////////////////////
+// Testing models concerning Admin  //
+// ////////////////////////////////////
+describe('##### Admin class', () => {
+  // Testing get admin
+  describe('# When email and password dont exist', () => {
+    const email = 'whatever';
+    const password = 'whatever';
+
+    it('should return undefined', () => {
+      const getAdmin = admin.getAdmin(email, password);
+      expect(getAdmin).to.be.an('undefined');
+    });
+  });
+
+  // Testing get admin id by email
+  describe('# get admin Id by email', () => {
+    const email = 'whatever';
+
+    it('should return undefined', () => {
+      const getAdmin = admin.getAdminIdByEmail(email);
+      expect(getAdmin).to.be.an('undefined');
+    });
+  });
+
+  describe('# Testing IsTokenValid method', () => {
+    it('should return boolean', () => {
+      const isTokenValid = admin.isTokenValid('whatever');
+      assert.isBoolean(isTokenValid);
+    });
+  });
+
+  describe('# Testing getAdminIdByToken method', () => {
+    it('should return some value', () => {
+      const isTokenValid = admin.getAdminIdByToken('authkey');
+      assert.isNotNull(isTokenValid);
+    });
+  });
+});
+
+// ////////////////////////////////////////////////////////
+// Testing models concerning App (read & write on file)  //
+// ////////////////////////////////////////////////////////
+describe('#### Testing App Model', () => {
+  const userFilePath = path.resolve(__dirname, '../../assets/users.json');
+  const adminFilePath = path.resolve(__dirname, '../../assets/admin.json');
+  const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
+
+  describe('# Reading file method For userFileData', () => {
+    it('should return an array or object', () => {
+      const userFile = app.readDataFile(userFilePath);
+      assert.isOk(userFile);
+    });
+  });
+
+  describe('# Reading file method For parcelFileData', () => {
+    it('should return an array or object', () => {
+      const parcelFile = app.readDataFile(parcelFilePath);
+      assert.isOk(parcelFile);
+    });
+  });
+
+  describe('# Reading file method For adminFileData', () => {
+    it('should return an array or object', () => {
+      const adminFile = app.readDataFile(adminFilePath);
+      assert.isOk(adminFile);
+    });
+  });
+});
+
+describe('#### Testing property of object', () => {
+  describe('# userInfo object', () => {
+    it('should have some property ', () => {
+      expect(userInfo).to.have.property('firstName');
+      expect(userInfo).to.have.property('lastName');
+      expect(userInfo).to.have.property('email');
+      expect(userInfo).to.have.property('password');
     });
   });
 });
