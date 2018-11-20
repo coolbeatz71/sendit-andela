@@ -12,6 +12,14 @@ var _user = require('./../models/user');
 
 var _user2 = _interopRequireDefault(_user);
 
+var _parcel = require('./../models/parcel');
+
+var _parcel2 = _interopRequireDefault(_parcel);
+
+var _app = require('./../models/app');
+
+var _app2 = _interopRequireDefault(_app);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var expect = _chai2.default.expect,
@@ -22,6 +30,8 @@ var expect = _chai2.default.expect,
 var should = _chai2.default.should();
 
 var user = new _user2.default();
+var parcel = new _parcel2.default();
+var app = new _app2.default();
 
 var userInfo = {
   firstName: '',
@@ -35,6 +45,39 @@ var userInfo = {
 //////////////////////////////////////
 
 describe('Testing params of each functions in classes without params', function () {
+
+  describe('App class', function () {
+    it('should throw an error or Exception', function () {
+      expect(app.readDataFile).to.throw();
+    });
+
+    it('should throw an error or Exception', function () {
+      expect(app.writeDataFile).to.throw();
+    });
+  });
+
+  describe('Parcel class', function () {
+    it('should return false', function () {
+      expect(parcel.createParcel()).to.be.false;
+    });
+
+    it('should return an array', function () {
+      expect(parcel.getAllParcel()).to.be.an('array');
+    });
+
+    it('should return NULL', function () {
+      expect(parcel.getAllParcelByUser()).to.be.null;
+    });
+
+    it('should return NaN', function () {
+      expect(parcel.getParcelPrice()).to.be.NaN;
+    });
+
+    it('should return a number', function () {
+      parcel.setOrderId();
+      expect(parcel.getOrderId()).to.be.a('string');
+    });
+  });
 
   describe('User class', function () {
     it('should return NULL', function () {
@@ -83,6 +126,10 @@ describe(" Test instance of Each Class", function () {
   it('should be an instance of User', function () {
     expect(user).to.be.an.instanceof(_user2.default);
   });
+
+  it('should be an instance of Parcel', function () {
+    expect(parcel).to.be.an.instanceof(_parcel2.default);
+  });
 });
 
 //testing length of getUserId
@@ -110,14 +157,38 @@ describe(' Testing methods[function] for User class', function () {
   });
 });
 
+describe('#### Testing methods[function] for User class', function () {
+  it('should be a function', function () {
+    user.getParcelNumber.should.be.a('function');
+  });
+});
+
+describe('#### Testing methods[function] for App class', function () {
+  it('should be a function', function () {
+    app.readDataFile.should.be.a('function');
+    app.writeDataFile.should.be.a('function');
+  });
+});
+
+describe('#### Testing methods[function] for Parcel class', function () {
+  it('should be a function', function () {
+    parcel.createParcel.should.be.a('function');
+    parcel.getAllParcel.should.be.a('function');
+    parcel.getAllParcelByUser.should.be.a('function');
+    parcel.getParcelPrice.should.be.a('function');
+    parcel.setOrderId.should.be.a('function');
+    parcel.getOrderId.should.be.a('function');
+  });
+});
+
 // //////////////////////////////////
 // Testing models concerning user  //
 // //////////////////////////////////
-describe('User class', function () {
+describe('##### User class', function () {
   // Testing user creation
-  describe('Testing user account creation', function () {
-    describe('when email already exist', function () {
-      it('Should return false', function () {
+  describe('#### Testing user account creation', function () {
+    describe('# when email already exist', function () {
+      it('should return false', function () {
         var firstName = 'whatever';
         var lastName = 'whatever';
         var email = 'sigmacool@gmail.com';
@@ -130,8 +201,8 @@ describe('User class', function () {
   });
 
   // Testing getUser
-  describe('Testing get user methods', function () {
-    describe('When email and password dont exist', function () {
+  describe('#### Testing get user methods', function () {
+    describe('# When email and password dont exist', function () {
       var email = 'whatever';
       var password = 'whatever';
 
@@ -141,7 +212,7 @@ describe('User class', function () {
       });
     });
 
-    describe(' When email and password exist', function () {
+    describe('# When email and password exist', function () {
       var email = 'sigmacool@gmail.com';
       var password = '12345678';
 
@@ -153,8 +224,8 @@ describe('User class', function () {
   });
 
   // Testing getUserIdByEmail
-  describe(' Testing get userId by email methods', function () {
-    describe(' When the email dont exist', function () {
+  describe('#### Testing get userId by email methods', function () {
+    describe('# When the email dont exist', function () {
       var email = 'whatever';
 
       it('should return undefined', function () {
@@ -163,7 +234,7 @@ describe('User class', function () {
       });
     });
 
-    describe(' When the email exist', function () {
+    describe('# When the email exist', function () {
       var email = 'sigmacool@gmail.com';
 
       it('should return a string', function () {
@@ -173,29 +244,29 @@ describe('User class', function () {
     });
   });
 
-  describe(' Testing IsTokenValid method', function () {
+  describe('#### Testing IsTokenValid method', function () {
     it('should return boolean', function () {
       var isTokenValid = user.isTokenValid('whatever');
       assert.isBoolean(isTokenValid);
     });
   });
 
-  describe(' Testing getUserIdByToken method', function () {
+  describe('#### Testing getUserIdByToken method', function () {
     it('should return some value', function () {
       var isTokenValid = user.getUserIdByToken('authkey');
       assert.isNotNull(isTokenValid);
     });
   });
 
-  describe(' Testing getEncryptedToken method', function () {
+  describe('#### Testing getEncryptedToken method', function () {
     it('should return a string', function () {
       var encryptedToken = user.getEncryptedToken('myEmail');
       expect(encryptedToken).to.be.a('string');
     });
   });
 
-  describe(' Testing getParcelNumber method', function () {
-    describe(' When the status is undefined', function () {
+  describe('#### Testing getParcelNumber method', function () {
+    describe('# When the status is undefined', function () {
       var userId = '001';
       var status = undefined;
       it('should return Number', function () {
@@ -204,7 +275,7 @@ describe('User class', function () {
       });
     });
 
-    describe(' When the status is delivered', function () {
+    describe('# When the status is delivered', function () {
       var userId = '001';
       var status = 'delivered';
       it('should return Number', function () {
@@ -213,7 +284,7 @@ describe('User class', function () {
       });
     });
 
-    describe(' When the status is in transit', function () {
+    describe('# When the status is in transit', function () {
       var userId = '001';
       var status = 'in transit';
       it('should return Number', function () {
@@ -222,13 +293,42 @@ describe('User class', function () {
       });
     });
 
-    describe(' When the status is cancelled', function () {
+    describe('# When the status is cancelled', function () {
       var userId = '001';
       var status = 'cancelled';
       it('should return Number', function () {
         var parcelNumber = user.getParcelNumber(userId, status);
         assert.isNumber(parcelNumber);
       });
+    });
+  });
+});
+
+// ////////////////////////////////////
+// Testing models concerning Parcel //
+// ////////////////////////////////////
+describe('##### Parcel class', function () {
+  // Testing get all parcels
+  describe('# get all parcel delivery order', function () {
+    it('should return an array', function () {
+      var allParcel = parcel.getAllParcel();
+      assert.isArray(allParcel);
+    });
+  });
+
+  // Testing get all parcels for a specific user
+  describe('# get all for parcel delivery order for a specific user', function () {
+    it('should return an array', function () {
+      var allParcel = parcel.getAllParcelByUser('011');
+      assert.isNull(allParcel);
+    });
+  });
+
+  // Testing get parcel order price
+  describe('# get price for a parcel by its weight', function () {
+    it('should return a number', function () {
+      var price = parcel.getParcelPrice('500');
+      assert.isNumber(price);
     });
   });
 });
