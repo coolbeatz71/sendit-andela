@@ -153,3 +153,43 @@ describe('/POST create new parcel delivery order with Authorization header but n
       });
   });
 });
+
+// to fetch a specific delivery order by its ID
+describe('## /GET parcels/:parcelId', () => {
+  const parcelId = '001';
+  it('should GET a specific delivery order by its ID', (done) => {
+    chai.request(app)
+      .get(`${apiVersion}/parcels/${parcelId}`)
+      .set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe')
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
+});
+
+describe('## /GET parcels/:parcelId without Authorization Header', () => {
+  const parcelId = '001';
+  it('should GET a specific delivery order by its ID', (done) => {
+    chai.request(app)
+      .get(`${apiVersion}/parcels/${parcelId}`)
+      .end((err, res) => {
+        res.should.have.status(401);
+        done();
+      });
+  });
+});
+
+// to fetch a specific delivery order by its ID
+describe('## /GET parcels/:parcelId with a wrong parcelId', () => {
+  const parcelId = '001wrong';
+  it('should GET a specific delivery order by its ID', (done) => {
+    chai.request(app)
+      .get(`${apiVersion}/parcels/${parcelId}`)
+      .set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+  });
+});
