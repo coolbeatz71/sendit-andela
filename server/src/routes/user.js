@@ -1,5 +1,7 @@
 import express from 'express';
 import AuthCtrl from '../controllers/auth';
+import UserCtrl from '../controllers/user';
+import checkAuth from '../middleware/user';
 
 const router = express.Router();
 
@@ -16,6 +18,13 @@ router.post('/signUp', AuthCtrl.userSignUp);
  * @method POST
  */
 router.post('/signIn', AuthCtrl.userSignIn);
+
+/**
+ * TESTED
+ * route to fetch all parcels delivery orders by a specific user
+ * @method GET
+ */
+router.get('/:userId/parcels', checkAuth, UserCtrl.getAllParcels);
 
 
 module.exports = router;
