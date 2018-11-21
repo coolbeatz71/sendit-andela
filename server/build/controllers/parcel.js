@@ -31,6 +31,38 @@ var ParcelCtrl = function () {
         parcel: getParcel
       });
     }
+  }, {
+    key: 'createParcel',
+    value: function createParcel(request, response) {
+      // get sign data from the request body
+      var _request$body = request.body,
+          parcelName = _request$body.parcelName,
+          description = _request$body.description,
+          pickupLocation = _request$body.pickupLocation,
+          destination = _request$body.destination,
+          weight = _request$body.weight;
+
+      // We should get the userId using the authKey in the header
+
+      var authKey = request.headers.authorization.split(' ')[1];
+
+      var user = new User();
+      var userId = user.getUserIdByToken(authKey);
+
+      if (!parcelName || !description || !pickupLocation || !destination || !weight) {
+        response.status(404).json({
+          status: 'fail',
+          message: 'Fill all required fields'
+        });
+      } else {
+        var parcel = new _parcel2.default();
+        var createParcel = parcel.createParcel(userId, parcelName, description, pickupLocation, destination, weight);
+        response.status(201).json({
+          status: 'success',
+          parcel: createParcel
+        });
+      }
+    }
   }]);
 
   return ParcelCtrl;
