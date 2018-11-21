@@ -100,3 +100,32 @@ describe('/POST signIn user with wrong email params', () => {
       });
   });
 });
+
+// //////////////////////////
+// Test for parcels routes //
+// //////////////////////////
+
+describe('## /GET parcels without Authorization header', () => {
+  it('should GET all the parcels', (done) => {
+    chai.request(app)
+      .get(`${apiVersion}/parcels`)
+      .end((err, res) => {
+        res.should.have.status(401);
+        done();
+      });
+  });
+});
+
+// get all parcel delivery orders
+describe('## /GET parcels with Authorization header', () => {
+  it('should GET all the parcels', (done) => {
+    chai.request(app)
+      .get(`${apiVersion}/parcels`)
+      .set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe')
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
+});
+

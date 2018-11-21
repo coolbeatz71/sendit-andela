@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/user';
+import parcelRoutes from './routes/parcel';
 
 const app = express();
 const apiVersion = '/api/v1';
@@ -30,6 +31,7 @@ app.use((request, response, next) => {
 
 // user endpoint
 app.use(`${apiVersion}/user`, userRoutes);
+app.use(`${apiVersion}/parcels`, parcelRoutes);
 
 // handling request error
 app.use((request, response, next) => {

@@ -16,6 +16,10 @@ var _user = require('./routes/user');
 
 var _user2 = _interopRequireDefault(_user);
 
+var _parcel = require('./routes/parcel');
+
+var _parcel2 = _interopRequireDefault(_parcel);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
@@ -44,6 +48,7 @@ app.use(function (request, response, next) {
 
 // user endpoint
 app.use(apiVersion + '/user', _user2.default);
+app.use(apiVersion + '/parcels', _parcel2.default);
 
 // handling request error
 app.use(function (request, response, next) {
