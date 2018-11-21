@@ -11,6 +11,10 @@ var _parcel = require('../models/parcel');
 
 var _parcel2 = _interopRequireDefault(_parcel);
 
+var _user = require('../models/user');
+
+var _user2 = _interopRequireDefault(_user);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46,7 +50,7 @@ var ParcelCtrl = function () {
 
       var authKey = request.headers.authorization.split(' ')[1];
 
-      var user = new User();
+      var user = new _user2.default();
       var userId = user.getUserIdByToken(authKey);
 
       if (!parcelName || !description || !pickupLocation || !destination || !weight) {

@@ -22,4 +22,10 @@ var router = _express2.default.Router();
  */
 router.get('/', _user2.default, _parcel2.default.getAllParcels);
 
+/**
+ * route to create a parcel delivery order
+ * @method POST
+ */
+router.post('/', _user2.default, _parcel2.default.createParcel);
+
 module.exports = router;

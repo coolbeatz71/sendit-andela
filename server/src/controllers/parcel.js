@@ -1,5 +1,6 @@
 // importing models
 import Parcel from '../models/parcel';
+import User from '../models/user';
 
 export default class ParcelCtrl {
   static getAllParcels(request, response) {
@@ -33,7 +34,7 @@ export default class ParcelCtrl {
       const parcel = new Parcel();
       const createParcel = parcel.createParcel(
         userId, parcelName, description, pickupLocation, destination, weight,
-        );
+      );
       response.status(201).json({
         status: 'success',
         parcel: createParcel,
