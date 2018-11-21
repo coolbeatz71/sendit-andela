@@ -59,5 +59,31 @@ export default class ParcelCtrl {
         parcel: getParcel,
       });
     }
+  }
+
+  static cancelParcel(request, response) {
+    const { parcelId } = request.params;
+
+    const user = new User();
+    
+    //get the AuthKey from the header to help retrieving the userId 
+    const authKey = request.headers.authorization.split(' ')[1];
+
+    //get the userId
+    const userId = user.getUserIdByToken(authKey);
+
+    const cancel = user.cancelParcel(userId, parcelId);
+
+    if(!cancel){
+      response.status(401).json({
+        status: 'fail',
+        message: 'Not authorized to cancel this parcel order',
+      });
+    } else {
+      response.status(200).json({
+        status: 'success',
+        parcel: cancel,
+      });
+    }
   } 
 }
