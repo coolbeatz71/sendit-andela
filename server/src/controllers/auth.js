@@ -11,7 +11,7 @@ export default class AuthCtrl {
     } = request.body;
 
     if (!firstName || !lastName || !email || !password) {
-      response.status(404).json({
+      response.status(400).json({
         status: 'fail',
         message: 'first name, last name, email and password are required',
       });
@@ -28,6 +28,33 @@ export default class AuthCtrl {
         response.status(201).json({
           status: 'success',
           user: signUp,
+        });
+      }
+    }
+  }
+
+  static userSignIn(request, response) {
+    // get sign data from the request body
+    const { email, password } = request.body;
+
+    if (!email || !password) {
+      response.status(400).json({
+        status: 'fail',
+        message: 'Email and password are required',
+      });
+    } else {
+      const user = new User();
+      const userInfo = user.getUser(email, password);
+
+      if (userInfo) {
+        response.status(200).json({
+          status: 'success',
+          user: userInfo,
+        });
+      } else {
+        response.status(404).json({
+          status: 'fail',
+          message: 'User not found, Incorrect email or password',
         });
       }
     }

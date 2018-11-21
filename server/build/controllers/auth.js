@@ -31,7 +31,7 @@ var AuthCtrl = function () {
 
 
       if (!firstName || !lastName || !email || !password) {
-        response.status(404).json({
+        response.status(400).json({
           status: 'fail',
           message: 'first name, last name, email and password are required'
         });
@@ -48,6 +48,37 @@ var AuthCtrl = function () {
           response.status(201).json({
             status: 'success',
             user: signUp
+          });
+        }
+      }
+    }
+  }, {
+    key: 'userSignIn',
+    value: function userSignIn(request, response) {
+      // get sign data from the request body
+      var _request$body2 = request.body,
+          email = _request$body2.email,
+          password = _request$body2.password;
+
+
+      if (!email || !password) {
+        response.status(400).json({
+          status: 'fail',
+          message: 'Email and password are required'
+        });
+      } else {
+        var user = new _user2.default();
+        var userInfo = user.getUser(email, password);
+
+        if (userInfo) {
+          response.status(200).json({
+            status: 'success',
+            user: userInfo
+          });
+        } else {
+          response.status(404).json({
+            status: 'fail',
+            message: 'User not found, Incorrect email or password'
           });
         }
       }
