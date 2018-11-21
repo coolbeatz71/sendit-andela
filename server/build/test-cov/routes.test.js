@@ -99,6 +99,28 @@ describe('/POST signIn user with wrong email params', function () {
   });
 });
 
+// fetch all parcel delivery order by an user
+describe('/GET /:userId/parcels', function () {
+  var userId = '001';
+  it('should fetch all parcel delivery order by an user', function (done) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/user/' + userId + '/parcels').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
+      res.should.have.status(200);
+      done();
+    });
+  });
+});
+
+// fetch all parcel delivery order by an user
+describe('/GET /:userId/parcels without Authorization Header', function () {
+  var userId = '001';
+  it('should fetch all parcel delivery order by an user', function (done) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/user/' + userId + '/parcels').end(function (err, res) {
+      res.should.have.status(401);
+      done();
+    });
+  });
+});
+
 // //////////////////////////
 // Test for parcels routes //
 // //////////////////////////
@@ -142,7 +164,7 @@ describe('/POST create new parcel delivery order with Authorization header but n
 });
 
 // to fetch a specific delivery order by its ID
-describe('## /GET parcels/:parcelId', function () {
+describe('/GET parcels/:parcelId', function () {
   var parcelId = '001';
   it('should GET a specific delivery order by its ID', function (done) {
     _chai2.default.request(_app2.default).get(apiVersion + '/parcels/' + parcelId).set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
@@ -152,7 +174,7 @@ describe('## /GET parcels/:parcelId', function () {
   });
 });
 
-describe('## /GET parcels/:parcelId without Authorization Header', function () {
+describe('/GET parcels/:parcelId without Authorization Header', function () {
   var parcelId = '001';
   it('should GET a specific delivery order by its ID', function (done) {
     _chai2.default.request(_app2.default).get(apiVersion + '/parcels/' + parcelId).end(function (err, res) {
@@ -163,7 +185,7 @@ describe('## /GET parcels/:parcelId without Authorization Header', function () {
 });
 
 // to fetch a specific delivery order by its ID
-describe('## /GET parcels/:parcelId with a wrong parcelId', function () {
+describe('/GET parcels/:parcelId with a wrong parcelId', function () {
   var parcelId = '001wrong';
   it('should GET a specific delivery order by its ID', function (done) {
     _chai2.default.request(_app2.default).get(apiVersion + '/parcels/' + parcelId).set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {

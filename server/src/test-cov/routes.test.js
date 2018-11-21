@@ -101,6 +101,33 @@ describe('/POST signIn user with wrong email params', () => {
   });
 });
 
+// fetch all parcel delivery order by an user
+describe('/GET /:userId/parcels', () => {
+  const userId = '001';
+  it('should fetch all parcel delivery order by an user', (done) => {
+    chai.request(app)
+      .get(`${apiVersion}/user/${userId}/parcels`)
+      .set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe')
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
+});
+
+// fetch all parcel delivery order by an user
+describe('/GET /:userId/parcels without Authorization Header', () => {
+  const userId = '001';
+  it('should fetch all parcel delivery order by an user', (done) => {
+    chai.request(app)
+      .get(`${apiVersion}/user/${userId}/parcels`)
+      .end((err, res) => {
+        res.should.have.status(401);
+        done();
+      });
+  });
+});
+
 // //////////////////////////
 // Test for parcels routes //
 // //////////////////////////
@@ -155,7 +182,7 @@ describe('/POST create new parcel delivery order with Authorization header but n
 });
 
 // to fetch a specific delivery order by its ID
-describe('## /GET parcels/:parcelId', () => {
+describe('/GET parcels/:parcelId', () => {
   const parcelId = '001';
   it('should GET a specific delivery order by its ID', (done) => {
     chai.request(app)
@@ -168,7 +195,7 @@ describe('## /GET parcels/:parcelId', () => {
   });
 });
 
-describe('## /GET parcels/:parcelId without Authorization Header', () => {
+describe('/GET parcels/:parcelId without Authorization Header', () => {
   const parcelId = '001';
   it('should GET a specific delivery order by its ID', (done) => {
     chai.request(app)
@@ -181,7 +208,7 @@ describe('## /GET parcels/:parcelId without Authorization Header', () => {
 });
 
 // to fetch a specific delivery order by its ID
-describe('## /GET parcels/:parcelId with a wrong parcelId', () => {
+describe('/GET parcels/:parcelId with a wrong parcelId', () => {
   const parcelId = '001wrong';
   it('should GET a specific delivery order by its ID', (done) => {
     chai.request(app)
