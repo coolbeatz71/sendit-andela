@@ -37,7 +37,7 @@ describe('/POST signUp user with empty argument', function () {
   };
   it('should POST user data (signUp)', function (done) {
     _chai2.default.request(_app2.default).post(apiVersion + '/user/signUp').send(signUpData).end(function (err, res) {
-      res.should.have.status(404);
+      res.should.have.status(400);
       done();
     });
   });
@@ -53,6 +53,46 @@ describe('/POST signUp user, Email already exist', function () {
   it('should POST user data (signUp)', function (done) {
     _chai2.default.request(_app2.default).post(apiVersion + '/user/signUp').send(signUpData).end(function (err, res) {
       res.should.have.status(409);
+      expect(res).to.be.json;
+      done();
+    });
+  });
+});
+
+// signIn the user when no data are sent
+describe('/POST signIn user with empty params', function () {
+  var signInData = {
+    email: '',
+    password: ''
+  };
+  it('should POST user data (signIn)', function (done) {
+    _chai2.default.request(_app2.default).post(apiVersion + '/user/signIn').send(signInData).end(function (err, res) {
+      res.should.have.status(400);
+      done();
+    });
+  });
+});
+
+describe('/POST signIn user with good params', function () {
+  it('should POST user data (signIn)', function (done) {
+    _chai2.default.request(_app2.default).post(apiVersion + '/user/signIn').send({
+      email: 'sigmacool@gmail.com',
+      password: '12345678'
+    }).end(function (err, res) {
+      res.should.have.status(200);
+      expect(res).to.be.json;
+      done();
+    });
+  });
+});
+
+describe('/POST signIn user with wrong email params', function () {
+  it('should POST user data (signIn)', function (done) {
+    _chai2.default.request(_app2.default).post(apiVersion + '/user/signIn').send({
+      email: 'sigmacoolwrong',
+      password: '12345678'
+    }).end(function (err, res) {
+      res.should.have.status(404);
       expect(res).to.be.json;
       done();
     });
