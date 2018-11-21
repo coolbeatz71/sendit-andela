@@ -122,6 +122,16 @@ describe('/GET /:userId/parcels without Authorization Header', function () {
 });
 
 // get the number for parcel delivery order per category
+describe('/GET /parcels/count with Authorization header', function () {
+  it('should get the number for parcel delivery order per category', function (done) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/user/parcels/count').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
+      res.should.have.status(200);
+      done();
+    });
+  });
+});
+
+// get the number for parcel delivery order per category
 describe('/GET /parcels/count without Authorization header', function () {
   it('should get the number for parcel delivery order per category', function (done) {
     _chai2.default.request(_app2.default).get(apiVersion + '/user/parcels/count').end(function (err, res) {
@@ -200,6 +210,27 @@ describe('/GET parcels/:parcelId with a wrong parcelId', function () {
   it('should GET a specific delivery order by its ID', function (done) {
     _chai2.default.request(_app2.default).get(apiVersion + '/parcels/' + parcelId).set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
       res.should.have.status(404);
+      done();
+    });
+  });
+});
+
+// for cancelling a parcel delivery order
+describe('## /PUT parcels/:parcelId/cancel without Authorization header', function () {
+  it('should cancel a parcel delivery order', function (done) {
+    _chai2.default.request(_app2.default).put(apiVersion + '/parcels/:parcelId/cancel').end(function (err, res) {
+      res.should.have.status(401);
+      done();
+    });
+  });
+});
+
+describe('## /PUT parcels/:parcelId/cancel with Authorization header, with wrong parcelId', function () {
+  it('should cancel a parcel delivery order', function (done) {
+    var parcelId = '001wrong';
+    _chai2.default.request(_app2.default).put(apiVersion + '/parcels/:parcelId/cancel').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
+      res.should.have.status(401);
+      res.body.errorCancel.should.be.true;
       done();
     });
   });

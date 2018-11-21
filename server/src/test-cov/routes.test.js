@@ -129,6 +129,19 @@ describe('/GET /:userId/parcels without Authorization Header', () => {
 });
 
 // get the number for parcel delivery order per category
+describe('/GET /parcels/count with Authorization header', () => {
+  it('should get the number for parcel delivery order per category', (done) => {
+    chai.request(app)
+      .get(`${apiVersion}/user/parcels/count`)
+      .set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe')
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
+});
+
+// get the number for parcel delivery order per category
 describe('/GET /parcels/count without Authorization header', () => {
   it('should get the number for parcel delivery order per category', (done) => {
     chai.request(app)
@@ -228,6 +241,32 @@ describe('/GET parcels/:parcelId with a wrong parcelId', () => {
       .set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe')
       .end((err, res) => {
         res.should.have.status(404);
+        done();
+      });
+  });
+});
+
+// for cancelling a parcel delivery order
+describe('## /PUT parcels/:parcelId/cancel without Authorization header', () => {
+  it('should cancel a parcel delivery order', (done) => {
+    chai.request(app)
+      .put(`${apiVersion}/parcels/:parcelId/cancel`)
+      .end((err, res) => {
+        res.should.have.status(401);
+        done();
+      });
+  });
+});
+
+describe('## /PUT parcels/:parcelId/cancel with Authorization header, with wrong parcelId', () => {
+  it('should cancel a parcel delivery order', (done) => {
+    const parcelId = '001wrong';
+    chai.request(app)
+      .put(`${apiVersion}/parcels/:parcelId/cancel`)
+      .set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe')
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.errorCancel.should.be.true;
         done();
       });
   });
