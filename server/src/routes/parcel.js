@@ -22,4 +22,10 @@ router.post('/', checkAuth, ParcelCtrl.createParcel);
  */
 router.get('/:parcelId', checkAuth, ParcelCtrl.getParcelById);
 
+/**
+ * routes for cancelling parcel delivery order
+ * @method PUT
+ */
+router.put('/:parcelId/cancel', checkAuth, ParcelCtrl.cancelParcel);
+
 module.exports = router;

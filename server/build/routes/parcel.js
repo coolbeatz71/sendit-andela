@@ -34,4 +34,10 @@ router.post('/', _user2.default, _parcel2.default.createParcel);
  */
 router.get('/:parcelId', _user2.default, _parcel2.default.getParcelById);
 
+/**
+ * routes for cancelling parcel delivery order
+ * @method PUT
+ */
+router.put('/:parcelId/cancel', _user2.default, _parcel2.default.cancelParcel);
+
 module.exports = router;
