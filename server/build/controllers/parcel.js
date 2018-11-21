@@ -67,6 +67,27 @@ var ParcelCtrl = function () {
         });
       }
     }
+  }, {
+    key: 'getParcelById',
+    value: function getParcelById(request, response) {
+      var parcelId = request.params.parcelId;
+
+
+      var parcel = new _parcel2.default();
+      var getParcel = parcel.getParcelById(parcelId);
+
+      if (!getParcel) {
+        response.status(404).json({
+          status: 'fail',
+          message: 'No parcel found, wrong parcel Id'
+        });
+      } else {
+        response.status(200).json({
+          status: 'success',
+          parcel: getParcel
+        });
+      }
+    }
   }]);
 
   return ParcelCtrl;

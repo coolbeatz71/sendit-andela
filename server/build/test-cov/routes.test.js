@@ -140,3 +140,35 @@ describe('/POST create new parcel delivery order with Authorization header but n
     });
   });
 });
+
+// to fetch a specific delivery order by its ID
+describe('## /GET parcels/:parcelId', function () {
+  var parcelId = '001';
+  it('should GET a specific delivery order by its ID', function (done) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/parcels/' + parcelId).set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
+      res.should.have.status(200);
+      done();
+    });
+  });
+});
+
+describe('## /GET parcels/:parcelId without Authorization Header', function () {
+  var parcelId = '001';
+  it('should GET a specific delivery order by its ID', function (done) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/parcels/' + parcelId).end(function (err, res) {
+      res.should.have.status(401);
+      done();
+    });
+  });
+});
+
+// to fetch a specific delivery order by its ID
+describe('## /GET parcels/:parcelId with a wrong parcelId', function () {
+  var parcelId = '001wrong';
+  it('should GET a specific delivery order by its ID', function (done) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/parcels/' + parcelId).set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
+      res.should.have.status(404);
+      done();
+    });
+  });
+});
