@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/coolbeatz71/sendit-andela.svg?branch=develop)](https://travis-ci.org/coolbeatz71/sendit-andela)
-[![Coverage Status](https://coveralls.io/repos/github/coolbeatz71/sendit-andela/badge.svg?branch=master)](https://coveralls.io/github/coolbeatz71/sendit-andela?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/coolbeatz71/sendit-andela/badge.svg?branch=develop)](https://coveralls.io/github/coolbeatz71/sendit-andela?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b8cfc6af129a376bd18b/maintainability)](https://codeclimate.com/github/coolbeatz71/sendit-andela/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b8cfc6af129a376bd18b/test_coverage)](https://codeclimate.com/github/coolbeatz71/sendit-andela/test_coverage)
 # sendit-andela
