@@ -10,4 +10,4 @@ after_success:
 addons:
   code_climate:
     repo_token:
-      secure: "5c4f62f95155c47ff22979e08e7a1753de51304f6f9b1b25071c92a19ac14839"
+      secure: "765a4e4444c11aa351b8b049ab5a43b4f9da19ea40491d02009d27f31d3b89a7"
