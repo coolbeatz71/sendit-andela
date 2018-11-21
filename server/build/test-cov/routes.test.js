@@ -216,7 +216,7 @@ describe('/GET parcels/:parcelId with a wrong parcelId', function () {
 });
 
 // for cancelling a parcel delivery order
-describe('## /PUT parcels/:parcelId/cancel without Authorization header', function () {
+describe('/PUT parcels/:parcelId/cancel without Authorization header', function () {
   it('should cancel a parcel delivery order', function (done) {
     _chai2.default.request(_app2.default).put(apiVersion + '/parcels/:parcelId/cancel').end(function (err, res) {
       res.should.have.status(401);
@@ -225,12 +225,11 @@ describe('## /PUT parcels/:parcelId/cancel without Authorization header', functi
   });
 });
 
-describe('## /PUT parcels/:parcelId/cancel with Authorization header, with wrong parcelId', function () {
+describe('/PUT parcels/:parcelId/cancel with Authorization header, with wrong parcelId', function () {
   it('should cancel a parcel delivery order', function (done) {
     var parcelId = '001wrong';
     _chai2.default.request(_app2.default).put(apiVersion + '/parcels/:parcelId/cancel').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
       res.should.have.status(401);
-      res.body.errorCancel.should.be.true;
       done();
     });
   });
