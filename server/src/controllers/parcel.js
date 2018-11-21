@@ -40,5 +40,24 @@ export default class ParcelCtrl {
         parcel: createParcel,
       });
     }
+  }
+
+  static getParcelById(request, response){
+    const { parcelId } = request.params;
+
+    const parcel = new Parcel();
+    const getParcel = parcel.getParcelById(parcelId);
+
+    if(!getParcel){
+      response.status(404).json({
+        status: 'fail',
+        message: 'No parcel found, wrong parcel Id',
+      });
+    }else{
+      response.status(200).json({
+        status: 'success',
+        parcel: getParcel,
+      });
+    }
   } 
 }
