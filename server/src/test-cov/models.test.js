@@ -27,7 +27,7 @@ const userInfo = {
 // Testing params for each classes  //
 //////////////////////////////////////
 
-describe('#### Testing params of each functions in classes without params', () => {
+describe('Testing params of each functions in classes without params', () => {
   describe('Admin class', () => {
     it('should return undefined', () => {
       expect(admin.getAdmin()).to.be.undefined;
@@ -132,7 +132,7 @@ describe('#### Testing params of each functions in classes without params', () =
 // //////////////////////////////////
 // Testing instance of classes     //
 // //////////////////////////////////
-describe("#### Test instance of Each Class", () => {
+describe('Test instance of Each Class', () => {
   it('should be an instance of User', () => {
     expect(user).to.be.an.instanceof(User);
   });
@@ -147,7 +147,7 @@ describe("#### Test instance of Each Class", () => {
 });
 
 //testing length of getUserId
-describe('#### length of the getUserId()', () => {
+describe('length of the getUserId()', () => {
   it('should have length of 3', () => {
     user.setUserId();
     const userId = user.getUserId();
@@ -155,7 +155,7 @@ describe('#### length of the getUserId()', () => {
   });
 });
 
-describe('#### Testing methods[function] for User class', () => {
+describe('Testing methods[function] for User class', () => {
   it('should be a function', () => {
     user.createUser.should.be.a('function');
     user.getUser.should.be.a('function');
@@ -171,7 +171,7 @@ describe('#### Testing methods[function] for User class', () => {
   });
 });
 
-describe('#### Testing methods[function] for Admin class', () => {
+describe('Testing methods[function] for Admin class', () => {
   it('should be a function', () => {
     admin.getAdmin.should.be.a('function');
     admin.getAdminIdByEmail.should.be.a('function');
@@ -181,26 +181,26 @@ describe('#### Testing methods[function] for Admin class', () => {
   });
 });
 
-describe('#### Testing methods[function] for Admin class', () => {
+describe('Testing methods[function] for Admin class', () => {
   it('should be a function', () => {
     admin.getParcelNumber.should.be.a('function');
   });
 });
 
-describe('#### Testing methods[function] for User class', () => {
+describe('Testing methods[function] for User class', () => {
   it('should be a function', () => {
     user.getParcelNumber.should.be.a('function');
   });
 });
 
-describe('#### Testing methods[function] for App class', () => {
+describe('Testing methods[function] for App class', () => {
   it('should be a function', () => {
     app.readDataFile.should.be.a('function');
     app.writeDataFile.should.be.a('function');
   });
 });
 
-describe('#### Testing methods[function] for Parcel class', () => {
+describe('Testing methods[function] for Parcel class', () => {
   it('should be a function', () => {
     parcel.createParcel.should.be.a('function');
     parcel.getAllParcel.should.be.a('function');
@@ -214,10 +214,10 @@ describe('#### Testing methods[function] for Parcel class', () => {
 // //////////////////////////////////
 // Testing models concerning user  //
 // //////////////////////////////////
-describe('##### User class', () => {
+describe('User class', () => {
   // Testing user creation
-  describe('#### Testing user account creation', () => {
-    describe('# when email already exist', () => {
+  describe('Testing user account creation', () => {
+    describe('when email already exist', () => {
       it('should return false', () => {
         const firstName = 'whatever';
         const lastName = 'whatever';
@@ -231,8 +231,8 @@ describe('##### User class', () => {
   });
 
   // Testing getUser
-  describe('#### Testing get user methods', () => {
-    describe('# When email and password dont exist', () => {
+  describe('Testing get user methods', () => {
+    describe('When email and password dont exist', () => {
       const email = 'whatever';
       const password = 'whatever';
 
@@ -242,7 +242,7 @@ describe('##### User class', () => {
       });
     });
 
-    describe('# When email and password exist', () => {
+    describe('When email and password exist', () => {
       const email = 'sigmacool@gmail.com';
       const password = '12345678';
 
@@ -254,8 +254,8 @@ describe('##### User class', () => {
   });
 
   // Testing getUserIdByEmail
-  describe('#### Testing get userId by email methods', () => {
-    describe('# When the email dont exist', () => {
+  describe('Testing get userId by email methods', () => {
+    describe('When the email dont exist', () => {
       const email = 'whatever';
 
       it('should return undefined', () => {
@@ -264,7 +264,7 @@ describe('##### User class', () => {
       });
     });
 
-    describe('# When the email exist', () => {
+    describe('When the email exist', () => {
       const email = 'sigmacool@gmail.com';
 
       it('should return a string', () => {
@@ -274,29 +274,29 @@ describe('##### User class', () => {
     });
   });
 
-  describe('#### Testing IsTokenValid method', () => {
+  describe('Testing IsTokenValid method', () => {
     it('should return boolean', () => {
       const isTokenValid = user.isTokenValid('whatever');
       assert.isBoolean(isTokenValid);
     });
   });
 
-  describe('#### Testing getUserIdByToken method', () => {
+  describe('Testing getUserIdByToken method', () => {
     it('should return some value', () => {
       const isTokenValid = user.getUserIdByToken('authkey');
       assert.isNotNull(isTokenValid);
     });
   });
 
-  describe('#### Testing getEncryptedToken method', () => {
+  describe('Testing getEncryptedToken method', () => {
     it('should return a string', () => {
       const encryptedToken = user.getEncryptedToken('myEmail');
       expect(encryptedToken).to.be.a('string');
     });
   });
 
-  describe('#### Testing getParcelNumber method', () => {
-    describe('# When the status is undefined', () => {
+  describe('Testing getParcelNumber method', () => {
+    describe('When the status is undefined', () => {
       const userId = '001';
       const status = undefined;
       it('should return Number', () => {
@@ -305,7 +305,7 @@ describe('##### User class', () => {
       });
     });
 
-    describe('# When the status is delivered', () => {
+    describe('When the status is delivered', () => {
       const userId = '001';
       const status = 'delivered';
       it('should return Number', () => {
@@ -314,7 +314,7 @@ describe('##### User class', () => {
       });
     });
 
-    describe('# When the status is in transit', () => {
+    describe('When the status is in transit', () => {
       const userId = '001';
       const status = 'in transit';
       it('should return Number', () => {
@@ -323,7 +323,7 @@ describe('##### User class', () => {
       });
     });
 
-    describe('# When the status is cancelled', () => {
+    describe('When the status is cancelled', () => {
       const userId = '001';
       const status = 'cancelled';
       it('should return Number', () => {
@@ -337,9 +337,9 @@ describe('##### User class', () => {
 // ////////////////////////////////////
 // Testing models concerning Parcel //
 // ////////////////////////////////////
-describe('##### Parcel class', () => {
+describe('Parcel class', () => {
   // Testing get all parcels
-  describe('# get all parcel delivery order', () => {
+  describe('get all parcel delivery order', () => {
     it('should return an array', () => {
       const allParcel = parcel.getAllParcel();
       assert.isArray(allParcel);
@@ -347,7 +347,7 @@ describe('##### Parcel class', () => {
   });
 
   // Testing get all parcels for a specific user
-  describe('# get all for parcel delivery order for a specific user', () => {
+  describe('get all for parcel delivery order for a specific user', () => {
     it('should return an array', () => {
       const allParcel = parcel.getAllParcelByUser('011');
       assert.isNull(allParcel);
@@ -355,7 +355,7 @@ describe('##### Parcel class', () => {
   });
 
   // Testing get parcel order price
-  describe('# get price for a parcel by its weight', () => {
+  describe('get price for a parcel by its weight', () => {
     it('should return a number', () => {
       const price = parcel.getParcelPrice('500');
       assert.isNumber(price);
@@ -366,9 +366,9 @@ describe('##### Parcel class', () => {
 // ////////////////////////////////////
 // Testing models concerning Admin  //
 // ////////////////////////////////////
-describe('##### Admin class', () => {
+describe('Admin class', () => {
   // Testing get admin
-  describe('# When email and password dont exist', () => {
+  describe('When email and password dont exist', () => {
     const email = 'whatever';
     const password = 'whatever';
 
@@ -379,7 +379,7 @@ describe('##### Admin class', () => {
   });
 
   // Testing get admin id by email
-  describe('# get admin Id by email', () => {
+  describe('get admin Id by email', () => {
     const email = 'whatever';
 
     it('should return undefined', () => {
@@ -388,14 +388,14 @@ describe('##### Admin class', () => {
     });
   });
 
-  describe('# Testing IsTokenValid method', () => {
+  describe('Testing IsTokenValid method', () => {
     it('should return boolean', () => {
       const isTokenValid = admin.isTokenValid('whatever');
       assert.isBoolean(isTokenValid);
     });
   });
 
-  describe('# Testing getAdminIdByToken method', () => {
+  describe('Testing getAdminIdByToken method', () => {
     it('should return some value', () => {
       const isTokenValid = admin.getAdminIdByToken('authkey');
       assert.isNotNull(isTokenValid);
@@ -406,26 +406,26 @@ describe('##### Admin class', () => {
 // ////////////////////////////////////////////////////////
 // Testing models concerning App (read & write on file)  //
 // ////////////////////////////////////////////////////////
-describe('#### Testing App Model', () => {
+describe('Testing App Model', () => {
   const userFilePath = path.resolve(__dirname, '../../assets/users.json');
   const adminFilePath = path.resolve(__dirname, '../../assets/admin.json');
   const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
 
-  describe('# Reading file method For userFileData', () => {
+  describe('Reading file method For userFileData', () => {
     it('should return an array or object', () => {
       const userFile = app.readDataFile(userFilePath);
       assert.isOk(userFile);
     });
   });
 
-  describe('# Reading file method For parcelFileData', () => {
+  describe('Reading file method For parcelFileData', () => {
     it('should return an array or object', () => {
       const parcelFile = app.readDataFile(parcelFilePath);
       assert.isOk(parcelFile);
     });
   });
 
-  describe('# Reading file method For adminFileData', () => {
+  describe('Reading file method For adminFileData', () => {
     it('should return an array or object', () => {
       const adminFile = app.readDataFile(adminFilePath);
       assert.isOk(adminFile);
@@ -433,8 +433,8 @@ describe('#### Testing App Model', () => {
   });
 });
 
-describe('#### Testing property of object', () => {
-  describe('# userInfo object', () => {
+describe('Testing property of object', () => {
+  describe('userInfo object', () => {
     it('should have some property ', () => {
       expect(userInfo).to.have.property('firstName');
       expect(userInfo).to.have.property('lastName');
