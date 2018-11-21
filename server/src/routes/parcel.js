@@ -16,4 +16,10 @@ router.get('/', checkAuth, ParcelCtrl.getAllParcels);
  */
 router.post('/', checkAuth, ParcelCtrl.createParcel);
 
+/**
+ * route to fetch a specific delivery order by its ID
+ * @method GET
+ */
+router.get('/:parcelId', checkAuth, ParcelCtrl.getParcelById);
+
 module.exports = router;

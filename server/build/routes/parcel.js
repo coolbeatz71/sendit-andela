@@ -28,4 +28,10 @@ router.get('/', _user2.default, _parcel2.default.getAllParcels);
  */
 router.post('/', _user2.default, _parcel2.default.createParcel);
 
+/**
+ * route to fetch a specific delivery order by its ID
+ * @method GET
+ */
+router.get('/:parcelId', _user2.default, _parcel2.default.getParcelById);
+
 module.exports = router;
