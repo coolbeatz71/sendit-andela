@@ -1,5 +1,5 @@
 import express from 'express';
-import ParcelsCtrl from '../controllers/parcel';
+import ParcelCtrl from '../controllers/parcel';
 import checkAuth from '../middleware/user';
 
 const router = express.Router();
@@ -8,6 +8,12 @@ const router = express.Router();
  * route to fetch all parcels delivery orders
  * @method GET
  */
-router.get('/', checkAuth, ParcelsCtrl.getAllParcels);
+router.get('/', checkAuth, ParcelCtrl.getAllParcels);
+
+/**
+ * route to create a parcel delivery order
+ * @method POST
+ */
+router.post('/', checkAuth, ParcelCtrl.createParcel);
 
 module.exports = router;

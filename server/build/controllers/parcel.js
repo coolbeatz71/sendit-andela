@@ -11,6 +11,10 @@ var _parcel = require('../models/parcel');
 
 var _parcel2 = _interopRequireDefault(_parcel);
 
+var _user = require('../models/user');
+
+var _user2 = _interopRequireDefault(_user);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30,6 +34,38 @@ var ParcelCtrl = function () {
         status: 'fail',
         parcel: getParcel
       });
+    }
+  }, {
+    key: 'createParcel',
+    value: function createParcel(request, response) {
+      // get sign data from the request body
+      var _request$body = request.body,
+          parcelName = _request$body.parcelName,
+          description = _request$body.description,
+          pickupLocation = _request$body.pickupLocation,
+          destination = _request$body.destination,
+          weight = _request$body.weight;
+
+      // We should get the userId using the authKey in the header
+
+      var authKey = request.headers.authorization.split(' ')[1];
+
+      var user = new _user2.default();
+      var userId = user.getUserIdByToken(authKey);
+
+      if (!parcelName || !description || !pickupLocation || !destination || !weight) {
+        response.status(404).json({
+          status: 'fail',
+          message: 'Fill all required fields'
+        });
+      } else {
+        var parcel = new _parcel2.default();
+        var createParcel = parcel.createParcel(userId, parcelName, description, pickupLocation, destination, weight);
+        response.status(201).json({
+          status: 'success',
+          parcel: createParcel
+        });
+      }
     }
   }]);
 

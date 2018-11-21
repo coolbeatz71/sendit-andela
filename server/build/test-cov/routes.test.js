@@ -103,7 +103,7 @@ describe('/POST signIn user with wrong email params', function () {
 // Test for parcels routes //
 // //////////////////////////
 
-describe('## /GET parcels without Authorization header', function () {
+describe('/GET parcels without Authorization header', function () {
   it('should GET all the parcels', function (done) {
     _chai2.default.request(_app2.default).get(apiVersion + '/parcels').end(function (err, res) {
       res.should.have.status(401);
@@ -113,10 +113,29 @@ describe('## /GET parcels without Authorization header', function () {
 });
 
 // get all parcel delivery orders
-describe('## /GET parcels with Authorization header', function () {
+describe('/GET parcels with Authorization header', function () {
   it('should GET all the parcels', function (done) {
     _chai2.default.request(_app2.default).get(apiVersion + '/parcels').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
       res.should.have.status(200);
+      done();
+    });
+  });
+});
+
+// test create parcel routes
+describe('/POST create new parcel delivery order without Authorization header', function () {
+  it('should POST a new parcel', function (done) {
+    _chai2.default.request(_app2.default).post(apiVersion + '/parcels').end(function (err, res) {
+      res.should.have.status(401);
+      done();
+    });
+  });
+});
+
+describe('/POST create new parcel delivery order with Authorization header but no Body', function () {
+  it('should POST a new parcel', function (done) {
+    _chai2.default.request(_app2.default).post(apiVersion + '/parcels').send({}).set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
+      res.should.have.status(404);
       done();
     });
   });
