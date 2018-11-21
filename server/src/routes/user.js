@@ -26,5 +26,12 @@ router.post('/signIn', AuthCtrl.userSignIn);
  */
 router.get('/:userId/parcels', checkAuth, UserCtrl.getAllParcels);
 
+/**
+ * TESTED
+ * route to get the number of parcels delivery orders by a specific user
+ * @method GET
+ */
+router.get('/parcels/count', checkAuth, UserCtrl.countParcels);
+
 
 module.exports = router;
