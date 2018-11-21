@@ -121,6 +121,16 @@ describe('/GET /:userId/parcels without Authorization Header', function () {
   });
 });
 
+// get the number for parcel delivery order per category
+describe('/GET /parcels/count without Authorization header', function () {
+  it('should get the number for parcel delivery order per category', function (done) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/user/parcels/count').end(function (err, res) {
+      res.should.have.status(401);
+      done();
+    });
+  });
+});
+
 // //////////////////////////
 // Test for parcels routes //
 // //////////////////////////

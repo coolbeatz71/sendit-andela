@@ -41,4 +41,11 @@ router.post('/signIn', _auth2.default.userSignIn);
  */
 router.get('/:userId/parcels', _user4.default, _user2.default.getAllParcels);
 
+/**
+ * TESTED
+ * route to get the number of parcels delivery orders by a specific user
+ * @method GET
+ */
+router.get('/parcels/count', _user4.default, _user2.default.countParcels);
+
 module.exports = router;
