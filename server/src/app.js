@@ -30,7 +30,7 @@ app.use((request, response, next) => {
 });
 
 // user endpoint
-app.use(`${apiVersion}/user`, userRoutes);
+app.use(`${apiVersion}/users`, userRoutes);
 app.use(`${apiVersion}/parcels`, parcelRoutes);
 
 // handling request error

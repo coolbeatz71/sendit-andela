@@ -81,5 +81,19 @@
         "pickupLocation": "Nigeria",
         "presentLocation": "",
         "destination": "Kenya"
+    },
+    {
+        "orderId": "257",
+        "sender": {
+            "id": "001"
+        },
+        "parcelName": "Electronic Guitares, Yamaha",
+        "description": "It's contains some electronic guitares of colours orange",
+        "weight": "40",
+        "price": 20000,
+        "status": "in transit",
+        "pickupLocation": "rwanda",
+        "presentLocation": "",
+        "destination": "nigeria"
     }
 ]

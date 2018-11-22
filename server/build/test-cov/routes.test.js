@@ -36,7 +36,7 @@ describe('/POST signUp user with empty argument', function () {
     password: ''
   };
   it('should POST user data (signUp)', function (done) {
-    _chai2.default.request(_app2.default).post(apiVersion + '/user/signUp').send(signUpData).end(function (err, res) {
+    _chai2.default.request(_app2.default).post(apiVersion + '/users/signUp').send(signUpData).end(function (err, res) {
       res.should.have.status(400);
       done();
     });
@@ -51,7 +51,7 @@ describe('/POST signUp user, Email already exist', function () {
     password: '12345678'
   };
   it('should POST user data (signUp)', function (done) {
-    _chai2.default.request(_app2.default).post(apiVersion + '/user/signUp').send(signUpData).end(function (err, res) {
+    _chai2.default.request(_app2.default).post(apiVersion + '/users/signUp').send(signUpData).end(function (err, res) {
       res.should.have.status(409);
       expect(res).to.be.json;
       done();
@@ -66,7 +66,7 @@ describe('/POST signIn user with empty params', function () {
     password: ''
   };
   it('should POST user data (signIn)', function (done) {
-    _chai2.default.request(_app2.default).post(apiVersion + '/user/signIn').send(signInData).end(function (err, res) {
+    _chai2.default.request(_app2.default).post(apiVersion + '/users/signIn').send(signInData).end(function (err, res) {
       res.should.have.status(400);
       done();
     });
@@ -75,7 +75,7 @@ describe('/POST signIn user with empty params', function () {
 
 describe('/POST signIn user with good params', function () {
   it('should POST user data (signIn)', function (done) {
-    _chai2.default.request(_app2.default).post(apiVersion + '/user/signIn').send({
+    _chai2.default.request(_app2.default).post(apiVersion + '/users/signIn').send({
       email: 'sigmacool@gmail.com',
       password: '12345678'
     }).end(function (err, res) {
@@ -88,7 +88,7 @@ describe('/POST signIn user with good params', function () {
 
 describe('/POST signIn user with wrong email params', function () {
   it('should POST user data (signIn)', function (done) {
-    _chai2.default.request(_app2.default).post(apiVersion + '/user/signIn').send({
+    _chai2.default.request(_app2.default).post(apiVersion + '/users/signIn').send({
       email: 'sigmacoolwrong',
       password: '12345678'
     }).end(function (err, res) {
@@ -103,7 +103,7 @@ describe('/POST signIn user with wrong email params', function () {
 describe('/GET /:userId/parcels', function () {
   var userId = '001';
   it('should fetch all parcel delivery order by an user', function (done) {
-    _chai2.default.request(_app2.default).get(apiVersion + '/user/' + userId + '/parcels').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/users/' + userId + '/parcels').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
       res.should.have.status(200);
       done();
     });
@@ -114,7 +114,7 @@ describe('/GET /:userId/parcels', function () {
 describe('/GET /:userId/parcels without Authorization Header', function () {
   var userId = '001';
   it('should fetch all parcel delivery order by an user', function (done) {
-    _chai2.default.request(_app2.default).get(apiVersion + '/user/' + userId + '/parcels').end(function (err, res) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/users/' + userId + '/parcels').end(function (err, res) {
       res.should.have.status(401);
       done();
     });
@@ -124,7 +124,7 @@ describe('/GET /:userId/parcels without Authorization Header', function () {
 // get the number for parcel delivery order per category
 describe('/GET /parcels/count with Authorization header', function () {
   it('should get the number for parcel delivery order per category', function (done) {
-    _chai2.default.request(_app2.default).get(apiVersion + '/user/parcels/count').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/users/parcels/count').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
       res.should.have.status(200);
       done();
     });
@@ -134,7 +134,7 @@ describe('/GET /parcels/count with Authorization header', function () {
 // get the number for parcel delivery order per category
 describe('/GET /parcels/count without Authorization header', function () {
   it('should get the number for parcel delivery order per category', function (done) {
-    _chai2.default.request(_app2.default).get(apiVersion + '/user/parcels/count').end(function (err, res) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/users/parcels/count').end(function (err, res) {
       res.should.have.status(401);
       done();
     });
@@ -229,6 +229,26 @@ describe('/PUT parcels/:parcelId/cancel with Authorization header, with wrong pa
   it('should cancel a parcel delivery order', function (done) {
     var parcelId = '001wrong';
     _chai2.default.request(_app2.default).put(apiVersion + '/parcels/:parcelId/cancel').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
+      res.should.have.status(404);
+      done();
+    });
+  });
+});
+
+describe('/PUT parcels/:parcelId/cancel with Authorization header, with empty parcelId', function () {
+  it('should cancel a parcel delivery order', function (done) {
+    var parcelId = undefined;
+    _chai2.default.request(_app2.default).put(apiVersion + '/parcels/' + parcelId + '/cancel').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
+      res.should.have.status(404);
+      done();
+    });
+  });
+});
+
+describe('/PUT parcels/:parcelId/cancel with Authorization header, with a delivered parcelId', function () {
+  it('should cancel a parcel delivery order', function (done) {
+    var parcelId = '001';
+    _chai2.default.request(_app2.default).put(apiVersion + '/parcels/' + parcelId + '/cancel').set('Authorization', 'Bearer a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe').end(function (err, res) {
       res.should.have.status(401);
       done();
     });
