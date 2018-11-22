@@ -74,7 +74,17 @@ export default class ParcelCtrl {
 
     const cancel = user.cancelParcel(userId, parcelId);
 
-    if(!cancel){
+    if(cancel === null){
+      response.status(400).json({
+        status: 'fail',
+        message: 'id of the parcel is required',
+      });
+    }else if (cancel === undefined) {
+      response.status(404).json({
+        status: 'fail',
+        message: 'No parcel order found with this id',
+      });
+    } else if(!cancel){
       response.status(401).json({
         status: 'fail',
         message: 'Not authorized to cancel this parcel order',
