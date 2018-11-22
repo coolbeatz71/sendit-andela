@@ -47,7 +47,7 @@ app.use(function (request, response, next) {
 });
 
 // user endpoint
-app.use(apiVersion + '/user', _user2.default);
+app.use(apiVersion + '/users', _user2.default);
 app.use(apiVersion + '/parcels', _parcel2.default);
 
 // handling request error

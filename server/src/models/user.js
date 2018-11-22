@@ -205,7 +205,11 @@ export default class User {
       return null;
     }
 
-    if (!parcel || parcel.status === 'delivered') {
+    if (!parcel) {
+      return undefined;
+    }
+
+    if (parcel.status === 'delivered') {
       return false;
     }
 
