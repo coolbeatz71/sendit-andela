@@ -1,34 +1,30 @@
+import path from 'path';
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
+
+const envPath = path.resolve(__dirname, '../../../.env');
+
+dotenv.config({ path: envPath });
+
+//set dev or test environment
+const myEnv = process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()}_`: '';
+
+const db_config = {
+  user: process.env.DB_USERNAME,
+  host: process.env.DB_HOST,
+  database: process.env[`${myEnv}DATABASE`],
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+};
+
+console.log(db_config);
+
 /**
  * Credit to charles odili https://github.com/chalu/pre-bc-workshops/
  */
-import { Pool } from 'pg';
+const pool = new Pool(db_config);
 
-let config = {};
-
-// configure the test environment DB
-if(process.env.NODE_ENV === 'test'){
-  config = {
-    user: process.env.DB_USERNAME,
-    host: process.env.DB_HOST,
-    database: process.env.TEST_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-  };
-}
-
-// configure the dev/prod environment DB
-if(process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'prod'){
-  config = {
-    user: process.env.DB_USERNAME,
-    host: process.env.DB_HOST,
-    database: process.env.DEV_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-  };
-}
-
-const pool = new Pool(config);
-
+//create the DB connection 
 const connect = async () => pool.connect();
 
 /**
@@ -47,5 +43,9 @@ const execute = async (query, data = []) => {
     connection.release();
   }
 };
+
+execute('SELECT * FROM admin', []).then((result) => {
+  console.log(result.rows);
+});
 
 export default execute;
