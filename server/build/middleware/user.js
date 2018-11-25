@@ -13,9 +13,9 @@ var secretToken = process.env.JWT_SECRET_TOKEN;
  */
 var checkAuth = function checkAuth(request, response, next) {
   if (!request.headers.authorization || request.headers.authorization.indexOf('Bearer ') === -1) {
-    response.status(401).json({
-      error: true,
-      authKeyMissed: true
+    response.status(403).json({
+      status: 'fail',
+      message: 'Not authorized, authentication key is required'
     });
   } else {
     // split the header value to get only teh authKey (Bearer wuyhdu3Y488478Eehjh...)
@@ -27,7 +27,7 @@ var checkAuth = function checkAuth(request, response, next) {
       if (err) {
         response.status(401).json({
           status: 'fail',
-          message: 'Not authorized'
+          message: 'Not authorized, invalid authentication key'
         });
       }
       // on success

@@ -12,6 +12,10 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _expressValidator = require('express-validator');
+
+var _expressValidator2 = _interopRequireDefault(_expressValidator);
+
 var _user = require('./routes/user');
 
 var _user2 = _interopRequireDefault(_user);
@@ -45,6 +49,25 @@ app.use(function (request, response, next) {
   }
   next();
 });
+
+// use the express validator middleware
+app.use((0, _expressValidator2.default)({
+  errorFormatter: function errorFormatter(param, msg, value) {
+    var namespace = param.split('.');
+    var root = namespace.shift();
+    var formParam = root;
+
+    while (namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+
+    return {
+      param: formParam,
+      msg: msg,
+      value: value
+    };
+  }
+}));
 
 // user endpoint
 app.use(apiVersion + '/users', _user2.default);

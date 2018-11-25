@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import expressValidator from 'express-validator';
 import userRoutes from './routes/user';
 import parcelRoutes from './routes/parcel';
 
@@ -28,6 +29,25 @@ app.use((request, response, next) => {
   }
   next();
 });
+
+// use the express validator middleware
+app.use(expressValidator({
+  errorFormatter: (param, msg, value) => {
+    const namespace = param.split('.');
+    const root = namespace.shift();
+    let formParam = root;
+
+    while (namespace.length) {
+      formParam += `[${namespace.shift()}]`;
+    }
+
+    return {
+      param: formParam,
+      msg,
+      value,
+    };
+  },
+}));
 
 // user endpoint
 app.use(`${apiVersion}/users`, userRoutes);
