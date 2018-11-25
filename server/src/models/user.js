@@ -1,6 +1,10 @@
-import crypto from 'crypto';
 import path from 'path';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import execute from './db';
+
 import App from './app';
+import constants from './constant';
 
 const userFilePath = path.resolve(__dirname, '../../assets/users.json');
 const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
@@ -23,96 +27,93 @@ export default class User {
    * @param  string lastName
    * @param  string email
    * @param  string password
-   * @return object
+   * @return object | constant
    */
-  createUser(firstName, lastName, email, password) {
-    this.setUserId();
-    const id = this.getUserId();
-    let response;
-    const userInfo = {
-      id,
+  async createUser(firstName, lastName, email, password) {
+    const isEmailExist = await this.app.isEmailExist(email, constants.USER);
+
+    // if the email exist
+    if (isEmailExist) {
+      return constants.EMAIL_EXIST;
+    }
+
+    // generate the password hash
+    const passwordHash = bcrypt.hashSync(password, 10);
+
+    // insert the user to the database
+    const query = `INSERT INTO users (first_name, last_name, email, password) 
+    VALUES ($1, $2, $3, $4) RETURNING id_user`;
+
+    const result = await execute(query, [
+      firstName, lastName, email, passwordHash,
+    ]);
+
+    const userId = result.rows[0].id_user.trim();
+
+    // generate the user token with jwt
+    const userToken = jwt.sign({
+      id: userId,
+      email,
+    }, process.env.JWT_SECRET_TOKEN);
+
+    return {
+      id: userId,
       firstName,
       lastName,
       email,
-      password,
-      token: this.getEncryptedToken(email),
+      token: userToken,
     };
-
-    const userData = this.app.readDataFile(userFilePath);
-
-    const isUserExist = userData.find(item => item.email === email);
-
-    if (!firstName || !lastName || !email || !password) {
-      return null;
-    }
-
-    if (isUserExist) {
-      response = false;
-    } else {
-      // push new user
-      userData.push(userInfo);
-      this.app.writeDataFile(userFilePath, userData);
-      response = userInfo;
-    }
-    return response;
   }
 
   /**
-   * get userInfo by email and password [signIn]
+   * login the user to his account
    *
    * @param  string email
    * @param  string password
-   * @return object
+   * @return object | constant
    */
-  getUser(email, password) {
+  async loginUser(email, password) {
     this.email = email;
     this.password = password;
 
-    const userData = this.app.readDataFile(userFilePath);
+    const isEmailExist = await this.app.isEmailExist(email, constants.USER);
 
-    userData.forEach((item) => {
-      if (item.email === this.email && item.password === this.password) {
-        this.userInfo = item;
-      }
-    });
+    // if the email doesnt exist
+    if (!isEmailExist) {
+      return constants.INVALID;
+    }
 
-    return this.userInfo;
-  }
+    // get the user password
+    const query = 'SELECT password FROM users WHERE email = $1';
+    const result = await execute(query, [email]);
 
-  /**
-   * get userId by his email
-   *
-   * @param  string email
-   * @return string
-   */
-  getUserIdByEmail(email) {
-    this.email = email;
-    let myId;
-    const userData = this.app.readDataFile(userFilePath);
+    const hashPassword = result.rows[0].password.trim();
 
-    // use Array.find()
-    userData.forEach((item) => {
-      if (item.email === this.email) {
-        myId = item.id;
-      }
-    });
+    // compare hashed and plain password
+    if (!bcrypt.compareSync(password, hashPassword)) {
+      return constants.INVALID_PASSWORD;
+    }
 
-    return myId;
-  }
+    // get the user Id
+    const id = await this.app.getIdByEmail(email, constants.USER);
+    const userId = id.id_user;
 
-  /**
-   * set the userId
-   */
-  setUserId() {
-    this.userId = String(Math.random()).substr(2, 3);
-  }
+    // generate the user token with jwt
+    const userToken = jwt.sign({
+      id: userId,
+      email,
+    }, process.env.JWT_SECRET_TOKEN);
 
-  /**
-   * get the userId
-   * @return string
-   */
-  getUserId() {
-    return this.userId;
+    // return user data
+    const data = await this.app.getInfoById(userId, constants.USER);
+
+    return {
+      id: userId,
+      firstName: data.first_name.trim(),
+      lastName: data.last_name.trim(),
+      email: data.email.trim(),
+      token: userToken,
+    };
   }
 
   /**
@@ -139,24 +140,6 @@ export default class User {
     const user = userData.find(item => item.token === authKey);
 
     return user ? user.id : false;
-  }
-
-  /**
-   * return an encrypted token for the user
-   *
-   * @param  string email
-   * @return string
-   */
-  getEncryptedToken(email) {
-    if (!email) {
-      return false;
-    }
-    const cipher = crypto.createCipher('aes192', email);
-
-    this.encrypted = cipher.update('some clear text data', 'utf8', 'hex');
-    this.encrypted += cipher.final('hex');
-
-    return this.encrypted;
   }
 
   /**
