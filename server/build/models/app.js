@@ -118,6 +118,36 @@ var App = function () {
       var result = await (0, _db2.default)(query, [email]);
       return result.rows[0];
     }
+
+    /**
+     * return all profile information
+     *
+     * @param  string id
+     * @param  string role [either admin or user]
+     * @return object
+     */
+
+  }, {
+    key: 'getInfoById',
+    value: async function getInfoById(id, role) {
+      var query = void 0;
+      this.id = id;
+      this.role = role;
+
+      switch (this.role) {
+        case _constant2.default.USER:
+          query = 'SELECT id_user, first_name, last_name, email FROM users WHERE id_user = $1';
+          break;
+        case _constant2.default.ADMIN:
+          query = 'SELECT id_user, first_name, last_name, email FROM admin WHERE id_admin = $1';
+          break;
+        default:
+          query = 'SELECT id_user, first_name, last_name, email FROM users WHERE id_user = $1';
+          break;
+      }
+      var result = await (0, _db2.default)(query, [id]);
+      return result.rows[0];
+    }
   }]);
 
   return App;

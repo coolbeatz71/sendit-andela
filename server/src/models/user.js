@@ -1,4 +1,3 @@
-import crypto from 'crypto';
 import path from 'path';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -6,7 +5,6 @@ import execute from './db';
 
 import App from './app';
 import constants from './constant';
-
 
 const userFilePath = path.resolve(__dirname, '../../assets/users.json');
 const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
@@ -32,7 +30,6 @@ export default class User {
    * @return object | constant
    */
   async createUser(firstName, lastName, email, password) {
-    let response;
     const isEmailExist = await this.app.isEmailExist(email, constants.USER);
 
     // if the email exist
@@ -40,73 +37,83 @@ export default class User {
       return constants.EMAIL_EXIST;
     }
 
-    // if the email dont exist, I can register the user
-    if (!isEmailExist) {
-      // generate the password hash
-      const passwordHash = bcrypt.hashSync(password, 10);
+    // generate the password hash
+    const passwordHash = bcrypt.hashSync(password, 10);
 
-      // insert the user to the database
-      const query = `INSERT INTO users (first_name, last_name, email, password) 
-      VALUES ($1, $2, $3, $4) RETURNING id_user`;
+    // insert the user to the database
+    const query = `INSERT INTO users (first_name, last_name, email, password) 
+    VALUES ($1, $2, $3, $4) RETURNING id_user`;
 
-      const result = await execute(query, [
-        firstName, lastName, email, passwordHash,
-      ]);
+    const result = await execute(query, [
+      firstName, lastName, email, passwordHash,
+    ]);
 
-      const userId = result.rows[0].id_user;
+    const userId = result.rows[0].id_user.trim();
 
-      // generate the user token with jwt
-      const userToken = jwt.sign({
-        id: userId,
-        email,
-      }, process.env.JWT_SECRET_TOKEN);
+    // generate the user token with jwt
+    const userToken = jwt.sign({
+      id: userId,
+      email,
+    }, process.env.JWT_SECRET_TOKEN);
 
-      response = {
-        id: userId,
-        firstName,
-        lastName,
-        email,
-        token: userToken,
-      };
-    }
-
-    return response;
+    return {
+      id: userId,
+      firstName,
+      lastName,
+      email,
+      token: userToken,
+    };
   }
 
   /**
-   * get userId by his email
+   * login the user to his account
    *
    * @param  string email
-   * @return string
+   * @param  string password
+   * @return object | constant
    */
-  getUserIdByEmail(email) {
+  async loginUser(email, password) {
     this.email = email;
-    let myId;
-    const userData = this.app.readDataFile(userFilePath);
+    this.password = password;
 
-    // use Array.find()
-    userData.forEach((item) => {
-      if (item.email === this.email) {
-        myId = item.id;
-      }
-    });
+    const isEmailExist = await this.app.isEmailExist(email, constants.USER);
 
-    return myId;
-  }
+    // if the email doesnt exist
+    if (!isEmailExist) {
+      return constants.INVALID;
+    }
 
-  /**
-   * set the userId
-   */
-  setUserId() {
-    this.userId = String(Math.random()).substr(2, 3);
-  }
+    // get the user password
+    const query = 'SELECT password FROM users WHERE email = $1';
+    const result = await execute(query, [email]);
 
-  /**
-   * get the userId
-   * @return string
-   */
-  getUserId() {
-    return this.userId;
+    const hashPassword = result.rows[0].password.trim();
+
+    // compare hashed and plain password
+    if (!bcrypt.compareSync(password, hashPassword)) {
+      return constants.INVALID_PASSWORD;
+    }
+
+    // get the user Id
+    const id = await this.app.getIdByEmail(email, constants.USER);
+    const userId = id.id_user;
+
+    // generate the user token with jwt
+    const userToken = jwt.sign({
+      id: userId,
+      email,
+    }, process.env.JWT_SECRET_TOKEN);
+
+    // return user data
+    const data = await this.app.getInfoById(userId, constants.USER);
+
+    return {
+      id: userId,
+      firstName: data.first_name.trim(),
+      lastName: data.last_name.trim(),
+      email: data.email.trim(),
+      token: userToken,
+    };
   }
 
   /**
@@ -133,24 +140,6 @@ export default class User {
     const user = userData.find(item => item.token === authKey);
 
     return user ? user.id : false;
-  }
-
-  /**
-   * return an encrypted token for the user
-   *
-   * @param  string email
-   * @return string
-   */
-  getEncryptedToken(email) {
-    if (!email) {
-      return false;
-    }
-    const cipher = crypto.createCipher('aes192', email);
-
-    this.encrypted = cipher.update('some clear text data', 'utf8', 'hex');
-    this.encrypted += cipher.final('hex');
-
-    return this.encrypted;
   }
 
   /**
@@ -232,8 +221,3 @@ export default class User {
     return parcel.length;
   }
 }
-
-const user = new User();
-user.createUser('Kalenga', 'Glody', 'kalenga@gmail.com', '12345678').then((data) => {
-  console.log(data);
-});

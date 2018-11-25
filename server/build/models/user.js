@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _crypto = require('crypto');
-
-var _crypto2 = _interopRequireDefault(_crypto);
-
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
@@ -68,7 +64,6 @@ var User = function () {
   _createClass(User, [{
     key: 'createUser',
     value: async function createUser(firstName, lastName, email, password) {
-      var response = void 0;
       var isEmailExist = await this.app.isEmailExist(email, _constant2.default.USER);
 
       // if the email exist
@@ -76,81 +71,83 @@ var User = function () {
         return _constant2.default.EMAIL_EXIST;
       }
 
-      // if the email dont exist, I can register the user
-      if (!isEmailExist) {
-        // generate the password hash
-        var passwordHash = _bcrypt2.default.hashSync(password, 10);
+      // generate the password hash
+      var passwordHash = _bcrypt2.default.hashSync(password, 10);
 
-        // insert the user to the database
-        var query = 'INSERT INTO users (first_name, last_name, email, password) \n      VALUES ($1, $2, $3, $4) RETURNING id_user';
+      // insert the user to the database
+      var query = 'INSERT INTO users (first_name, last_name, email, password) \n    VALUES ($1, $2, $3, $4) RETURNING id_user';
 
-        var result = await (0, _db2.default)(query, [firstName, lastName, email, passwordHash]);
+      var result = await (0, _db2.default)(query, [firstName, lastName, email, passwordHash]);
 
-        var userId = result.rows[0].id_user;
+      var userId = result.rows[0].id_user.trim();
 
-        // generate the user token with jwt
-        var userToken = _jsonwebtoken2.default.sign({
-          id: userId,
-          email: email
-        }, process.env.JWT_SECRET_TOKEN);
+      // generate the user token with jwt
+      var userToken = _jsonwebtoken2.default.sign({
+        id: userId,
+        email: email
+      }, process.env.JWT_SECRET_TOKEN);
 
-        response = {
-          id: userId,
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          token: userToken
-        };
-      }
-
-      return response;
+      return {
+        id: userId,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        token: userToken
+      };
     }
 
     /**
-     * get userId by his email
+     * login the user to his account
      *
      * @param  string email
-     * @return string
+     * @param  string password
+     * @return object | constant
      */
 
   }, {
-    key: 'getUserIdByEmail',
-    value: function getUserIdByEmail(email) {
-      var _this = this;
-
+    key: 'loginUser',
+    value: async function loginUser(email, password) {
       this.email = email;
-      var myId = void 0;
-      var userData = this.app.readDataFile(userFilePath);
+      this.password = password;
 
-      // use Array.find()
-      userData.forEach(function (item) {
-        if (item.email === _this.email) {
-          myId = item.id;
-        }
-      });
+      var isEmailExist = await this.app.isEmailExist(email, _constant2.default.USER);
 
-      return myId;
-    }
+      // if the email doesnt exist
+      if (!isEmailExist) {
+        return _constant2.default.INVALID;
+      }
 
-    /**
-     * set the userId
-     */
+      // get the user password
+      var query = 'SELECT password FROM users WHERE email = $1';
+      var result = await (0, _db2.default)(query, [email]);
 
-  }, {
-    key: 'setUserId',
-    value: function setUserId() {
-      this.userId = String(Math.random()).substr(2, 3);
-    }
+      var hashPassword = result.rows[0].password.trim();
 
-    /**
-     * get the userId
-     * @return string
-     */
+      // compare hashed and plain password
+      if (!_bcrypt2.default.compareSync(password, hashPassword)) {
+        return _constant2.default.INVALID_PASSWORD;
+      }
 
-  }, {
-    key: 'getUserId',
-    value: function getUserId() {
-      return this.userId;
+      // get the user Id
+      var id = await this.app.getIdByEmail(email, _constant2.default.USER);
+      var userId = id.id_user;
+
+      // generate the user token with jwt
+      var userToken = _jsonwebtoken2.default.sign({
+        id: userId,
+        email: email
+      }, process.env.JWT_SECRET_TOKEN);
+
+      // return user data
+      var data = await this.app.getInfoById(userId, _constant2.default.USER);
+
+      return {
+        id: userId,
+        firstName: data.first_name.trim(),
+        lastName: data.last_name.trim(),
+        email: data.email.trim(),
+        token: userToken
+      };
     }
 
     /**
@@ -187,27 +184,6 @@ var User = function () {
       });
 
       return user ? user.id : false;
-    }
-
-    /**
-     * return an encrypted token for the user
-     *
-     * @param  string email
-     * @return string
-     */
-
-  }, {
-    key: 'getEncryptedToken',
-    value: function getEncryptedToken(email) {
-      if (!email) {
-        return false;
-      }
-      var cipher = _crypto2.default.createCipher('aes192', email);
-
-      this.encrypted = cipher.update('some clear text data', 'utf8', 'hex');
-      this.encrypted += cipher.final('hex');
-
-      return this.encrypted;
     }
 
     /**
@@ -311,9 +287,3 @@ var User = function () {
 }();
 
 exports.default = User;
-
-
-var user = new User();
-user.createUser('Kalenga', 'Glody', 'kalenga@gmail.com', '12345678').then(function (data) {
-  console.log(data);
-});
