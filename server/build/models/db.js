@@ -20,10 +20,10 @@ var envPath = _path2.default.resolve(__dirname, '../../../.env');
 
 _dotenv2.default.config({ path: envPath });
 
-//set dev or test environment
+// set dev or test environment
 var myEnv = process.env.NODE_ENV ? process.env.NODE_ENV.toUpperCase() + '_' : '';
 
-var db_config = {
+var dbConfig = {
   user: process.env.DB_USERNAME,
   host: process.env.DB_HOST,
   database: process.env[myEnv + 'DATABASE'],
@@ -31,14 +31,12 @@ var db_config = {
   port: process.env.DB_PORT
 };
 
-console.log(db_config);
-
 /**
  * Credit to charles odili https://github.com/chalu/pre-bc-workshops/
  */
-var pool = new _pg.Pool(db_config);
+var pool = new _pg.Pool(dbConfig);
 
-//create the DB connection 
+// create the DB connection
 var connect = async function connect() {
   return pool.connect();
 };
@@ -61,9 +59,5 @@ var execute = async function execute(query) {
     connection.release();
   }
 };
-
-execute('SELECT * FROM admin', []).then(function (result) {
-  console.log(result.rows);
-});
 
 exports.default = execute;

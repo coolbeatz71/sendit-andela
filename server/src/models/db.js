@@ -6,10 +6,10 @@ const envPath = path.resolve(__dirname, '../../../.env');
 
 dotenv.config({ path: envPath });
 
-//set dev or test environment
-const myEnv = process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()}_`: '';
+// set dev or test environment
+const myEnv = process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()}_` : '';
 
-const db_config = {
+const dbConfig = {
   user: process.env.DB_USERNAME,
   host: process.env.DB_HOST,
   database: process.env[`${myEnv}DATABASE`],
@@ -17,14 +17,12 @@ const db_config = {
   port: process.env.DB_PORT,
 };
 
-console.log(db_config);
-
 /**
  * Credit to charles odili https://github.com/chalu/pre-bc-workshops/
  */
-const pool = new Pool(db_config);
+const pool = new Pool(dbConfig);
 
-//create the DB connection 
+// create the DB connection
 const connect = async () => pool.connect();
 
 /**
@@ -43,9 +41,5 @@ const execute = async (query, data = []) => {
     connection.release();
   }
 };
-
-execute('SELECT * FROM admin', []).then((result) => {
-  console.log(result.rows);
-});
 
 export default execute;

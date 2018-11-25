@@ -1,6 +1,12 @@
 import crypto from 'crypto';
 import path from 'path';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import execute from './db';
+
 import App from './app';
+import constants from './constant';
+
 
 const userFilePath = path.resolve(__dirname, '../../assets/users.json');
 const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
@@ -23,60 +29,48 @@ export default class User {
    * @param  string lastName
    * @param  string email
    * @param  string password
-   * @return object
+   * @return object | constant
    */
-  createUser(firstName, lastName, email, password) {
-    this.setUserId();
-    const id = this.getUserId();
+  async createUser(firstName, lastName, email, password) {
     let response;
-    const userInfo = {
-      id,
-      firstName,
-      lastName,
-      email,
-      password,
-      token: this.getEncryptedToken(email),
-    };
+    const isEmailExist = await this.app.isEmailExist(email, constants.USER);
 
-    const userData = this.app.readDataFile(userFilePath);
-
-    const isUserExist = userData.find(item => item.email === email);
-
-    if (!firstName || !lastName || !email || !password) {
-      return null;
+    // if the email exist
+    if (isEmailExist) {
+      return constants.EMAIL_EXIST;
     }
 
-    if (isUserExist) {
-      response = false;
-    } else {
-      // push new user
-      userData.push(userInfo);
-      this.app.writeDataFile(userFilePath, userData);
-      response = userInfo;
+    // if the email dont exist, I can register the user
+    if (!isEmailExist) {
+      // generate the password hash
+      const passwordHash = bcrypt.hashSync(password, 10);
+
+      // insert the user to the database
+      const query = `INSERT INTO users (first_name, last_name, email, password) 
+      VALUES ($1, $2, $3, $4) RETURNING id_user`;
+
+      const result = await execute(query, [
+        firstName, lastName, email, passwordHash,
+      ]);
+
+      const userId = result.rows[0].id_user;
+
+      // generate the user token with jwt
+      const userToken = jwt.sign({
+        id: userId,
+        email,
+      }, process.env.JWT_SECRET_TOKEN);
+
+      response = {
+        id: userId,
+        firstName,
+        lastName,
+        email,
+        token: userToken,
+      };
     }
+
     return response;
-  }
-
-  /**
-   * get userInfo by email and password [signIn]
-   *
-   * @param  string email
-   * @param  string password
-   * @return object
-   */
-  getUser(email, password) {
-    this.email = email;
-    this.password = password;
-
-    const userData = this.app.readDataFile(userFilePath);
-
-    userData.forEach((item) => {
-      if (item.email === this.email && item.password === this.password) {
-        this.userInfo = item;
-      }
-    });
-
-    return this.userInfo;
   }
 
   /**
@@ -238,3 +232,8 @@ export default class User {
     return parcel.length;
   }
 }
+
+const user = new User();
+user.createUser('Kalenga', 'Glody', 'kalenga@gmail.com', '12345678').then((data) => {
+  console.log(data);
+});

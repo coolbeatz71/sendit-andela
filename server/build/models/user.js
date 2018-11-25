@@ -14,9 +14,25 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _bcrypt = require('bcrypt');
+
+var _bcrypt2 = _interopRequireDefault(_bcrypt);
+
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
+var _db = require('./db');
+
+var _db2 = _interopRequireDefault(_db);
+
 var _app = require('./app');
 
 var _app2 = _interopRequireDefault(_app);
+
+var _constant = require('./constant');
+
+var _constant2 = _interopRequireDefault(_constant);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45,71 +61,49 @@ var User = function () {
    * @param  string lastName
    * @param  string email
    * @param  string password
-   * @return object
+   * @return object | constant
    */
 
 
   _createClass(User, [{
     key: 'createUser',
-    value: function createUser(firstName, lastName, email, password) {
-      this.setUserId();
-      var id = this.getUserId();
+    value: async function createUser(firstName, lastName, email, password) {
       var response = void 0;
-      var userInfo = {
-        id: id,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        token: this.getEncryptedToken(email)
-      };
+      var isEmailExist = await this.app.isEmailExist(email, _constant2.default.USER);
 
-      var userData = this.app.readDataFile(userFilePath);
-
-      var isUserExist = userData.find(function (item) {
-        return item.email === email;
-      });
-
-      if (!firstName || !lastName || !email || !password) {
-        return null;
+      // if the email exist
+      if (isEmailExist) {
+        return _constant2.default.EMAIL_EXIST;
       }
 
-      if (isUserExist) {
-        response = false;
-      } else {
-        // push new user
-        userData.push(userInfo);
-        this.app.writeDataFile(userFilePath, userData);
-        response = userInfo;
+      // if the email dont exist, I can register the user
+      if (!isEmailExist) {
+        // generate the password hash
+        var passwordHash = _bcrypt2.default.hashSync(password, 10);
+
+        // insert the user to the database
+        var query = 'INSERT INTO users (first_name, last_name, email, password) \n      VALUES ($1, $2, $3, $4) RETURNING id_user';
+
+        var result = await (0, _db2.default)(query, [firstName, lastName, email, passwordHash]);
+
+        var userId = result.rows[0].id_user;
+
+        // generate the user token with jwt
+        var userToken = _jsonwebtoken2.default.sign({
+          id: userId,
+          email: email
+        }, process.env.JWT_SECRET_TOKEN);
+
+        response = {
+          id: userId,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          token: userToken
+        };
       }
+
       return response;
-    }
-
-    /**
-     * get userInfo by email and password [signIn]
-     *
-     * @param  string email
-     * @param  string password
-     * @return object
-     */
-
-  }, {
-    key: 'getUser',
-    value: function getUser(email, password) {
-      var _this = this;
-
-      this.email = email;
-      this.password = password;
-
-      var userData = this.app.readDataFile(userFilePath);
-
-      userData.forEach(function (item) {
-        if (item.email === _this.email && item.password === _this.password) {
-          _this.userInfo = item;
-        }
-      });
-
-      return this.userInfo;
     }
 
     /**
@@ -122,7 +116,7 @@ var User = function () {
   }, {
     key: 'getUserIdByEmail',
     value: function getUserIdByEmail(email) {
-      var _this2 = this;
+      var _this = this;
 
       this.email = email;
       var myId = void 0;
@@ -130,7 +124,7 @@ var User = function () {
 
       // use Array.find()
       userData.forEach(function (item) {
-        if (item.email === _this2.email) {
+        if (item.email === _this.email) {
           myId = item.id;
         }
       });
@@ -317,3 +311,9 @@ var User = function () {
 }();
 
 exports.default = User;
+
+
+var user = new User();
+user.createUser('Kalenga', 'Glody', 'kalenga@gmail.com', '12345678').then(function (data) {
+  console.log(data);
+});
