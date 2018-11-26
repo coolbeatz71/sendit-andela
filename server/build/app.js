@@ -16,6 +16,10 @@ var _expressValidator = require('express-validator');
 
 var _expressValidator2 = _interopRequireDefault(_expressValidator);
 
+var _auth = require('./routes/auth');
+
+var _auth2 = _interopRequireDefault(_auth);
+
 var _user = require('./routes/user');
 
 var _user2 = _interopRequireDefault(_user);
@@ -69,7 +73,8 @@ app.use((0, _expressValidator2.default)({
   }
 }));
 
-// user endpoint
+// endpoints
+app.use(apiVersion + '/auth', _auth2.default);
 app.use(apiVersion + '/users', _user2.default);
 app.use(apiVersion + '/parcels', _parcel2.default);
 

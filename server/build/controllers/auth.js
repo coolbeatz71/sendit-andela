@@ -11,6 +11,10 @@ var _user = require('../models/user');
 
 var _user2 = _interopRequireDefault(_user);
 
+var _constant = require('../models/constant');
+
+var _constant2 = _interopRequireDefault(_constant);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22,7 +26,7 @@ var AuthCtrl = function () {
 
   _createClass(AuthCtrl, null, [{
     key: 'userSignUp',
-    value: function userSignUp(request, response) {
+    value: async function userSignUp(request, response) {
       var _request$body = request.body,
           firstName = _request$body.firstName,
           lastName = _request$body.lastName,
@@ -37,10 +41,10 @@ var AuthCtrl = function () {
         });
       }
 
-      request.checkBody('firstName').notEmpty().isAlpha().withMessage('Must only contains alphabetic symbols');
-      request.checkBody('lastName').notEmpty().isAlpha().withMessage('Must only contains alphabetic symbols');
-      request.checkBody('email').notEmpty().isEmail().withMessage('Invalid email format');
-      request.checkBody('password').notEmpty().isAlphanumeric().withMessage('Must contains alphabetic or numeric symbols');
+      request.checkBody('firstName', 'first name is required').notEmpty().isAlpha().trim().withMessage('First name must only contains alphabetic symbols');
+      request.checkBody('lastName', 'last name is required').notEmpty().isAlpha().trim().withMessage('Last name must only contains alphabetic symbols');
+      request.checkBody('email', 'email is required').notEmpty().trim().isEmail().withMessage('Invalid email format');
+      request.checkBody('password', 'password is required').notEmpty().isAlphanumeric().trim().withMessage('The password must contains alphabetic or numeric symbols');
 
       var errors = request.validationErrors();
 
@@ -49,21 +53,21 @@ var AuthCtrl = function () {
           status: 'fail',
           message: errors
         });
-      }
-
-      var user = new _user2.default();
-      var signUp = user.createUser(firstName, lastName, email, password);
-
-      if (!signUp) {
-        response.status(409).json({
-          status: 'fail',
-          message: 'the entered email is already used by an account'
-        });
       } else {
-        response.status(201).json({
-          status: 'success',
-          user: signUp
-        });
+        var user = new _user2.default();
+        var signUp = await user.createUser(firstName, lastName, email, password);
+
+        if (signUp === _constant2.default.EMAIL_EXIST) {
+          response.status(409).json({
+            status: 'fail',
+            message: 'the entered email is already used by an account'
+          });
+        } else {
+          response.status(201).json({
+            status: 'success',
+            user: signUp
+          });
+        }
       }
     }
   }, {

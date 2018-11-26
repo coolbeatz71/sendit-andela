@@ -79,7 +79,7 @@ var User = function () {
 
       var result = await (0, _db2.default)(query, [firstName, lastName, email, passwordHash]);
 
-      var userId = result.rows[0].id_user.trim();
+      var userId = result.rows[0].id_user;
 
       // generate the user token with jwt
       var userToken = _jsonwebtoken2.default.sign({

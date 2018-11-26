@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
+import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import parcelRoutes from './routes/parcel';
 
@@ -49,7 +50,8 @@ app.use(expressValidator({
   },
 }));
 
-// user endpoint
+// endpoints
+app.use(`${apiVersion}/auth`, authRoutes);
 app.use(`${apiVersion}/users`, userRoutes);
 app.use(`${apiVersion}/parcels`, parcelRoutes);
 

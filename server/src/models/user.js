@@ -48,7 +48,7 @@ export default class User {
       firstName, lastName, email, passwordHash,
     ]);
 
-    const userId = result.rows[0].id_user.trim();
+    const userId = result.rows[0].id_user;
 
     // generate the user token with jwt
     const userToken = jwt.sign({
