@@ -1,8 +1,9 @@
 // importing models
 import User from '../models/user';
+import constants from '../models/constant';
 
 export default class AuthCtrl {
-  static userSignUp(request, response) {
+  static async userSignUp(request, response) {
     const {
       firstName,
       lastName,
@@ -17,14 +18,19 @@ export default class AuthCtrl {
       });
     }
 
-    request.checkBody('firstName').notEmpty()
-      .isAlpha().withMessage('Must only contains alphabetic symbols');
-    request.checkBody('lastName').notEmpty()
-      .isAlpha().withMessage('Must only contains alphabetic symbols');
-    request.checkBody('email').notEmpty()
-      .isEmail().withMessage('Invalid email format');
-    request.checkBody('password').notEmpty()
-      .isAlphanumeric().withMessage('Must contains alphabetic or numeric symbols');
+    request.checkBody('firstName', 'first name is required').notEmpty()
+      .isAlpha().trim()
+      .withMessage('First name must only contains alphabetic symbols');
+    request.checkBody('lastName', 'last name is required').notEmpty()
+      .isAlpha().trim()
+      .withMessage('Last name must only contains alphabetic symbols');
+    request.checkBody('email', 'email is required').notEmpty()
+      .trim()
+      .isEmail()
+      .withMessage('Invalid email format');
+    request.checkBody('password', 'password is required').notEmpty()
+      .isAlphanumeric().trim()
+      .withMessage('The password must contains alphabetic or numeric symbols');
 
     const errors = request.validationErrors();
 
@@ -33,21 +39,21 @@ export default class AuthCtrl {
         status: 'fail',
         message: errors,
       });
-    }
-
-    const user = new User();
-    const signUp = user.createUser(firstName, lastName, email, password);
-
-    if (!signUp) {
-      response.status(409).json({
-        status: 'fail',
-        message: 'the entered email is already used by an account',
-      });
     } else {
-      response.status(201).json({
-        status: 'success',
-        user: signUp,
-      });
+      const user = new User();
+      const signUp = await user.createUser(firstName, lastName, email, password);
+
+      if (signUp === constants.EMAIL_EXIST) {
+        response.status(409).json({
+          status: 'fail',
+          message: 'the entered email is already used by an account',
+        });
+      } else {
+        response.status(201).json({
+          status: 'success',
+          user: signUp,
+        });
+      }
     }
   }
 

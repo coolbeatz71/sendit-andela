@@ -1,23 +1,8 @@
 import express from 'express';
-import AuthCtrl from '../controllers/auth';
 import UserCtrl from '../controllers/user';
 import checkAuth from '../middleware/user';
 
 const router = express.Router();
-
-/**
- * TESTED
- * route to sign-up the user
- * @method POST
- */
-router.post('/signUp', AuthCtrl.userSignUp);
-
-/**
- * TESTED
- * route to sign-in the user to its account
- * @method POST
- */
-router.post('/signIn', AuthCtrl.userSignIn);
 
 /**
  * TESTED

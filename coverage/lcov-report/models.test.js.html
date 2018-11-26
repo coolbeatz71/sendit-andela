@@ -1,0 +1,1397 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for models.test.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> models.test.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/0</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// /* eslint-disable */
+// import chai from 'chai';
+// import path from 'path';
+&nbsp;
+// // importing models
+// import Parcel from './../models/parcel';
+// import User from './../models/user';
+// import Admin from './../models/admin';
+// import App from './../models/app';
+&nbsp;
+// const { expect, assert } = chai;
+// const should = chai.should();
+&nbsp;
+// const user = new User();
+// const parcel = new Parcel();
+// const admin = new Admin();
+// const app = new App();
+&nbsp;
+// const userInfo = {
+//   firstName: '',
+//   lastName: '',
+//   email: '',
+//   password: '',
+// };
+&nbsp;
+// //////////////////////////////////////
+// // Testing params for each classes  //
+// //////////////////////////////////////
+&nbsp;
+// describe('Testing params of each functions in classes without params', () =&gt; {
+//   describe('Admin class', () =&gt; {
+//     it('should return undefined', () =&gt; {
+//       expect(admin.getAdmin()).to.be.undefined;
+//     });
+&nbsp;
+//     it('should return undefined', () =&gt; {
+//       expect(admin.getAdminIdByEmail()).to.be.undefined;
+//     });
+&nbsp;
+//     it('should return false', () =&gt; {
+//       expect(admin.isTokenValid()).to.be.false;
+//     });
+&nbsp;
+//     it('should return false', () =&gt; {
+//       expect(admin.getAdminIdByToken()).to.be.false;
+//     });
+&nbsp;
+//     it('should return false', () =&gt; {
+//       expect(admin.editParcel()).to.be.false;
+//     });
+&nbsp;
+//     it('should return a number', () =&gt; {
+//       expect(admin.getParcelNumber()).to.be.a('number');
+//     });
+//   });
+&nbsp;
+//   describe('App class', () =&gt; {
+//     it('should throw an error or Exception', () =&gt; {
+//       expect(app.readDataFile).to.throw();
+//     });
+&nbsp;
+//     it('should throw an error or Exception', () =&gt; {
+//       expect(app.writeDataFile).to.throw();
+//     });
+//   });
+&nbsp;
+//   describe('Parcel class', () =&gt; {
+//     it('should return false', () =&gt; {
+//       expect(parcel.createParcel()).to.be.false;
+//     });
+&nbsp;
+//     it('should return an array', () =&gt; {
+//       expect(parcel.getAllParcel()).to.be.an('array');
+//     });
+&nbsp;
+//     it('should return NULL', () =&gt; {
+//       expect(parcel.getAllParcelByUser()).to.be.null;
+//     });
+&nbsp;
+//     it('should return NaN', () =&gt; {
+//       expect(parcel.getParcelPrice()).to.be.NaN;
+//     });
+&nbsp;
+//     it('should return a number', () =&gt; {
+//       parcel.setOrderId();
+//       expect(parcel.getOrderId()).to.be.a('string');
+//     });
+//   });
+&nbsp;
+//   describe('User class', () =&gt; {
+//     it('should return NULL', () =&gt; {
+//       expect(user.createUser()).to.be.null;
+//     });
+&nbsp;
+//     it('should return undefined', () =&gt; {
+//       expect(user.getUser()).to.be.undefined;
+//     });
+&nbsp;
+//     it('should return undefined', () =&gt; {
+//       expect(user.getUserIdByEmail()).to.be.undefined;
+//     });
+&nbsp;
+//     it('should return a number', () =&gt; {
+//       user.setUserId();
+//       expect(user.getUserId()).to.be.a('string');
+//     });
+&nbsp;
+//     it('should return false', () =&gt; {
+//       expect(user.isTokenValid()).to.be.false;
+//     });
+&nbsp;
+//     it('should return false', () =&gt; {
+//       expect(user.getUserIdByToken()).to.be.false;
+//     });
+&nbsp;
+//     it('should return false', () =&gt; {
+//       expect(user.getEncryptedToken()).to.be.false;
+//     });
+&nbsp;
+//     it('should return NULL', () =&gt; {
+//       expect(user.editParcelDestination()).to.be.null;
+//     });
+&nbsp;
+//     it('should return NULL', () =&gt; {
+//       expect(user.cancelParcel()).to.be.null;
+//     });
+//   });
+// });
+&nbsp;
+&nbsp;
+// // //////////////////////////////////
+// // Testing instance of classes     //
+// // //////////////////////////////////
+// describe('Test instance of Each Class', () =&gt; {
+//   it('should be an instance of User', () =&gt; {
+//     expect(user).to.be.an.instanceof(User);
+//   });
+&nbsp;
+//   it('should be an instance of Parcel', () =&gt; {
+//     expect(parcel).to.be.an.instanceof(Parcel);
+//   });
+&nbsp;
+//   it('should be an instance of Admin', () =&gt; {
+//     expect(admin).to.be.an.instanceof(Admin);
+//   });
+// });
+&nbsp;
+// //testing length of getUserId
+// describe('length of the getUserId()', () =&gt; {
+//   it('should have length of 3', () =&gt; {
+//     user.setUserId();
+//     const userId = user.getUserId();
+//     expect(userId).to.have.lengthOf(3);
+//   });
+// });
+&nbsp;
+// describe('Testing methods[function] for User class', () =&gt; {
+//   it('should be a function', () =&gt; {
+//     user.createUser.should.be.a('function');
+//     user.getUser.should.be.a('function');
+//     user.getUserIdByEmail.should.be.a('function');
+//     user.setUserId.should.be.a('function');
+//     user.getUserId.should.be.a('function');
+//     user.isTokenValid.should.be.a('function');
+//     user.getUserIdByToken.should.be.a('function');
+//     user.getEncryptedToken.should.be.a('function');
+//     user.editParcelDestination.should.be.a('function');
+//     user.cancelParcel.should.be.a('function');
+//     user.getParcelNumber.should.be.a('function');
+//   });
+// });
+&nbsp;
+// describe('Testing methods[function] for Admin class', () =&gt; {
+//   it('should be a function', () =&gt; {
+//     admin.getAdmin.should.be.a('function');
+//     admin.getAdminIdByEmail.should.be.a('function');
+//     admin.isTokenValid.should.be.a('function');
+//     admin.getAdminIdByToken.should.be.a('function');
+//     admin.editParcel.should.be.a('function');
+//   });
+// });
+&nbsp;
+// describe('Testing methods[function] for Admin class', () =&gt; {
+//   it('should be a function', () =&gt; {
+//     admin.getParcelNumber.should.be.a('function');
+//   });
+// });
+&nbsp;
+// describe('Testing methods[function] for User class', () =&gt; {
+//   it('should be a function', () =&gt; {
+//     user.getParcelNumber.should.be.a('function');
+//   });
+// });
+&nbsp;
+// describe('Testing methods[function] for App class', () =&gt; {
+//   it('should be a function', () =&gt; {
+//     app.readDataFile.should.be.a('function');
+//     app.writeDataFile.should.be.a('function');
+//   });
+// });
+&nbsp;
+// describe('Testing methods[function] for Parcel class', () =&gt; {
+//   it('should be a function', () =&gt; {
+//     parcel.createParcel.should.be.a('function');
+//     parcel.getAllParcel.should.be.a('function');
+//     parcel.getAllParcelByUser.should.be.a('function');
+//     parcel.getParcelPrice.should.be.a('function');
+//     parcel.setOrderId.should.be.a('function');
+//     parcel.getOrderId.should.be.a('function');
+//   });
+// });
+&nbsp;
+// // //////////////////////////////////
+// // Testing models concerning user  //
+// // //////////////////////////////////
+// describe('User class', () =&gt; {
+//   // Testing user creation
+//   describe('Testing user account creation', () =&gt; {
+//     describe('when email already exist', () =&gt; {
+//       it('should return false', () =&gt; {
+//         const firstName = 'whatever';
+//         const lastName = 'whatever';
+//         const email = 'sigmacool@gmail.com';
+//         const password = 'whatever';
+&nbsp;
+//         const createUser = user.createUser(firstName, lastName, email, password);
+//         expect(createUser).to.be.false;
+//       });
+//     });
+//   });
+&nbsp;
+//   // Testing getUser
+//   describe('Testing get user methods', () =&gt; {
+//     describe('When email and password dont exist', () =&gt; {
+//       const email = 'whatever';
+//       const password = 'whatever';
+&nbsp;
+//       it('should return undefined', () =&gt; {
+//         const getUser = user.getUser(email, password);
+//         expect(getUser).to.be.an('undefined');
+//       });
+//     });
+&nbsp;
+//     describe('When email and password exist', () =&gt; {
+//       const email = 'sigmacool@gmail.com';
+//       const password = '12345678';
+&nbsp;
+//       it('should return object', () =&gt; {
+//         const getUser = user.getUser(email, password);
+//         expect(getUser).to.be.an('object');
+//       });
+//     });
+//   });
+&nbsp;
+//   // Testing getUserIdByEmail
+//   describe('Testing get userId by email methods', () =&gt; {
+//     describe('When the email dont exist', () =&gt; {
+//       const email = 'whatever';
+&nbsp;
+//       it('should return undefined', () =&gt; {
+//         const getId = user.getUserIdByEmail(email);
+//         expect(getId).to.be.an('undefined');
+//       });
+//     });
+&nbsp;
+//     describe('When the email exist', () =&gt; {
+//       const email = 'sigmacool@gmail.com';
+&nbsp;
+//       it('should return a string', () =&gt; {
+//         const getId = user.getUserIdByEmail(email);
+//         expect(getId).to.be.a('string');
+//       });
+//     });
+//   });
+&nbsp;
+//   describe('Testing IsTokenValid method', () =&gt; {
+//     it('should return boolean', () =&gt; {
+//       const isTokenValid = user.isTokenValid('whatever');
+//       assert.isBoolean(isTokenValid);
+//     });
+//   });
+&nbsp;
+//   describe('Testing getUserIdByToken method', () =&gt; {
+//     it('should return some value', () =&gt; {
+//       const isTokenValid = user.getUserIdByToken('authkey');
+//       assert.isNotNull(isTokenValid);
+//     });
+//   });
+&nbsp;
+//   describe('Testing getEncryptedToken method', () =&gt; {
+//     it('should return a string', () =&gt; {
+//       const encryptedToken = user.getEncryptedToken('myEmail');
+//       expect(encryptedToken).to.be.a('string');
+//     });
+//   });
+&nbsp;
+//   describe('Testing getParcelNumber method', () =&gt; {
+//     describe('When the status is undefined', () =&gt; {
+//       const userId = '001';
+//       const status = undefined;
+//       it('should return Number', () =&gt; {
+//         const parcelNumber = user.getParcelNumber(userId, status);
+//         assert.isNumber(parcelNumber);
+//       });
+//     });
+&nbsp;
+//     describe('When the status is delivered', () =&gt; {
+//       const userId = '001';
+//       const status = 'delivered';
+//       it('should return Number', () =&gt; {
+//         const parcelNumber = user.getParcelNumber(userId, status);
+//         assert.isNumber(parcelNumber);
+//       });
+//     });
+&nbsp;
+//     describe('When the status is in transit', () =&gt; {
+//       const userId = '001';
+//       const status = 'in transit';
+//       it('should return Number', () =&gt; {
+//         const parcelNumber = user.getParcelNumber(userId, status);
+//         assert.isNumber(parcelNumber);
+//       });
+//     });
+&nbsp;
+//     describe('When the status is cancelled', () =&gt; {
+//       const userId = '001';
+//       const status = 'cancelled';
+//       it('should return Number', () =&gt; {
+//         const parcelNumber = user.getParcelNumber(userId, status);
+//         assert.isNumber(parcelNumber);
+//       });
+//     });
+//   });
+// });
+&nbsp;
+// // ////////////////////////////////////
+// // Testing models concerning Parcel //
+// // ////////////////////////////////////
+// describe('Parcel class', () =&gt; {
+//   // Testing get all parcels
+//   describe('get all parcel delivery order', () =&gt; {
+//     it('should return an array', () =&gt; {
+//       const allParcel = parcel.getAllParcel();
+//       assert.isArray(allParcel);
+//     });
+//   });
+&nbsp;
+//   // Testing get all parcels for a specific user
+//   describe('get all for parcel delivery order for a specific user', () =&gt; {
+//     it('should return an array', () =&gt; {
+//       const allParcel = parcel.getAllParcelByUser('011');
+//       assert.isNull(allParcel);
+//     });
+//   });
+&nbsp;
+//   // Testing get parcel order price
+//   describe('get price for a parcel by its weight', () =&gt; {
+//     it('should return a number', () =&gt; {
+//       const price = parcel.getParcelPrice('500');
+//       assert.isNumber(price);
+//     });
+//   });
+// });
+&nbsp;
+// // ////////////////////////////////////
+// // Testing models concerning Admin  //
+// // ////////////////////////////////////
+// describe('Admin class', () =&gt; {
+//   // Testing get admin
+//   describe('When email and password dont exist', () =&gt; {
+//     const email = 'whatever';
+//     const password = 'whatever';
+&nbsp;
+//     it('should return undefined', () =&gt; {
+//       const getAdmin = admin.getAdmin(email, password);
+//       expect(getAdmin).to.be.an('undefined');
+//     });
+//   });
+&nbsp;
+//   // Testing get admin id by email
+//   describe('get admin Id by email', () =&gt; {
+//     const email = 'whatever';
+&nbsp;
+//     it('should return undefined', () =&gt; {
+//       const getAdmin = admin.getAdminIdByEmail(email);
+//       expect(getAdmin).to.be.an('undefined');
+//     });
+//   });
+&nbsp;
+//   describe('Testing IsTokenValid method', () =&gt; {
+//     it('should return boolean', () =&gt; {
+//       const isTokenValid = admin.isTokenValid('whatever');
+//       assert.isBoolean(isTokenValid);
+//     });
+//   });
+&nbsp;
+//   describe('Testing getAdminIdByToken method', () =&gt; {
+//     it('should return some value', () =&gt; {
+//       const isTokenValid = admin.getAdminIdByToken('authkey');
+//       assert.isNotNull(isTokenValid);
+//     });
+//   });
+// });
+&nbsp;
+// // ////////////////////////////////////////////////////////
+// // Testing models concerning App (read &amp; write on file)  //
+// // ////////////////////////////////////////////////////////
+// describe('Testing App Model', () =&gt; {
+//   const userFilePath = path.resolve(__dirname, '../../assets/users.json');
+//   const adminFilePath = path.resolve(__dirname, '../../assets/admin.json');
+//   const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
+&nbsp;
+//   describe('Reading file method For userFileData', () =&gt; {
+//     it('should return an array or object', () =&gt; {
+//       const userFile = app.readDataFile(userFilePath);
+//       assert.isOk(userFile);
+//     });
+//   });
+&nbsp;
+//   describe('Reading file method For parcelFileData', () =&gt; {
+//     it('should return an array or object', () =&gt; {
+//       const parcelFile = app.readDataFile(parcelFilePath);
+//       assert.isOk(parcelFile);
+//     });
+//   });
+&nbsp;
+//   describe('Reading file method For adminFileData', () =&gt; {
+//     it('should return an array or object', () =&gt; {
+//       const adminFile = app.readDataFile(adminFilePath);
+//       assert.isOk(adminFile);
+//     });
+//   });
+// });
+&nbsp;
+// describe('Testing property of object', () =&gt; {
+//   describe('userInfo object', () =&gt; {
+//     it('should have some property ', () =&gt; {
+//       expect(userInfo).to.have.property('firstName');
+//       expect(userInfo).to.have.property('lastName');
+//       expect(userInfo).to.have.property('email');
+//       expect(userInfo).to.have.property('password');
+//     });
+//   });
+// });
+"use strict";</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 25 2018 20:32:24 GMT+0200 (South Africa Standard Time)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>
