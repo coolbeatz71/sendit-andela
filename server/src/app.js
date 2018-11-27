@@ -5,6 +5,7 @@ import expressValidator from 'express-validator';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import parcelRoutes from './routes/parcel';
+import adminRoutes from './routes/admin';
 
 const app = express();
 const apiVersion = '/api/v1';
@@ -54,6 +55,8 @@ app.use(expressValidator({
 app.use(`${apiVersion}/auth`, authRoutes);
 app.use(`${apiVersion}/users`, userRoutes);
 app.use(`${apiVersion}/parcels`, parcelRoutes);
+app.use(`${apiVersion}/admin`, adminRoutes);
+
 
 // handling request error
 app.use((request, response, next) => {
