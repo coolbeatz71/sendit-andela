@@ -26,6 +26,13 @@ var AuthCtrl = function () {
 
   _createClass(AuthCtrl, null, [{
     key: 'userSignUp',
+
+    /**
+     * signUp the user
+     * @param  string request
+     * @param  string response
+     * @return object json
+     */
     value: async function userSignUp(request, response) {
       var _request$body = request.body,
           firstName = _request$body.firstName,
@@ -70,9 +77,17 @@ var AuthCtrl = function () {
         }
       }
     }
+
+    /**
+     * signIn the user
+     * @param  string request
+     * @param  string response
+     * @return object json
+     */
+
   }, {
     key: 'userSignIn',
-    value: function userSignIn(request, response) {
+    value: async function userSignIn(request, response) {
       // get sign data from the request body
       var _request$body2 = request.body,
           email = _request$body2.email,
@@ -84,19 +99,37 @@ var AuthCtrl = function () {
           status: 'fail',
           message: 'Email and password are required'
         });
+      }
+
+      request.checkBody('email', 'email is required').notEmpty().trim().isEmail().withMessage('Invalid email format');
+      request.checkBody('password', 'password is required').notEmpty().isAlphanumeric().trim().withMessage('The password must contains alphabetic or numeric symbols');
+
+      var errors = request.validationErrors();
+
+      if (errors) {
+        response.status(400).json({
+          status: 'fail',
+          message: errors
+        });
       } else {
         var user = new _user2.default();
-        var userInfo = user.getUser(email, password);
+        var login = await user.loginUser(email, password);
 
-        if (userInfo) {
-          response.status(200).json({
-            status: 'success',
-            user: userInfo
-          });
-        } else {
+        if (login === _constant2.default.INVALID_EMAIL) {
           response.status(404).json({
             status: 'fail',
-            message: 'User not found, Incorrect email or password'
+            message: 'User not found, Incorrect email address'
+          });
+        } else if (login === _constant2.default.INVALID_PASSWORD) {
+          response.status(404).json({
+            status: 'fail',
+            message: 'the password is incorrect'
+          });
+        } else {
+          console.log(login);
+          response.status(200).json({
+            status: 'success',
+            user: login
           });
         }
       }

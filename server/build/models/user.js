@@ -114,7 +114,7 @@ var User = function () {
 
       // if the email doesnt exist
       if (!isEmailExist) {
-        return _constant2.default.INVALID;
+        return _constant2.default.INVALID_EMAIL;
       }
 
       // get the user password
