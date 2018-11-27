@@ -1,13 +1,14 @@
 import path from 'path';
 import App from './app';
 import execute from './db';
-import constants from './constant';
+// import constants from './constant';
 
 const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
 
 const defaultStatus = {
-  delivered: 'delivered',
+  pending: 'pending',
   transit: 'in transit',
+  delivered: 'delivered',
   cancelled: 'cancelled',
 };
 
@@ -27,37 +28,26 @@ export default class Parcel {
    * @param  int weight
    * @return object
    */
-  createParcel(senderId, parcelName, description, pickupLocation, destination, weight) {
-    this.setOrderId();
-
+  async createParcel(senderId, parcelName, description, pickupLocation, destination, weight) {
     const presentLocation = '';
     const price = this.getParcelPrice(weight);
-    const status = defaultStatus.transit;
-    const orderId = this.getOrderId();
-
-    const parcelInfo = {
-      orderId,
-      sender: {
-        id: senderId,
-      },
-      parcelName,
-      description,
-      weight,
-      price,
-      status,
-      pickupLocation,
-      presentLocation,
-      destination,
-    };
+    const status = defaultStatus.pending;
 
     if (!senderId || !parcelName || !description || !pickupLocation || !destination || !weight) {
       return false;
     }
-    const parcelData = this.app.readDataFile(parcelFilePath);
 
-    // push new order
-    parcelData.push(parcelInfo);
-    this.app.writeDataFile(parcelFilePath, parcelData);
+    const query = `INSERT INTO parcels 
+    (id_user, parcel_name, description, pickup_location,
+     present_location, destination, weight, price, status) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
+
+    const insert = await execute(query, [
+      senderId, parcelName, description, pickupLocation,
+      presentLocation, destination, weight, price, status,
+    ]);
+    const parcelInfo = insert.rows;
+
     return parcelInfo;
   }
 
@@ -117,20 +107,5 @@ export default class Parcel {
     const unitPrice = 500;
     this.price = weight * unitPrice;
     return Number.parseInt(this.price, 10);
-  }
-
-  /**
-   * set the orderId
-   */
-  setOrderId() {
-    this.orderId = String(Math.random()).substr(2, 3);
-  }
-
-  /**
-   * get the orderId
-   * @return string
-   */
-  getOrderId() {
-    return this.orderId;
   }
 }
