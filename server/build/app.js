@@ -28,6 +28,10 @@ var _parcel = require('./routes/parcel');
 
 var _parcel2 = _interopRequireDefault(_parcel);
 
+var _admin = require('./routes/admin');
+
+var _admin2 = _interopRequireDefault(_admin);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
@@ -77,6 +81,7 @@ app.use((0, _expressValidator2.default)({
 app.use(apiVersion + '/auth', _auth2.default);
 app.use(apiVersion + '/users', _user2.default);
 app.use(apiVersion + '/parcels', _parcel2.default);
+app.use(apiVersion + '/admin', _admin2.default);
 
 // handling request error
 app.use(function (request, response, next) {

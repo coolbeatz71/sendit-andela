@@ -1,5 +1,9 @@
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import path from 'path';
 import App from './app';
+import constants from './constant';
+import execute from './db';
 
 const adminFilePath = path.resolve(__dirname, '../../assets/admin.json');
 const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
@@ -14,25 +18,54 @@ export default class Admin {
   }
 
   /**
-   * get adminInfo by email and password [signIn]
+   * login the admin to his account
    *
    * @param  string email
    * @param  string password
-   * @return object
+   * @return object | constant
    */
-  getAdmin(email, password) {
+  async loginAdmin(email, password) {
     this.email = email;
     this.password = password;
 
-    const adminData = this.app.readDataFile(adminFilePath);
+    const isEmailExist = await this.app.isEmailExist(email, constants.ADMIN);
 
-    adminData.forEach((item) => {
-      if (item.email === this.email && item.password === this.password) {
-        this.adminInfo = item;
-      }
-    });
+    // if the email doesnt exist
+    if (!isEmailExist) {
+      return constants.INVALID_EMAIL;
+    }
 
-    return this.adminInfo;
+    // get the admin password
+    const query = 'SELECT password FROM admin WHERE email = $1';
+    const result = await execute(query, [email]);
+
+    const hashPassword = result.rows[0].password.trim();
+
+    // compare hashed and plain password
+    if (!bcrypt.compareSync(password, hashPassword)) {
+      return constants.INVALID_PASSWORD;
+    }
+
+    // get the admin Id
+    const id = await this.app.getIdByEmail(email, constants.ADMIN);
+    const adminId = id.id_admin;
+
+    // generate the user token with jwt
+    const userToken = jwt.sign({
+      id: adminId,
+      email,
+    }, process.env.JWT_SECRET_TOKEN);
+
+    // return user data
+    const data = await this.app.getInfoById(adminId, constants.ADMIN);
+
+    return {
+      id: adminId,
+      firstName: data.first_name.trim(),
+      lastName: data.last_name.trim(),
+      email: data.email.trim(),
+      token: userToken,
+    };
   }
 
   /**
