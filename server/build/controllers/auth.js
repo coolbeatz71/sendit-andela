@@ -126,7 +126,6 @@ var AuthCtrl = function () {
             message: 'the password is incorrect'
           });
         } else {
-          console.log(login);
           response.status(200).json({
             status: 'success',
             user: login

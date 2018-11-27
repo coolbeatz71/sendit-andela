@@ -6,6 +6,14 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _bcrypt = require('bcrypt');
+
+var _bcrypt2 = _interopRequireDefault(_bcrypt);
+
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
@@ -13,6 +21,14 @@ var _path2 = _interopRequireDefault(_path);
 var _app = require('./app');
 
 var _app2 = _interopRequireDefault(_app);
+
+var _constant = require('./constant');
+
+var _constant2 = _interopRequireDefault(_constant);
+
+var _db = require('./db');
+
+var _db2 = _interopRequireDefault(_db);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,31 +49,58 @@ var Admin = function () {
   }
 
   /**
-   * get adminInfo by email and password [signIn]
+   * login the admin to his account
    *
    * @param  string email
    * @param  string password
-   * @return object
+   * @return object | constant
    */
 
 
   _createClass(Admin, [{
-    key: 'getAdmin',
-    value: function getAdmin(email, password) {
-      var _this = this;
-
+    key: 'loginAdmin',
+    value: async function loginAdmin(email, password) {
       this.email = email;
       this.password = password;
 
-      var adminData = this.app.readDataFile(adminFilePath);
+      var isEmailExist = await this.app.isEmailExist(email, _constant2.default.ADMIN);
 
-      adminData.forEach(function (item) {
-        if (item.email === _this.email && item.password === _this.password) {
-          _this.adminInfo = item;
-        }
-      });
+      // if the email doesnt exist
+      if (!isEmailExist) {
+        return _constant2.default.INVALID_EMAIL;
+      }
 
-      return this.adminInfo;
+      // get the admin password
+      var query = 'SELECT password FROM admin WHERE email = $1';
+      var result = await (0, _db2.default)(query, [email]);
+
+      var hashPassword = result.rows[0].password.trim();
+
+      // compare hashed and plain password
+      if (!_bcrypt2.default.compareSync(password, hashPassword)) {
+        return _constant2.default.INVALID_PASSWORD;
+      }
+
+      // get the admin Id
+      var id = await this.app.getIdByEmail(email, _constant2.default.ADMIN);
+      var adminId = id.id_admin;
+
+      // generate the user token with jwt
+      var userToken = _jsonwebtoken2.default.sign({
+        id: adminId,
+        email: email
+      }, process.env.JWT_SECRET_TOKEN);
+
+      // return user data
+      var data = await this.app.getInfoById(adminId, _constant2.default.ADMIN);
+
+      return {
+        id: adminId,
+        firstName: data.first_name.trim(),
+        lastName: data.last_name.trim(),
+        email: data.email.trim(),
+        token: userToken
+      };
     }
 
     /**
@@ -70,14 +113,14 @@ var Admin = function () {
   }, {
     key: 'getAdminIdByEmail',
     value: function getAdminIdByEmail(email) {
-      var _this2 = this;
+      var _this = this;
 
       this.email = email;
       var myId = void 0;
       var adminData = this.app.readDataFile(adminFilePath);
 
       adminData.forEach(function (item) {
-        if (item.email === _this2.email) {
+        if (item.email === _this.email) {
           myId = item.id;
         }
       });
