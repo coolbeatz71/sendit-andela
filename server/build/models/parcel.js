@@ -14,6 +14,14 @@ var _app = require('./app');
 
 var _app2 = _interopRequireDefault(_app);
 
+var _db = require('./db');
+
+var _db2 = _interopRequireDefault(_db);
+
+var _constant = require('./constant');
+
+var _constant2 = _interopRequireDefault(_constant);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -89,9 +97,12 @@ var Parcel = function () {
 
   }, {
     key: 'getAllParcel',
-    value: function getAllParcel() {
-      var parcelData = this.app.readDataFile(parcelFilePath);
-      return parcelData;
+    value: async function getAllParcel() {
+      // select all parcel info to the database
+      var query = 'SELECT * FROM parcels';
+      var result = await (0, _db2.default)(query);
+
+      return result.rows;
     }
 
     /**
@@ -103,17 +114,14 @@ var Parcel = function () {
 
   }, {
     key: 'getAllParcelByUser',
-    value: function getAllParcelByUser(id) {
-      var parcelData = this.app.readDataFile(parcelFilePath);
+    value: async function getAllParcelByUser(id) {
+      this.id = id;
 
-      var parcel = parcelData.filter(function (el) {
-        return el.sender.id === id;
-      });
+      // select all parcel info to the database
+      var query = 'SELECT * FROM parcels WHERE id_user = $1';
+      var result = await (0, _db2.default)(query, [id]);
 
-      if (parcel.length < 1) {
-        return null;
-      }
-      return parcel;
+      return result.rows;
     }
 
     /**

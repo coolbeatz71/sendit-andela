@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 const secretToken = process.env.JWT_SECRET_TOKEN;
 
 /**
- * Middleware for the user
+ * Middleware for the user and admin
  */
 const checkAuth = (request, response, next) => {
   if (!request.headers.authorization || request.headers.authorization.indexOf('Bearer ') === -1) {
