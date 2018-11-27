@@ -15,6 +15,14 @@ var _user = require('../models/user');
 
 var _user2 = _interopRequireDefault(_user);
 
+var _app = require('../models/app');
+
+var _app2 = _interopRequireDefault(_app);
+
+var _constant = require('../models/constant');
+
+var _constant2 = _interopRequireDefault(_constant);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26,17 +34,47 @@ var UserCtrl = function () {
 
   _createClass(UserCtrl, null, [{
     key: 'getAllParcels',
-    value: function getAllParcels(request, response) {
+
+    /**
+     * get All parcels for a user
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+    value: async function getAllParcels(request, response) {
       var userId = request.params.userId;
+      var email = response.locals.email;
 
 
-      var parcel = new _parcel2.default();
-      var getParcel = parcel.getAllParcelByUser(userId);
+      request.check('userId', 'the user id is required').notEmpty().isInt().withMessage('userId must be a number');
 
-      response.status(200).json({
-        status: 'success',
-        parcel: getParcel
-      });
+      var errors = request.validationErrors();
+
+      if (errors) {
+        response.status(400).json({
+          status: 'fail',
+          message: errors
+        });
+      } else {
+        var app = new _app2.default();
+        var parcel = new _parcel2.default();
+
+        // get the user id from the DB
+        var user = await app.getIdByEmail(email, _constant2.default.USER);
+
+        if (userId.toString() === user.id_user.toString()) {
+          var getParcel = await parcel.getAllParcelByUser(userId);
+          response.status(200).json({
+            status: 'success',
+            parcel: getParcel
+          });
+        } else {
+          response.status(401).json({
+            status: 'fail',
+            message: 'Not Authorized, can only view your own parcels'
+          });
+        }
+      }
     }
   }, {
     key: 'countParcels',
