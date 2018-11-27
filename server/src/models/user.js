@@ -117,32 +117,6 @@ export default class User {
   }
 
   /**
-   * check whether the token is valid or not
-   *
-   * @param  string  authKey
-   * @return Boolean
-   */
-  isTokenValid(authKey) {
-    const userData = this.app.readDataFile(userFilePath);
-    const user = userData.find(item => item.token === authKey);
-
-    return !!user;
-  }
-
-  /**
-   * retrive the user Id using his authKey
-   *
-   * @param  string authKey
-   * @return string
-   */
-  getUserIdByToken(authKey) {
-    const userData = this.app.readDataFile(userFilePath);
-    const user = userData.find(item => item.token === authKey);
-
-    return user ? user.id : false;
-  }
-
-  /**
    * edit the destination of parcel by a user
    *
    * @param  string userId

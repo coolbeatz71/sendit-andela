@@ -1,5 +1,7 @@
 import path from 'path';
 import App from './app';
+import execute from './db';
+import constants from './constant';
 
 const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
 
@@ -63,9 +65,12 @@ export default class Parcel {
    * get all parcel delivery order
    * @return array
    */
-  getAllParcel() {
-    const parcelData = this.app.readDataFile(parcelFilePath);
-    return parcelData;
+  async getAllParcel() {
+    // select all parcel info to the database
+    const query = 'SELECT * FROM parcels';
+    const result = await execute(query);
+
+    return result.rows;
   }
 
   /**
@@ -74,15 +79,16 @@ export default class Parcel {
    * @param  string id
    * @return array
    */
-  getAllParcelByUser(id) {
-    const parcelData = this.app.readDataFile(parcelFilePath);
+  async getAllParcelByUser(id) {
+    this.id = id;
 
-    const parcel = parcelData.filter(el => el.sender.id === id);
+    // select all parcel info to the database
+    const query = 'SELECT * FROM parcels WHERE id_user = $1';
+    const result = await execute(query, [
+      id,
+    ]);
 
-    if (parcel.length < 1) {
-      return null;
-    }
-    return parcel;
+    return result.rows;
   }
 
   /**

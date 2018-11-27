@@ -151,42 +151,6 @@ var User = function () {
     }
 
     /**
-     * check whether the token is valid or not
-     *
-     * @param  string  authKey
-     * @return Boolean
-     */
-
-  }, {
-    key: 'isTokenValid',
-    value: function isTokenValid(authKey) {
-      var userData = this.app.readDataFile(userFilePath);
-      var user = userData.find(function (item) {
-        return item.token === authKey;
-      });
-
-      return !!user;
-    }
-
-    /**
-     * retrive the user Id using his authKey
-     *
-     * @param  string authKey
-     * @return string
-     */
-
-  }, {
-    key: 'getUserIdByToken',
-    value: function getUserIdByToken(authKey) {
-      var userData = this.app.readDataFile(userFilePath);
-      var user = userData.find(function (item) {
-        return item.token === authKey;
-      });
-
-      return user ? user.id : false;
-    }
-
-    /**
      * edit the destination of parcel by a user
      *
      * @param  string userId

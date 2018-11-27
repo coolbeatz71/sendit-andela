@@ -1,12 +1,13 @@
 // importing models
 import Admin from '../models/admin';
 import constants from '../models/constant';
+import Parcel from '../models/parcel';
 
 export default class AdminCtrl {
   /**
    * signIn the admin
-   * @param  string request
-   * @param  string response
+   * @param  Request request
+   * @param  Response response
    * @return object json
    */
   static async adminSignIn(request, response) {
@@ -56,5 +57,21 @@ export default class AdminCtrl {
         });
       }
     }
+  }
+
+  /**
+   * get All parcels for all users
+   * @param  Request request
+   * @param  Response response
+   * @return object json
+   */
+  static async getAllParcels(request, response) {
+    const parcel = new Parcel();
+    const getParcel = await parcel.getAllParcel();
+
+    response.status(200).json({
+      status: 'success',
+      parcel: getParcel,
+    });
   }
 }

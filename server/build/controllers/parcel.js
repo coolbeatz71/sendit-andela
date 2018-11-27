@@ -26,12 +26,19 @@ var ParcelCtrl = function () {
 
   _createClass(ParcelCtrl, null, [{
     key: 'getAllParcels',
-    value: function getAllParcels(request, response) {
+
+    /**
+     * get All parcels for all users
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+    value: async function getAllParcels(request, response) {
       var parcel = new _parcel2.default();
-      var getParcel = parcel.getAllParcel();
+      var getParcel = await parcel.getAllParcel();
 
       response.status(200).json({
-        status: 'fail',
+        status: 'success',
         parcel: getParcel
       });
     }
@@ -96,10 +103,10 @@ var ParcelCtrl = function () {
 
       var user = new _user2.default();
 
-      //get the AuthKey from the header to help retrieving the userId 
+      // get the AuthKey from the header to help retrieving the userId
       var authKey = request.headers.authorization.split(' ')[1];
 
-      //get the userId
+      // get the userId
       var userId = user.getUserIdByToken(authKey);
 
       var cancel = user.cancelParcel(userId, parcelId);

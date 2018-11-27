@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 const secretToken = process.env.JWT_SECRET_TOKEN;
 
 /**
- * Middleware for the user
+ * Middleware for the user and admin
  */
 const checkAuth = (request, response, next) => {
   if (!request.headers.authorization || request.headers.authorization.indexOf('Bearer ') === -1) {
@@ -27,10 +27,9 @@ const checkAuth = (request, response, next) => {
       // on success
       if (data) {
         // get the decoded email and userId
-        const { userId, email } = data;
-
-        request.auth.userId = userId;
-        request.auth.email = email;
+        const { id, email } = data;
+        response.locals.id = id;
+        response.locals.email = email;
 
         next();
       }

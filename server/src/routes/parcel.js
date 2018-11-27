@@ -1,6 +1,6 @@
 import express from 'express';
 import ParcelCtrl from '../controllers/parcel';
-import checkAuth from '../middleware/user';
+import checkAuth from '../middleware/auth';
 
 const router = express.Router();
 
