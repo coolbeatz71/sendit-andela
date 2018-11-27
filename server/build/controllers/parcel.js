@@ -42,32 +42,50 @@ var ParcelCtrl = function () {
         parcel: getParcel
       });
     }
+
+    /**
+     * create a new parcel delivery order
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+
   }, {
     key: 'createParcel',
-    value: function createParcel(request, response) {
-      // get sign data from the request body
+    value: async function createParcel(request, response) {
+      // get parcel data from the request body
       var _request$body = request.body,
           parcelName = _request$body.parcelName,
           description = _request$body.description,
           pickupLocation = _request$body.pickupLocation,
           destination = _request$body.destination,
           weight = _request$body.weight;
+      var id = response.locals.id;
 
-      // We should get the userId using the authKey in the header
 
-      var authKey = request.headers.authorization.split(' ')[1];
+      request.checkBody('parcelName', 'parcel name is required').notEmpty();
+      request.checkBody('description', 'description is required').notEmpty();
+      request.checkBody('pickupLocation', 'pickupLocation is required').notEmpty();
+      request.checkBody('destination', 'destination is required').notEmpty();
+      request.checkBody('weight', 'parcel weight is required').notEmpty().isNumeric().withMessage('parcel weight must be a number');
 
-      var user = new _user2.default();
-      var userId = user.getUserIdByToken(authKey);
+      var errors = request.validationErrors();
 
       if (!parcelName || !description || !pickupLocation || !destination || !weight) {
         response.status(404).json({
           status: 'fail',
           message: 'Fill all required fields'
         });
+      }
+
+      if (errors) {
+        response.status(400).json({
+          status: 'fail',
+          message: errors
+        });
       } else {
         var parcel = new _parcel2.default();
-        var createParcel = parcel.createParcel(userId, parcelName, description, pickupLocation, destination, weight);
+        var createParcel = await parcel.createParcel(id, parcelName, description, pickupLocation, destination, weight);
         response.status(201).json({
           status: 'success',
           parcel: createParcel
