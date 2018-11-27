@@ -34,7 +34,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var userFilePath = _path2.default.resolve(__dirname, '../../assets/users.json');
+// const userFilePath = path.resolve(__dirname, '../../assets/users.json');
 var parcelFilePath = _path2.default.resolve(__dirname, '../../assets/parcels.json');
 
 var User = function () {

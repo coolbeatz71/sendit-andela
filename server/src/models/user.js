@@ -6,7 +6,7 @@ import execute from './db';
 import App from './app';
 import constants from './constant';
 
-const userFilePath = path.resolve(__dirname, '../../assets/users.json');
+// const userFilePath = path.resolve(__dirname, '../../assets/users.json');
 const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
 
 export default class User {

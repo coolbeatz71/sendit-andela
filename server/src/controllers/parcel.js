@@ -4,7 +4,7 @@ import User from '../models/user';
 
 export default class ParcelCtrl {
   /**
-   * get All parcels for all users
+   * get All parcels for all users (for the admin)
    * @param  Request request
    * @param  Response response
    * @return object json
@@ -66,22 +66,40 @@ export default class ParcelCtrl {
     }
   }
 
-  static getParcelById(request, response) {
+  /**
+   * return a specific parcel delivery order (ADMIN)
+   * @param  Request request
+   * @param  Response response
+   * @return object json
+   */
+  static async getParcelById(request, response) {
     const { parcelId } = request.params;
 
-    const parcel = new Parcel();
-    const getParcel = parcel.getParcelById(parcelId);
+    request.check('parcelId', 'parcel id is required')
+      .notEmpty().isInt().withMessage('parcel id must be a number');
 
-    if (!getParcel) {
-      response.status(404).json({
+    const errors = request.validationErrors();
+
+    if (errors) {
+      response.status(400).json({
         status: 'fail',
-        message: 'No parcel found, wrong parcel Id',
+        message: errors,
       });
     } else {
-      response.status(200).json({
-        status: 'success',
-        parcel: getParcel,
-      });
+      const parcel = new Parcel();
+      const getParcel = await parcel.getParcelById(parcelId);
+
+      if (getParcel.length <= 0) {
+        response.status(404).json({
+          status: 'fail',
+          message: 'No parcel found with this parcel Id',
+        });
+      } else {
+        response.status(200).json({
+          status: 'success',
+          parcel: getParcel,
+        });
+      }
     }
   }
 
