@@ -19,27 +19,45 @@ export default class ParcelCtrl {
     });
   }
 
-  static createParcel(request, response) {
-    // get sign data from the request body
+  /**
+   * create a new parcel delivery order
+   * @param  Request request
+   * @param  Response response
+   * @return object json
+   */
+  static async createParcel(request, response) {
+    // get parcel data from the request body
     const {
       parcelName, description, pickupLocation, destination, weight,
     } = request.body;
 
-    // We should get the userId using the authKey in the header
-    const authKey = request.headers.authorization.split(' ')[1];
+    const { id } = response.locals;
 
-    const user = new User();
-    const userId = user.getUserIdByToken(authKey);
+    request.checkBody('parcelName', 'parcel name is required').notEmpty();
+    request.checkBody('description', 'description is required').notEmpty();
+    request.checkBody('pickupLocation', 'pickupLocation is required').notEmpty();
+    request.checkBody('destination', 'destination is required').notEmpty();
+    request.checkBody('weight', 'parcel weight is required')
+      .notEmpty().isNumeric().withMessage('parcel weight must be a number');
+
+    const errors = request.validationErrors();
 
     if (!parcelName || !description || !pickupLocation || !destination || !weight) {
       response.status(404).json({
         status: 'fail',
         message: 'Fill all required fields',
       });
+    }
+
+    if (errors) {
+      response.status(400).json({
+        status: 'fail',
+        message: errors,
+      });
     } else {
       const parcel = new Parcel();
-      const createParcel = parcel.createParcel(
-        userId, parcelName, description, pickupLocation, destination, weight,
+      const createParcel = await parcel.createParcel(
+        id, parcelName, description, pickupLocation, destination, weight,
       );
       response.status(201).json({
         status: 'success',

@@ -18,19 +18,18 @@ var _db = require('./db');
 
 var _db2 = _interopRequireDefault(_db);
 
-var _constant = require('./constant');
-
-var _constant2 = _interopRequireDefault(_constant);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+// import constants from './constant';
+
 var parcelFilePath = _path2.default.resolve(__dirname, '../../assets/parcels.json');
 
 var defaultStatus = {
-  delivered: 'delivered',
+  pending: 'pending',
   transit: 'in transit',
+  delivered: 'delivered',
   cancelled: 'cancelled'
 };
 
@@ -56,37 +55,20 @@ var Parcel = function () {
 
   _createClass(Parcel, [{
     key: 'createParcel',
-    value: function createParcel(senderId, parcelName, description, pickupLocation, destination, weight) {
-      this.setOrderId();
-
+    value: async function createParcel(senderId, parcelName, description, pickupLocation, destination, weight) {
       var presentLocation = '';
       var price = this.getParcelPrice(weight);
-      var status = defaultStatus.transit;
-      var orderId = this.getOrderId();
-
-      var parcelInfo = {
-        orderId: orderId,
-        sender: {
-          id: senderId
-        },
-        parcelName: parcelName,
-        description: description,
-        weight: weight,
-        price: price,
-        status: status,
-        pickupLocation: pickupLocation,
-        presentLocation: presentLocation,
-        destination: destination
-      };
+      var status = defaultStatus.pending;
 
       if (!senderId || !parcelName || !description || !pickupLocation || !destination || !weight) {
         return false;
       }
-      var parcelData = this.app.readDataFile(parcelFilePath);
 
-      // push new order
-      parcelData.push(parcelInfo);
-      this.app.writeDataFile(parcelFilePath, parcelData);
+      var query = 'INSERT INTO parcels \n    (id_user, parcel_name, description, pickup_location,\n     present_location, destination, weight, price, status) \n    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
+
+      var insert = await (0, _db2.default)(query, [senderId, parcelName, description, pickupLocation, presentLocation, destination, weight, price, status]);
+      var parcelInfo = insert.rows;
+
       return parcelInfo;
     }
 
@@ -158,27 +140,6 @@ var Parcel = function () {
       var unitPrice = 500;
       this.price = weight * unitPrice;
       return Number.parseInt(this.price, 10);
-    }
-
-    /**
-     * set the orderId
-     */
-
-  }, {
-    key: 'setOrderId',
-    value: function setOrderId() {
-      this.orderId = String(Math.random()).substr(2, 3);
-    }
-
-    /**
-     * get the orderId
-     * @return string
-     */
-
-  }, {
-    key: 'getOrderId',
-    value: function getOrderId() {
-      return this.orderId;
     }
   }]);
 
