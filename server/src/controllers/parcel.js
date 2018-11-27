@@ -3,17 +3,23 @@ import Parcel from '../models/parcel';
 import User from '../models/user';
 
 export default class ParcelCtrl {
-  static getAllParcels(request, response) {
+  /**
+   * get All parcels for all users
+   * @param  Request request
+   * @param  Response response
+   * @return object json
+   */
+  static async getAllParcels(request, response) {
     const parcel = new Parcel();
-    const getParcel = parcel.getAllParcel();
+    const getParcel = await parcel.getAllParcel();
 
     response.status(200).json({
-      status: 'fail',
+      status: 'success',
       parcel: getParcel,
     });
   }
 
-  static createParcel(request, response){
+  static createParcel(request, response) {
     // get sign data from the request body
     const {
       parcelName, description, pickupLocation, destination, weight,
@@ -42,18 +48,18 @@ export default class ParcelCtrl {
     }
   }
 
-  static getParcelById(request, response){
+  static getParcelById(request, response) {
     const { parcelId } = request.params;
 
     const parcel = new Parcel();
     const getParcel = parcel.getParcelById(parcelId);
 
-    if(!getParcel){
+    if (!getParcel) {
       response.status(404).json({
         status: 'fail',
         message: 'No parcel found, wrong parcel Id',
       });
-    }else{
+    } else {
       response.status(200).json({
         status: 'success',
         parcel: getParcel,
@@ -65,26 +71,26 @@ export default class ParcelCtrl {
     const { parcelId } = request.params;
 
     const user = new User();
-    
-    //get the AuthKey from the header to help retrieving the userId 
+
+    // get the AuthKey from the header to help retrieving the userId
     const authKey = request.headers.authorization.split(' ')[1];
 
-    //get the userId
+    // get the userId
     const userId = user.getUserIdByToken(authKey);
 
     const cancel = user.cancelParcel(userId, parcelId);
 
-    if(cancel === null){
+    if (cancel === null) {
       response.status(400).json({
         status: 'fail',
         message: 'id of the parcel is required',
       });
-    }else if (cancel === undefined) {
+    } else if (cancel === undefined) {
       response.status(404).json({
         status: 'fail',
         message: 'No parcel order found with this id',
       });
-    } else if(!cancel){
+    } else if (!cancel) {
       response.status(401).json({
         status: 'fail',
         message: 'Not authorized to cancel this parcel order',
@@ -95,5 +101,5 @@ export default class ParcelCtrl {
         parcel: cancel,
       });
     }
-  } 
+  }
 }

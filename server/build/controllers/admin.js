@@ -15,6 +15,10 @@ var _constant = require('../models/constant');
 
 var _constant2 = _interopRequireDefault(_constant);
 
+var _parcel = require('../models/parcel');
+
+var _parcel2 = _interopRequireDefault(_parcel);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29,8 +33,8 @@ var AdminCtrl = function () {
 
     /**
      * signIn the admin
-     * @param  string request
-     * @param  string response
+     * @param  Request request
+     * @param  Response response
      * @return object json
      */
     value: async function adminSignIn(request, response) {
@@ -78,6 +82,25 @@ var AdminCtrl = function () {
           });
         }
       }
+    }
+
+    /**
+     * get All parcels for all users
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+
+  }, {
+    key: 'getAllParcels',
+    value: async function getAllParcels(request, response) {
+      var parcel = new _parcel2.default();
+      var getParcel = await parcel.getAllParcel();
+
+      response.status(200).json({
+        status: 'success',
+        parcel: getParcel
+      });
     }
   }]);
 

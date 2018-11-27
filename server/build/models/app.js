@@ -139,7 +139,7 @@ var App = function () {
           query = 'SELECT id_user, first_name, last_name, email FROM users WHERE id_user = $1';
           break;
         case _constant2.default.ADMIN:
-          query = 'SELECT id_user, first_name, last_name, email FROM admin WHERE id_admin = $1';
+          query = 'SELECT id_admin, first_name, last_name, email FROM admin WHERE id_admin = $1';
           break;
         default:
           query = 'SELECT id_user, first_name, last_name, email FROM users WHERE id_user = $1';

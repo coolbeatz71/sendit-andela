@@ -27,10 +27,9 @@ const checkAuth = (request, response, next) => {
       // on success
       if (data) {
         // get the decoded email and userId
-        const { userId, email } = data;
-
-        request.auth.userId = userId;
-        request.auth.email = email;
+        const { id, email } = data;
+        response.locals.id = id;
+        response.locals.email = email;
 
         next();
       }

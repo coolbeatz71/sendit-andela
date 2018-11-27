@@ -33,12 +33,11 @@ var checkAuth = function checkAuth(request, response, next) {
       // on success
       if (data) {
         // get the decoded email and userId
-        var userId = data.userId,
+        var id = data.id,
             email = data.email;
 
-
-        request.auth.userId = userId;
-        request.auth.email = email;
+        response.locals.id = id;
+        response.locals.email = email;
 
         next();
       }
