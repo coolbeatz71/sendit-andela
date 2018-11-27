@@ -3,6 +3,12 @@ import User from '../models/user';
 import constants from '../models/constant';
 
 export default class AuthCtrl {
+  /**
+   * signUp the user
+   * @param  string request
+   * @param  string response
+   * @return object json
+   */
   static async userSignUp(request, response) {
     const {
       firstName,
@@ -57,7 +63,13 @@ export default class AuthCtrl {
     }
   }
 
-  static userSignIn(request, response) {
+  /**
+   * signIn the user
+   * @param  string request
+   * @param  string response
+   * @return object json
+   */
+  static async userSignIn(request, response) {
     // get sign data from the request body
     const { email, password } = request.body;
 
@@ -66,19 +78,42 @@ export default class AuthCtrl {
         status: 'fail',
         message: 'Email and password are required',
       });
+    }
+
+    request.checkBody('email', 'email is required').notEmpty()
+      .trim()
+      .isEmail()
+      .withMessage('Invalid email format');
+    request.checkBody('password', 'password is required').notEmpty()
+      .isAlphanumeric().trim()
+      .withMessage('The password must contains alphabetic or numeric symbols');
+
+    const errors = request.validationErrors();
+
+    if (errors) {
+      response.status(400).json({
+        status: 'fail',
+        message: errors,
+      });
     } else {
       const user = new User();
-      const userInfo = user.getUser(email, password);
+      const login = await user.loginUser(email, password);
 
-      if (userInfo) {
-        response.status(200).json({
-          status: 'success',
-          user: userInfo,
-        });
-      } else {
+      if (login === constants.INVALID_EMAIL) {
         response.status(404).json({
           status: 'fail',
-          message: 'User not found, Incorrect email or password',
+          message: 'User not found, Incorrect email address',
+        });
+      } else if (login === constants.INVALID_PASSWORD) {
+        response.status(404).json({
+          status: 'fail',
+          message: 'the password is incorrect',
+        });
+      } else {
+        console.log(login);
+        response.status(200).json({
+          status: 'success',
+          user: login,
         });
       }
     }

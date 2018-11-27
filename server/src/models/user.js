@@ -80,7 +80,7 @@ export default class User {
 
     // if the email doesnt exist
     if (!isEmailExist) {
-      return constants.INVALID;
+      return constants.INVALID_EMAIL;
     }
 
     // get the user password
