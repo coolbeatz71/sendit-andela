@@ -28,7 +28,7 @@ var ParcelCtrl = function () {
     key: 'getAllParcels',
 
     /**
-     * get All parcels for all users
+     * get All parcels for all users (for the admin)
      * @param  Request request
      * @param  Response response
      * @return object json
@@ -92,25 +92,44 @@ var ParcelCtrl = function () {
         });
       }
     }
+
+    /**
+     * return a specific parcel delivery order (ADMIN)
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+
   }, {
     key: 'getParcelById',
-    value: function getParcelById(request, response) {
+    value: async function getParcelById(request, response) {
       var parcelId = request.params.parcelId;
 
 
-      var parcel = new _parcel2.default();
-      var getParcel = parcel.getParcelById(parcelId);
+      request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');
 
-      if (!getParcel) {
-        response.status(404).json({
+      var errors = request.validationErrors();
+
+      if (errors) {
+        response.status(400).json({
           status: 'fail',
-          message: 'No parcel found, wrong parcel Id'
+          message: errors
         });
       } else {
-        response.status(200).json({
-          status: 'success',
-          parcel: getParcel
-        });
+        var parcel = new _parcel2.default();
+        var getParcel = await parcel.getParcelById(parcelId);
+
+        if (getParcel.length <= 0) {
+          response.status(404).json({
+            status: 'fail',
+            message: 'No parcel found with this parcel Id'
+          });
+        } else {
+          response.status(200).json({
+            status: 'success',
+            parcel: getParcel
+          });
+        }
       }
     }
   }, {

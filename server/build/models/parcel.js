@@ -18,20 +18,13 @@ var _db = require('./db');
 
 var _db2 = _interopRequireDefault(_db);
 
+var _constant = require('./constant');
+
+var _constant2 = _interopRequireDefault(_constant);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// import constants from './constant';
-
-var parcelFilePath = _path2.default.resolve(__dirname, '../../assets/parcels.json');
-
-var defaultStatus = {
-  pending: 'pending',
-  transit: 'in transit',
-  delivered: 'delivered',
-  cancelled: 'cancelled'
-};
 
 var Parcel = function () {
   function Parcel() {
@@ -58,7 +51,7 @@ var Parcel = function () {
     value: async function createParcel(senderId, parcelName, description, pickupLocation, destination, weight) {
       var presentLocation = '';
       var price = this.getParcelPrice(weight);
-      var status = defaultStatus.pending;
+      var status = _constant2.default.DEFAULT_STATUS.pending;
 
       if (!senderId || !parcelName || !description || !pickupLocation || !destination || !weight) {
         return false;
@@ -115,17 +108,14 @@ var Parcel = function () {
 
   }, {
     key: 'getParcelById',
-    value: function getParcelById(orderId) {
-      var parcelData = this.app.readDataFile(parcelFilePath);
+    value: async function getParcelById(orderId) {
+      this.orderId = orderId;
 
-      var parcel = parcelData.filter(function (el) {
-        return el.orderId === orderId;
-      });
+      // select all parcel info to the database
+      var query = 'SELECT * FROM parcels WHERE id_parcel = $1';
+      var result = await (0, _db2.default)(query, [orderId]);
 
-      if (parcel.length < 1) {
-        return null;
-      }
-      return parcel;
+      return result.rows;
     }
 
     /**

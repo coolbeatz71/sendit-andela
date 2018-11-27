@@ -1,16 +1,8 @@
 import path from 'path';
 import App from './app';
 import execute from './db';
-// import constants from './constant';
+import constants from './constant';
 
-const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
-
-const defaultStatus = {
-  pending: 'pending',
-  transit: 'in transit',
-  delivered: 'delivered',
-  cancelled: 'cancelled',
-};
 
 export default class Parcel {
   constructor() {
@@ -31,7 +23,7 @@ export default class Parcel {
   async createParcel(senderId, parcelName, description, pickupLocation, destination, weight) {
     const presentLocation = '';
     const price = this.getParcelPrice(weight);
-    const status = defaultStatus.pending;
+    const status = constants.DEFAULT_STATUS.pending;
 
     if (!senderId || !parcelName || !description || !pickupLocation || !destination || !weight) {
       return false;
@@ -87,15 +79,16 @@ export default class Parcel {
    * @param  string orderId
    * @return string
    */
-  getParcelById(orderId) {
-    const parcelData = this.app.readDataFile(parcelFilePath);
+  async getParcelById(orderId) {
+    this.orderId = orderId;
 
-    const parcel = parcelData.filter(el => el.orderId === orderId);
+    // select all parcel info to the database
+    const query = 'SELECT * FROM parcels WHERE id_parcel = $1';
+    const result = await execute(query, [
+      orderId,
+    ]);
 
-    if (parcel.length < 1) {
-      return null;
-    }
-    return parcel;
+    return result.rows;
   }
 
   /**
