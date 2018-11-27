@@ -1,18 +1,51 @@
 // importing models
 import Parcel from '../models/parcel';
 import User from '../models/user';
+import App from '../models/app';
+import constants from '../models/constant';
 
 export default class UserCtrl {
-  static getAllParcels(request, response) {
+  /**
+   * get All parcels for a user
+   * @param  Request request
+   * @param  Response response
+   * @return object json
+   */
+  static async getAllParcels(request, response) {
     const { userId } = request.params;
+    const { email } = response.locals;
 
-    const parcel = new Parcel();
-    const getParcel = parcel.getAllParcelByUser(userId);
+    request.check('userId', 'the user id is required').notEmpty()
+      .isInt()
+      .withMessage('userId must be a number');
 
-    response.status(200).json({
-      status: 'success',
-      parcel: getParcel,
-    });
+    const errors = request.validationErrors();
+
+    if (errors) {
+      response.status(400).json({
+        status: 'fail',
+        message: errors,
+      });
+    } else {
+      const app = new App();
+      const parcel = new Parcel();
+
+      // get the user id from the DB
+      const user = await app.getIdByEmail(email, constants.USER);
+
+      if (userId.toString() === user.id_user.toString()) {
+        const getParcel = await parcel.getAllParcelByUser(userId);
+        response.status(200).json({
+          status: 'success',
+          parcel: getParcel,
+        });
+      } else {
+        response.status(401).json({
+          status: 'fail',
+          message: 'Not Authorized, can only view your own parcels',
+        });
+      }
+    }
   }
 
   static countParcels(request, response) {
