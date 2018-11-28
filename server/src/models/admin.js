@@ -80,6 +80,10 @@ export default class Admin {
     this.parcelId = parcelId;
     this.newStatus = newStatus;
 
+    if (newStatus === constants.DEFAULT_STATUS.cancelled) {
+      return undefined;
+    }
+
     const query = 'SELECT status FROM parcels WHERE id_parcel = $1';
 
     const parcel = await execute(query, [

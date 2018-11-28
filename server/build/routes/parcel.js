@@ -8,6 +8,10 @@ var _parcel = require('../controllers/parcel');
 
 var _parcel2 = _interopRequireDefault(_parcel);
 
+var _admin = require('../controllers/admin');
+
+var _admin2 = _interopRequireDefault(_admin);
+
 var _auth = require('../middleware/auth');
 
 var _auth2 = _interopRequireDefault(_auth);
@@ -45,5 +49,11 @@ router.put('/:parcelId/cancel', _auth2.default, _parcel2.default.cancelParcel);
  * @method PUT
  */
 router.put('/:parcelId/destination', _auth2.default, _parcel2.default.editDestination);
+
+/**
+ * routes to edit status of a parcel delivery order
+ * @method PUT
+ */
+router.put('/:parcelId/status', _auth2.default, _admin2.default.editStatus);
 
 module.exports = router;

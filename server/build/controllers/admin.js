@@ -19,6 +19,10 @@ var _parcel = require('../models/parcel');
 
 var _parcel2 = _interopRequireDefault(_parcel);
 
+var _app = require('../models/app');
+
+var _app2 = _interopRequireDefault(_app);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -94,13 +98,89 @@ var AdminCtrl = function () {
   }, {
     key: 'getAllParcels',
     value: async function getAllParcels(request, response) {
-      var parcel = new _parcel2.default();
-      var getParcel = await parcel.getAllParcel();
+      var email = response.locals.email;
 
-      response.status(200).json({
-        status: 'success',
-        parcel: getParcel
-      });
+      var app = new _app2.default();
+      var isAdmin = await app.isEmailExist(email, _constant2.default.ADMIN);
+
+      if (!isAdmin) {
+        response.status(403).json({
+          status: 'fail',
+          message: 'Forbidden, Invalid admin authentication key'
+        });
+      } else {
+        var parcel = new _parcel2.default();
+        var getParcel = await parcel.getAllParcel();
+
+        response.status(200).json({
+          status: 'success',
+          parcel: getParcel
+        });
+      }
+    }
+
+    /**
+     * edit status of a particular parcel order
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+
+  }, {
+    key: 'editStatus',
+    value: async function editStatus(request, response) {
+      var parcelId = request.params.parcelId;
+      var status = request.body.status;
+      var email = response.locals.email;
+
+
+      var app = new _app2.default();
+      var isAdmin = await app.isEmailExist(email, _constant2.default.ADMIN);
+
+      if (!isAdmin) {
+        response.status(403).json({
+          status: 'fail',
+          message: 'Forbidden, Invalid admin authentication key'
+        });
+      }
+
+      request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');
+
+      request.checkBody('status', 'new status is required').notEmpty().isAlpha().withMessage('new status must only contains alphabetic sysmbols');
+
+      var errors = request.validationErrors();
+
+      if (errors) {
+        response.status(400).json({
+          status: 'fail',
+          message: errors
+        });
+      } else {
+        var admin = new _admin2.default();
+        var edit = await admin.editParcelStatus(parcelId, status);
+
+        if (edit === undefined) {
+          response.status(401).json({
+            status: 'fail',
+            message: 'Not authorized to cancel parcel delievry order'
+          });
+        } else if (edit === null) {
+          response.status(404).json({
+            status: 'fail',
+            message: 'No parcel order found with this id'
+          });
+        } else if (!edit) {
+          response.status(401).json({
+            status: 'fail',
+            message: 'Not authorized to edit status of this parcel order'
+          });
+        } else {
+          response.status(200).json({
+            status: 'success',
+            parcel: edit
+          });
+        }
+      }
     }
   }]);
 

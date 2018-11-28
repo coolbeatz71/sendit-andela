@@ -125,7 +125,12 @@ export default class AdminCtrl {
       const admin = new Admin();
       const edit = await admin.editParcelStatus(parcelId, status);
 
-      if (edit === null) {
+      if (edit === undefined) {
+        response.status(401).json({
+          status: 'fail',
+          message: 'Not authorized to cancel parcel delievry order',
+        });
+      } else if (edit === null) {
         response.status(404).json({
           status: 'fail',
           message: 'No parcel order found with this id',

@@ -104,101 +104,45 @@ var Admin = function () {
     }
 
     /**
-     * get the admin Id using his email
+     * edit the status of parcel by the admin
      *
-     * @param  string email
-     * @return string
-     */
-
-  }, {
-    key: 'getAdminIdByEmail',
-    value: function getAdminIdByEmail(email) {
-      var _this = this;
-
-      this.email = email;
-      var myId = void 0;
-      var adminData = this.app.readDataFile(adminFilePath);
-
-      adminData.forEach(function (item) {
-        if (item.email === _this.email) {
-          myId = item.id;
-        }
-      });
-
-      return myId;
-    }
-
-    /**
-     * check whether the admin token is valid or not
-     *
-     * @param  string  authKey
-     * @return boolean
-     */
-
-  }, {
-    key: 'isTokenValid',
-    value: function isTokenValid(authKey) {
-      var adminData = this.app.readDataFile(adminFilePath);
-      var admin = adminData.find(function (item) {
-        return item.token === authKey;
-      });
-
-      return !!admin;
-    }
-
-    /**
-     * get admin Id using the token (authKey)
-     *
-     * @param  string authKey
-     * @return object || false
-     */
-
-  }, {
-    key: 'getAdminIdByToken',
-    value: function getAdminIdByToken(authKey) {
-      var userData = this.app.readDataFile(adminFilePath);
-      var user = userData.find(function (item) {
-        return item.token === authKey;
-      });
-
-      return user ? user.id : false;
-    }
-
-    /**
-     * edit presentLocation or status for a delivery order
-     * @param  string userId
+     * @param  string adminId
      * @param  string parcelId
-     * @param  object params
-     * @return {[type]}
+     * @param  string  status
+     * @return boolean || array
      */
 
   }, {
-    key: 'editParcel',
-    value: function editParcel(parcelId) {
-      var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    key: 'editParcelStatus',
+    value: async function editParcelStatus(parcelId, newStatus) {
+      this.parcelId = parcelId;
+      this.newStatus = newStatus;
 
-      // get presentLocation and status
-      var presentLocation = params.presentLocation,
-          status = params.status;
+      if (newStatus === _constant2.default.DEFAULT_STATUS.cancelled) {
+        return undefined;
+      }
 
-      // read parcel json file
+      var query = 'SELECT status FROM parcels WHERE id_parcel = $1';
 
-      var parcelData = this.app.readDataFile(parcelFilePath);
+      var parcel = await (0, _db2.default)(query, [parcelId]);
 
-      var parcel = parcelData.find(function (el) {
-        return el.orderId === parcelId;
-      });
+      if (parcel.rows.length <= 0) {
+        return null;
+      }
 
-      if (!parcel || !presentLocation || !status || parcel.status === 'delivered') {
+      var status = parcel.rows[0].status.trim();
+      console.log(status);
+
+      // dont edit status if already cancelled
+      if (status === _constant2.default.DEFAULT_STATUS.cancelled) {
         return false;
       }
 
-      // edit its presentLocation or status
-      parcel.presentLocation = presentLocation;
-      parcel.status = status;
+      var queryStatus = 'UPDATE parcels SET status = $1 \n    WHERE id_parcel = $2 RETURNING *';
 
-      this.app.writeDataFile(parcelFilePath, parcelData);
-      return parcel;
+      var edit = await (0, _db2.default)(queryStatus, [newStatus.trim(), parcelId]);
+
+      return edit.rows[0];
     }
 
     /**
