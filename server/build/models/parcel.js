@@ -59,7 +59,7 @@ var Parcel = function () {
 
       var query = 'INSERT INTO parcels \n    (id_user, parcel_name, description, pickup_location,\n     present_location, destination, weight, price, status) \n    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
 
-      var insert = await (0, _db2.default)(query, [senderId, parcelName, description, pickupLocation, presentLocation, destination, weight, price, status]);
+      var insert = await (0, _db2.default)(query, [senderId, parcelName.trim(), description.trim(), pickupLocation.trim(), presentLocation.trim(), destination.trim(), weight, price, status.trim()]);
       var parcelInfo = insert.rows;
 
       return parcelInfo;

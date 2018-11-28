@@ -35,8 +35,8 @@ export default class Parcel {
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
 
     const insert = await execute(query, [
-      senderId, parcelName, description, pickupLocation,
-      presentLocation, destination, weight, price, status,
+      senderId, parcelName.trim(), description.trim(), pickupLocation.trim(),
+      presentLocation.trim(), destination.trim(), weight, price, status.trim(),
     ]);
     const parcelInfo = insert.rows;
 

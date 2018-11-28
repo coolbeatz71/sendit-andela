@@ -77,7 +77,7 @@ var User = function () {
       // insert the user to the database
       var query = 'INSERT INTO users (first_name, last_name, email, password) \n    VALUES ($1, $2, $3, $4) RETURNING id_user';
 
-      var result = await (0, _db2.default)(query, [firstName, lastName, email, passwordHash]);
+      var result = await (0, _db2.default)(query, [firstName.trim(), lastName.trim(), email.trim(), passwordHash.trim()]);
 
       var userId = result.rows[0].id_user;
 
@@ -194,31 +194,31 @@ var User = function () {
 
   }, {
     key: 'cancelParcel',
-    value: function cancelParcel(userId, parcelId) {
-      // read parcel json file
-      var parcelData = this.app.readDataFile(parcelFilePath);
+    value: async function cancelParcel(userId, parcelId) {
+      this.userId = userId;
+      this.parcelId = parcelId;
 
-      var parcel = parcelData.find(function (el) {
-        return el.orderId === parcelId && el.sender.id === userId;
-      });
+      var query = 'SELECT status FROM parcels WHERE id_parcel = $1 AND id_user = $2';
 
-      if (!userId || !parcelId) {
+      var parcel = await (0, _db2.default)(query, [parcelId, userId]);
+
+      if (parcel.length <= 0) {
         return null;
       }
 
-      if (!parcel) {
-        return undefined;
-      }
+      var status = parcel.rows[0].status.trim();
+      console.log(status);
 
-      if (parcel.status === 'delivered') {
+      // dont cancel if already cancelled or delivered
+      if (status === _constant2.default.DEFAULT_STATUS.delivered || status === _constant2.default.DEFAULT_STATUS.cancelled) {
         return false;
       }
 
-      // edit its status instead of removing it from the array
-      parcel.status = 'cancelled';
+      var queryCancel = 'UPDATE parcels SET status = $1 \n    WHERE id_parcel = $2 AND id_user = $3 RETURNING *';
 
-      this.app.writeDataFile(parcelFilePath, parcelData);
-      return parcel;
+      var cancel = await (0, _db2.default)(queryCancel, [_constant2.default.DEFAULT_STATUS.cancelled.trim(), parcelId, userId]);
+
+      return cancel.rows[0];
     }
 
     /**
