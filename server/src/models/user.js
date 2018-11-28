@@ -136,7 +136,7 @@ export default class User {
       parcelId, userId,
     ]);
 
-    if (parcel.length <= 0) {
+    if (parcel.rows.length <= 0) {
       return null;
     }
 
@@ -178,7 +178,7 @@ export default class User {
       parcelId, userId,
     ]);
 
-    if (parcel.length <= 0) {
+    if (parcel.rows.length <= 0) {
       return null;
     }
 

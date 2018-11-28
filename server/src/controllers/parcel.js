@@ -145,4 +145,51 @@ export default class ParcelCtrl {
       }
     }
   }
+
+  /**
+   * edit destination of a particular parcel order
+   * @param  Request request
+   * @param  Response response
+   * @return object json
+   */
+  static async editDestination(request, response) {
+    const { parcelId } = request.params;
+    const { destination } = request.body;
+    const { id } = response.locals;
+
+    request.check('parcelId', 'parcel id is required')
+      .notEmpty().isInt().withMessage('parcel id must be a number');
+
+    request.checkBody('destination', 'new destination is required')
+      .notEmpty().isAlpha().withMessage('new destination must only contains alphabetic sysmbols');
+
+    const errors = request.validationErrors();
+
+    if (errors) {
+      response.status(400).json({
+        status: 'fail',
+        message: errors,
+      });
+    } else {
+      const user = new User();
+      const edit = await user.editParcelDestination(id, parcelId, destination);
+
+      if (edit === null) {
+        response.status(404).json({
+          status: 'fail',
+          message: 'No parcel order found with this id',
+        });
+      } else if (!edit) {
+        response.status(401).json({
+          status: 'fail',
+          message: 'Not authorized to edit destination of this parcel order',
+        });
+      } else {
+        response.status(200).json({
+          status: 'success',
+          parcel: edit,
+        });
+      }
+    }
+  }
 }
