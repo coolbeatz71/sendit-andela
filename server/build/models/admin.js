@@ -189,17 +189,20 @@ var Admin = function () {
 
   }, {
     key: 'getParcelNumber',
-    value: function getParcelNumber(status) {
-      var parcelData = this.app.readDataFile(parcelFilePath);
+    value: async function getParcelNumber(status) {
+      var query = void 0;
+      var parcel = void 0;
+      this.status = status;
 
-      // if status is undefined, we should getAllParcel
-      if (status) {
-        var parcel = parcelData.filter(function (el) {
-          return el.status === status;
-        });
-        return parcel.length;
+      if (!status) {
+        query = 'SELECT id_parcel FROM parcels';
+        parcel = await (0, _db2.default)(query);
+      } else {
+        query = 'SELECT id_parcel FROM parcels WHERE status = $1';
+        parcel = await (0, _db2.default)(query, [status]);
       }
-      return parcelData.length;
+
+      return parcel.rows.length;
     }
   }]);
 
