@@ -76,28 +76,50 @@ var UserCtrl = function () {
         }
       }
     }
+
+    /**
+     * count the number of parcels according to their status
+     *
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+
   }, {
     key: 'countParcels',
-    value: function countParcels(request, response) {
-      // split the header value to get only teh authKey (Bearer wuyhdu3Y488478Eehjh...)
-      var authKey = request.headers.authorization.split(' ')[1];
+    value: async function countParcels(request, response) {
+      var _response$locals = response.locals,
+          id = _response$locals.id,
+          email = _response$locals.email;
+      var _constants$DEFAULT_ST = _constant2.default.DEFAULT_STATUS,
+          pending = _constants$DEFAULT_ST.pending,
+          transit = _constants$DEFAULT_ST.transit,
+          delivered = _constants$DEFAULT_ST.delivered,
+          cancelled = _constants$DEFAULT_ST.cancelled;
 
-      var delivered = 'delivered';
-      var inTransit = 'in transit';
-      var cancelled = 'cancelled';
-      // verify the authKey
+
+      var app = new _app2.default();
+      var isUser = await app.isEmailExist(email, _constant2.default.USER);
+
+      if (!isUser) {
+        response.status(403).json({
+          status: 'fail',
+          message: 'Forbidden, Invalid user authentication key'
+        });
+      }
+
       var user = new _user2.default();
-      var userId = user.getUserIdByToken(authKey);
-
-      var all = user.getParcelNumber(userId);
-      var parcelDelivered = user.getParcelNumber(userId, delivered);
-      var parcelInTransit = user.getParcelNumber(userId, inTransit);
-      var parcelCancelled = user.getParcelNumber(userId, cancelled);
+      var all = await user.getParcelNumber(id);
+      var parcelPending = await user.getParcelNumber(id, pending);
+      var parcelInTransit = await user.getParcelNumber(id, transit);
+      var parcelDelivered = await user.getParcelNumber(id, delivered);
+      var parcelCancelled = await user.getParcelNumber(id, cancelled);
 
       response.status(200).json({
         status: 'success',
         parcel: {
           all: all,
+          pending: parcelPending,
           delivered: parcelDelivered,
           inTransit: parcelInTransit,
           cancelled: parcelCancelled

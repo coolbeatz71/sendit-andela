@@ -48,26 +48,44 @@ export default class UserCtrl {
     }
   }
 
-  static countParcels(request, response) {
-    // split the header value to get only teh authKey (Bearer wuyhdu3Y488478Eehjh...)
-    const authKey = request.headers.authorization.split(' ')[1];
+  /**
+   * count the number of parcels according to their status
+   *
+   * @param  Request request
+   * @param  Response response
+   * @return object json
+   */
+  static async countParcels(request, response) {
+    const { id, email } = response.locals;
+    const {
+      pending,
+      transit,
+      delivered,
+      cancelled,
+    } = constants.DEFAULT_STATUS;
 
-    const delivered = 'delivered';
-    const inTransit = 'in transit';
-    const cancelled = 'cancelled';
-    // verify the authKey
+    const app = new App();
+    const isUser = await app.isEmailExist(email, constants.USER);
+
+    if (!isUser) {
+      response.status(403).json({
+        status: 'fail',
+        message: 'Forbidden, Invalid user authentication key',
+      });
+    }
+
     const user = new User();
-    const userId = user.getUserIdByToken(authKey);
-
-    const all = user.getParcelNumber(userId);
-    const parcelDelivered = user.getParcelNumber(userId, delivered);
-    const parcelInTransit = user.getParcelNumber(userId, inTransit);
-    const parcelCancelled = user.getParcelNumber(userId, cancelled);
+    const all = await user.getParcelNumber(id);
+    const parcelPending = await user.getParcelNumber(id, pending);
+    const parcelInTransit = await user.getParcelNumber(id, transit);
+    const parcelDelivered = await user.getParcelNumber(id, delivered);
+    const parcelCancelled = await user.getParcelNumber(id, cancelled);
 
     response.status(200).json({
       status: 'success',
       parcel: {
         all,
+        pending: parcelPending,
         delivered: parcelDelivered,
         inTransit: parcelInTransit,
         cancelled: parcelCancelled,

@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -38,221 +38,222 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var parcelFilePath = _path2.default.resolve(__dirname, '../../assets/parcels.json');
 
 var User = function () {
-    function User(firstName, lastName, email, password) {
-        _classCallCheck(this, User);
+  function User(firstName, lastName, email, password) {
+    _classCallCheck(this, User);
 
-        var app = new _app2.default();
-        this.app = app;
+    var app = new _app2.default();
+    this.app = app;
 
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+  }
+
+  /**
+   * create a user in the server [signUp]
+   *
+   * @param  string firstName
+   * @param  string lastName
+   * @param  string email
+   * @param  string password
+   * @return object | constant
+   */
+
+
+  _createClass(User, [{
+    key: 'createUser',
+    value: async function createUser(firstName, lastName, email, password) {
+      var isEmailExist = await this.app.isEmailExist(email, _constant2.default.USER);
+
+      // if the email exist
+      if (isEmailExist) {
+        return _constant2.default.EMAIL_EXIST;
+      }
+
+      // generate the password hash
+      var passwordHash = _bcrypt2.default.hashSync(password, 10);
+
+      // insert the user to the database
+      var query = 'INSERT INTO users (first_name, last_name, email, password) \n    VALUES ($1, $2, $3, $4) RETURNING id_user';
+
+      var result = await (0, _db2.default)(query, [firstName.trim(), lastName.trim(), email.trim(), passwordHash.trim()]);
+
+      var userId = result.rows[0].id_user;
+
+      // generate the user token with jwt
+      var userToken = _jsonwebtoken2.default.sign({
+        id: userId,
+        email: email
+      }, process.env.JWT_SECRET_TOKEN);
+
+      return {
+        id: userId,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        token: userToken
+      };
     }
 
     /**
-     * create a user in the server [signUp]
+     * login the user to his account
      *
-     * @param  string firstName
-     * @param  string lastName
      * @param  string email
      * @param  string password
      * @return object | constant
      */
 
+  }, {
+    key: 'loginUser',
+    value: async function loginUser(email, password) {
+      this.email = email;
+      this.password = password;
 
-    _createClass(User, [{
-        key: 'createUser',
-        value: async function createUser(firstName, lastName, email, password) {
-            var isEmailExist = await this.app.isEmailExist(email, _constant2.default.USER);
+      var isEmailExist = await this.app.isEmailExist(email, _constant2.default.USER);
 
-            // if the email exist
-            if (isEmailExist) {
-                return _constant2.default.EMAIL_EXIST;
-            }
+      // if the email doesnt exist
+      if (!isEmailExist) {
+        return _constant2.default.INVALID_EMAIL;
+      }
 
-            // generate the password hash
-            var passwordHash = _bcrypt2.default.hashSync(password, 10);
+      // get the user password
+      var query = 'SELECT password FROM users WHERE email = $1';
+      var result = await (0, _db2.default)(query, [email]);
 
-            // insert the user to the database
-            var query = 'INSERT INTO users (first_name, last_name, email, password) \n    VALUES ($1, $2, $3, $4) RETURNING id_user';
+      var hashPassword = result.rows[0].password.trim();
 
-            var result = await (0, _db2.default)(query, [firstName.trim(), lastName.trim(), email.trim(), passwordHash.trim()]);
+      // compare hashed and plain password
+      if (!_bcrypt2.default.compareSync(password, hashPassword)) {
+        return _constant2.default.INVALID_PASSWORD;
+      }
 
-            var userId = result.rows[0].id_user;
+      // get the user Id
+      var id = await this.app.getIdByEmail(email, _constant2.default.USER);
+      var userId = id.id_user;
 
-            // generate the user token with jwt
-            var userToken = _jsonwebtoken2.default.sign({
-                id: userId,
-                email: email
-            }, process.env.JWT_SECRET_TOKEN);
+      // generate the user token with jwt
+      var userToken = _jsonwebtoken2.default.sign({
+        id: userId,
+        email: email
+      }, process.env.JWT_SECRET_TOKEN);
 
-            return {
-                id: userId,
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                token: userToken
-            };
-        }
+      // return user data
+      var data = await this.app.getInfoById(userId, _constant2.default.USER);
 
-        /**
-         * login the user to his account
-         *
-         * @param  string email
-         * @param  string password
-         * @return object | constant
-         */
+      return {
+        id: userId,
+        firstName: data.first_name.trim(),
+        lastName: data.last_name.trim(),
+        email: data.email.trim(),
+        token: userToken
+      };
+    }
 
-    }, {
-        key: 'loginUser',
-        value: async function loginUser(email, password) {
-            this.email = email;
-            this.password = password;
+    /**
+     * edit the destination of parcel by a user
+     *
+     * @param  string userId
+     * @param  string parcelId
+     * @param  string  destination
+     * @return boolean || array
+     */
 
-            var isEmailExist = await this.app.isEmailExist(email, _constant2.default.USER);
+  }, {
+    key: 'editParcelDestination',
+    value: async function editParcelDestination(userId, parcelId, destination) {
+      this.userId = userId;
+      this.parcelId = parcelId;
+      this.destination = destination;
 
-            // if the email doesnt exist
-            if (!isEmailExist) {
-                return _constant2.default.INVALID_EMAIL;
-            }
+      var query = 'SELECT status FROM parcels WHERE id_parcel = $1 AND id_user = $2';
 
-            // get the user password
-            var query = 'SELECT password FROM users WHERE email = $1';
-            var result = await (0, _db2.default)(query, [email]);
+      var parcel = await (0, _db2.default)(query, [parcelId, userId]);
 
-            var hashPassword = result.rows[0].password.trim();
+      if (parcel.rows.length <= 0) {
+        return null;
+      }
 
-            // compare hashed and plain password
-            if (!_bcrypt2.default.compareSync(password, hashPassword)) {
-                return _constant2.default.INVALID_PASSWORD;
-            }
+      var status = parcel.rows[0].status.trim();
+      console.log(status);
 
-            // get the user Id
-            var id = await this.app.getIdByEmail(email, _constant2.default.USER);
-            var userId = id.id_user;
+      // dont edit destination if already cancelled or delivered or in transit
+      if (status === _constant2.default.DEFAULT_STATUS.delivered || status === _constant2.default.DEFAULT_STATUS.cancelled || status === _constant2.default.DEFAULT_STATUS.transit) {
+        return false;
+      }
 
-            // generate the user token with jwt
-            var userToken = _jsonwebtoken2.default.sign({
-                id: userId,
-                email: email
-            }, process.env.JWT_SECRET_TOKEN);
+      var queryDestination = 'UPDATE parcels SET destination = $1 \n    WHERE id_parcel = $2 AND id_user = $3 RETURNING *';
 
-            // return user data
-            var data = await this.app.getInfoById(userId, _constant2.default.USER);
+      var edit = await (0, _db2.default)(queryDestination, [destination.trim(), parcelId, userId]);
 
-            return {
-                id: userId,
-                firstName: data.first_name.trim(),
-                lastName: data.last_name.trim(),
-                email: data.email.trim(),
-                token: userToken
-            };
-        }
+      return edit.rows[0];
+    }
 
-        /**
-         * edit the destination of parcel by a user
-         *
-         * @param  string userId
-         * @param  string parcelId
-         * @param  string  destination
-         * @return boolean || array
-         */
+    /**
+     * Cancel a specific parcel delivery order
+     *
+     * @param  string userId
+     * @param  string parcelId
+     * @return boolean || array
+     */
 
-    }, {
-        key: 'editParcelDestination',
-        value: async function editParcelDestination(userId, parcelId, destination) {
-            this.userId = userId;
-            this.parcelId = parcelId;
-            this.destination = destination;
+  }, {
+    key: 'cancelParcel',
+    value: async function cancelParcel(userId, parcelId) {
+      this.userId = userId;
+      this.parcelId = parcelId;
 
-            var query = 'SELECT status FROM parcels WHERE id_parcel = $1 AND id_user = $2';
+      var query = 'SELECT status FROM parcels WHERE id_parcel = $1 AND id_user = $2';
 
-            var parcel = await (0, _db2.default)(query, [parcelId, userId]);
+      var parcel = await (0, _db2.default)(query, [parcelId, userId]);
 
-            if (parcel.rows.length <= 0) {
-                return null;
-            }
+      if (parcel.rows.length <= 0) {
+        return null;
+      }
 
-            var status = parcel.rows[0].status.trim();
-            console.log(status);
+      var status = parcel.rows[0].status.trim();
+      console.log(status);
 
-            // dont edit destination if already cancelled or delivered or in transit
-            if (status === _constant2.default.DEFAULT_STATUS.delivered || status === _constant2.default.DEFAULT_STATUS.cancelled || status === _constant2.default.DEFAULT_STATUS.transit) {
-                return false;
-            }
+      // dont cancel if already cancelled or delivered
+      if (status === _constant2.default.DEFAULT_STATUS.delivered || status === _constant2.default.DEFAULT_STATUS.cancelled) {
+        return false;
+      }
 
-            var queryDestination = 'UPDATE parcels SET destination = $1 \n    WHERE id_parcel = $2 AND id_user = $3 RETURNING *';
+      var queryCancel = 'UPDATE parcels SET status = $1 \n    WHERE id_parcel = $2 AND id_user = $3 RETURNING *';
 
-            var edit = await (0, _db2.default)(queryDestination, [destination.trim(), parcelId, userId]);
+      var cancel = await (0, _db2.default)(queryCancel, [_constant2.default.DEFAULT_STATUS.cancelled.trim(), parcelId, userId]);
 
-            return edit.rows[0];
-        }
+      return cancel.rows[0];
+    }
 
-        /**
-         * Cancel a specific parcel delivery order
-         *
-         * @param  string userId
-         * @param  string parcelId
-         * @return boolean || array
-         */
+    /**
+     * get Number of parcel delivery order by categories for one users
+     * @param  string userId
+     * @param  string status
+     * @return Number
+     */
 
-    }, {
-        key: 'cancelParcel',
-        value: async function cancelParcel(userId, parcelId) {
-            this.userId = userId;
-            this.parcelId = parcelId;
+  }, {
+    key: 'getParcelNumber',
+    value: async function getParcelNumber(userId, status) {
+      var query = void 0;
+      var parcel = void 0;
+      this.userId = userId;
+      this.status = status;
 
-            var query = 'SELECT status FROM parcels WHERE id_parcel = $1 AND id_user = $2';
+      if (!status) {
+        query = 'SELECT id_parcel FROM parcels WHERE id_user = $1';
+        parcel = await (0, _db2.default)(query, [userId]);
+      } else {
+        query = 'SELECT id_parcel FROM parcels WHERE status = $1 AND id_user = $2';
+        parcel = await (0, _db2.default)(query, [status, userId]);
+      }
 
-            var parcel = await (0, _db2.default)(query, [parcelId, userId]);
+      return parcel.rows.length;
+    }
+  }]);
 
-            if (parcel.rows.length <= 0) {
-                return null;
-            }
-
-            var status = parcel.rows[0].status.trim();
-            console.log(status);
-
-            // dont cancel if already cancelled or delivered
-            if (status === _constant2.default.DEFAULT_STATUS.delivered || status === _constant2.default.DEFAULT_STATUS.cancelled) {
-                return false;
-            }
-
-            var queryCancel = 'UPDATE parcels SET status = $1 \n    WHERE id_parcel = $2 AND id_user = $3 RETURNING *';
-
-            var cancel = await (0, _db2.default)(queryCancel, [_constant2.default.DEFAULT_STATUS.cancelled.trim(), parcelId, userId]);
-
-            return cancel.rows[0];
-        }
-
-        /**
-         * get Number of parcel delivery order by categories for one users
-         * @param  string userId
-         * @param  string status
-         * @return Number
-         */
-
-    }, {
-        key: 'getParcelNumber',
-        value: function getParcelNumber(userId, status) {
-            var parcelData = this.app.readDataFile(parcelFilePath);
-
-            // if status is undefined, we should getAllParcel
-            if (status) {
-                var _parcel = parcelData.filter(function (el) {
-                    return el.sender.id === userId && el.status === status;
-                });
-                return _parcel.length;
-            }
-            var parcel = parcelData.filter(function (el) {
-                return el.sender.id === userId;
-            });
-            return parcel.length;
-        }
-    }]);
-
-    return User;
+  return User;
 }();
 
 exports.default = User;

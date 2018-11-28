@@ -208,15 +208,24 @@ export default class User {
    * @param  string status
    * @return Number
    */
-  getParcelNumber(userId, status) {
-    const parcelData = this.app.readDataFile(parcelFilePath);
+  async getParcelNumber(userId, status) {
+    let query;
+    let parcel;
+    this.userId = userId;
+    this.status = status;
 
-    // if status is undefined, we should getAllParcel
-    if (status) {
-      const parcel = parcelData.filter(el => el.sender.id === userId && el.status === status);
-      return parcel.length;
+    if (!status) {
+      query = 'SELECT id_parcel FROM parcels WHERE id_user = $1';
+      parcel = await execute(query, [
+        userId,
+      ]);
+    } else {
+      query = 'SELECT id_parcel FROM parcels WHERE status = $1 AND id_user = $2';
+      parcel = await execute(query, [
+        status, userId,
+      ]);
     }
-    const parcel = parcelData.filter(el => el.sender.id === userId);
-    return parcel.length;
+
+    return parcel.rows.length;
   }
 }
