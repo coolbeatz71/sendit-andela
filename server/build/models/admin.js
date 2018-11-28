@@ -106,7 +106,6 @@ var Admin = function () {
     /**
      * edit the status of parcel by the admin
      *
-     * @param  string adminId
      * @param  string parcelId
      * @param  string  status
      * @return boolean || array
@@ -141,6 +140,43 @@ var Admin = function () {
       var queryStatus = 'UPDATE parcels SET status = $1 \n    WHERE id_parcel = $2 RETURNING *';
 
       var edit = await (0, _db2.default)(queryStatus, [newStatus.trim(), parcelId]);
+
+      return edit.rows[0];
+    }
+
+    /**
+     * edit present location of parcel by the admin
+     *
+     * @param  string parcelId
+     * @param  string  location
+     * @return boolean || array
+     */
+
+  }, {
+    key: 'editPresentLocation',
+    value: async function editPresentLocation(parcelId, location) {
+      this.parcelId = parcelId;
+      this.location = location;
+
+      var query = 'SELECT status FROM parcels WHERE id_parcel = $1';
+
+      var parcel = await (0, _db2.default)(query, [parcelId]);
+
+      if (parcel.rows.length <= 0) {
+        return null;
+      }
+
+      var status = parcel.rows[0].status.trim();
+      console.log(status);
+
+      // dont edit present location if parcel already cancelled
+      if (status === _constant2.default.DEFAULT_STATUS.cancelled) {
+        return false;
+      }
+
+      var queryLocation = 'UPDATE parcels SET present_location = $1 \n    WHERE id_parcel = $2 RETURNING *';
+
+      var edit = await (0, _db2.default)(queryLocation, [location.trim(), parcelId]);
 
       return edit.rows[0];
     }

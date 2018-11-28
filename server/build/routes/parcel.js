@@ -56,4 +56,10 @@ router.put('/:parcelId/destination', _auth2.default, _parcel2.default.editDestin
  */
 router.put('/:parcelId/status', _auth2.default, _admin2.default.editStatus);
 
+/**
+ * routes to edit status of a parcel delivery order
+ * @method PUT
+ */
+router.put('/:parcelId/presentLocation', _auth2.default, _admin2.default.editPresentLocation);
+
 module.exports = router;

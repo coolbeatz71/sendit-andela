@@ -71,7 +71,6 @@ export default class Admin {
   /**
    * edit the status of parcel by the admin
    *
-   * @param  string adminId
    * @param  string parcelId
    * @param  string  status
    * @return boolean || array
@@ -107,6 +106,46 @@ export default class Admin {
 
     const edit = await execute(queryStatus, [
       newStatus.trim(),
+      parcelId,
+    ]);
+
+    return edit.rows[0];
+  }
+
+  /**
+   * edit present location of parcel by the admin
+   *
+   * @param  string parcelId
+   * @param  string  location
+   * @return boolean || array
+   */
+  async editPresentLocation(parcelId, location) {
+    this.parcelId = parcelId;
+    this.location = location;
+
+    const query = 'SELECT status FROM parcels WHERE id_parcel = $1';
+
+    const parcel = await execute(query, [
+      parcelId,
+    ]);
+
+    if (parcel.rows.length <= 0) {
+      return null;
+    }
+
+    const status = parcel.rows[0].status.trim();
+    console.log(status);
+
+    // dont edit present location if parcel already cancelled
+    if (status === constants.DEFAULT_STATUS.cancelled) {
+      return false;
+    }
+
+    const queryLocation = `UPDATE parcels SET present_location = $1 
+    WHERE id_parcel = $2 RETURNING *`;
+
+    const edit = await execute(queryLocation, [
+      location.trim(),
       parcelId,
     ]);
 

@@ -148,4 +148,65 @@ export default class AdminCtrl {
       }
     }
   }
+
+  /**
+   * edit present location of a particular parcel order
+   * @param  Request request
+   * @param  Response response
+   * @return object json
+   */
+  static async editPresentLocation(request, response) {
+    const { parcelId } = request.params;
+    const { presentLocation } = request.body;
+    const { email } = response.locals;
+
+    const app = new App();
+    const isAdmin = await app.isEmailExist(email, constants.ADMIN);
+
+    if (!isAdmin) {
+      response.status(403).json({
+        status: 'fail',
+        message: 'Forbidden, Invalid admin authentication key',
+      });
+    }
+
+    request.check('parcelId', 'parcel id is required')
+      .notEmpty()
+      .isInt()
+      .withMessage('parcel id must be a number');
+
+    request.checkBody('presentLocation', 'present location is required')
+      .notEmpty()
+      .isAlpha()
+      .withMessage('present location must only contains alphabetic sysmbols');
+
+    const errors = request.validationErrors();
+
+    if (errors) {
+      response.status(400).json({
+        status: 'fail',
+        message: errors,
+      });
+    } else {
+      const admin = new Admin();
+      const edit = await admin.editPresentLocation(parcelId, presentLocation);
+
+      if (edit === null) {
+        response.status(404).json({
+          status: 'fail',
+          message: 'No parcel order found with this id',
+        });
+      } else if (!edit) {
+        response.status(401).json({
+          status: 'fail',
+          message: 'Not authorized to edit present location of this parcel order',
+        });
+      } else {
+        response.status(200).json({
+          status: 'success',
+          parcel: edit,
+        });
+      }
+    }
+  }
 }
