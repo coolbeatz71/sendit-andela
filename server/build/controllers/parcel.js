@@ -132,42 +132,50 @@ var ParcelCtrl = function () {
         }
       }
     }
+
+    /**
+     * cancel a particular parcel order
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+
   }, {
     key: 'cancelParcel',
-    value: function cancelParcel(request, response) {
+    value: async function cancelParcel(request, response) {
       var parcelId = request.params.parcelId;
+      var id = response.locals.id;
 
 
-      var user = new _user2.default();
+      request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');
 
-      // get the AuthKey from the header to help retrieving the userId
-      var authKey = request.headers.authorization.split(' ')[1];
+      var errors = request.validationErrors();
 
-      // get the userId
-      var userId = user.getUserIdByToken(authKey);
-
-      var cancel = user.cancelParcel(userId, parcelId);
-
-      if (cancel === null) {
+      if (errors) {
         response.status(400).json({
           status: 'fail',
-          message: 'id of the parcel is required'
-        });
-      } else if (cancel === undefined) {
-        response.status(404).json({
-          status: 'fail',
-          message: 'No parcel order found with this id'
-        });
-      } else if (!cancel) {
-        response.status(401).json({
-          status: 'fail',
-          message: 'Not authorized to cancel this parcel order'
+          message: errors
         });
       } else {
-        response.status(200).json({
-          status: 'success',
-          parcel: cancel
-        });
+        var user = new _user2.default();
+        var cancel = await user.cancelParcel(id, parcelId);
+
+        if (cancel === null) {
+          response.status(404).json({
+            status: 'fail',
+            message: 'No parcel order found with this id'
+          });
+        } else if (!cancel) {
+          response.status(401).json({
+            status: 'fail',
+            message: 'Not authorized to cancel this parcel order'
+          });
+        } else {
+          response.status(200).json({
+            status: 'success',
+            parcel: cancel
+          });
+        }
       }
     }
   }]);

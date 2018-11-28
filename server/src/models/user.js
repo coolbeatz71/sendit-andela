@@ -45,7 +45,8 @@ export default class User {
     VALUES ($1, $2, $3, $4) RETURNING id_user`;
 
     const result = await execute(query, [
-      firstName, lastName, email, passwordHash,
+      firstName.trim(), lastName.trim(),
+      email.trim(), passwordHash.trim(),
     ]);
 
     const userId = result.rows[0].id_user;
@@ -152,29 +153,38 @@ export default class User {
    * @param  string parcelId
    * @return boolean || array
    */
-  cancelParcel(userId, parcelId) {
-    // read parcel json file
-    const parcelData = this.app.readDataFile(parcelFilePath);
+  async cancelParcel(userId, parcelId) {
+    this.userId = userId;
+    this.parcelId = parcelId;
 
-    const parcel = parcelData.find(el => el.orderId === parcelId && el.sender.id === userId);
+    const query = 'SELECT status FROM parcels WHERE id_parcel = $1 AND id_user = $2';
 
-    if (!userId || !parcelId) {
+    const parcel = await execute(query, [
+      parcelId, userId,
+    ]);
+
+    if (parcel.length <= 0) {
       return null;
     }
 
-    if (!parcel) {
-      return undefined;
-    }
+    const status = parcel.rows[0].status.trim();
+    console.log(status);
 
-    if (parcel.status === 'delivered') {
+    // dont cancel if already cancelled or delivered
+    if (status === constants.DEFAULT_STATUS.delivered
+      || status === constants.DEFAULT_STATUS.cancelled) {
       return false;
     }
 
-    // edit its status instead of removing it from the array
-    parcel.status = 'cancelled';
+    const queryCancel = `UPDATE parcels SET status = $1 
+    WHERE id_parcel = $2 AND id_user = $3 RETURNING *`;
 
-    this.app.writeDataFile(parcelFilePath, parcelData);
-    return parcel;
+    const cancel = await execute(queryCancel, [
+      constants.DEFAULT_STATUS.cancelled.trim(),
+      parcelId, userId,
+    ]);
+
+    return cancel.rows[0];
   }
 
   /**

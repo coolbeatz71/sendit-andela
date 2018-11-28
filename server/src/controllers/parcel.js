@@ -103,39 +103,46 @@ export default class ParcelCtrl {
     }
   }
 
-  static cancelParcel(request, response) {
+  /**
+   * cancel a particular parcel order
+   * @param  Request request
+   * @param  Response response
+   * @return object json
+   */
+  static async cancelParcel(request, response) {
     const { parcelId } = request.params;
+    const { id } = response.locals;
 
-    const user = new User();
+    request.check('parcelId', 'parcel id is required')
+      .notEmpty().isInt().withMessage('parcel id must be a number');
 
-    // get the AuthKey from the header to help retrieving the userId
-    const authKey = request.headers.authorization.split(' ')[1];
+    const errors = request.validationErrors();
 
-    // get the userId
-    const userId = user.getUserIdByToken(authKey);
-
-    const cancel = user.cancelParcel(userId, parcelId);
-
-    if (cancel === null) {
+    if (errors) {
       response.status(400).json({
         status: 'fail',
-        message: 'id of the parcel is required',
-      });
-    } else if (cancel === undefined) {
-      response.status(404).json({
-        status: 'fail',
-        message: 'No parcel order found with this id',
-      });
-    } else if (!cancel) {
-      response.status(401).json({
-        status: 'fail',
-        message: 'Not authorized to cancel this parcel order',
+        message: errors,
       });
     } else {
-      response.status(200).json({
-        status: 'success',
-        parcel: cancel,
-      });
+      const user = new User();
+      const cancel = await user.cancelParcel(id, parcelId);
+
+      if (cancel === null) {
+        response.status(404).json({
+          status: 'fail',
+          message: 'No parcel order found with this id',
+        });
+      } else if (!cancel) {
+        response.status(401).json({
+          status: 'fail',
+          message: 'Not authorized to cancel this parcel order',
+        });
+      } else {
+        response.status(200).json({
+          status: 'success',
+          parcel: cancel,
+        });
+      }
     }
   }
 }
