@@ -1,5 +1,6 @@
 import express from 'express';
 import AdminCtrl from '../controllers/admin';
+import checkAuth from '../middleware/auth';
 
 const router = express.Router();
 
@@ -9,5 +10,12 @@ const router = express.Router();
  * @method POST
  */
 router.post('/login', AdminCtrl.adminSignIn);
+
+/**
+ * TESTED
+ * route to get the number of parcels delivery orders for all users
+ * @method GET
+ */
+router.get('/parcels/count', checkAuth, AdminCtrl.countParcels);
 
 module.exports = router;
