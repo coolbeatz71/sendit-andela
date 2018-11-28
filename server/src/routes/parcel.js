@@ -28,4 +28,10 @@ router.get('/:parcelId', checkAuth, ParcelCtrl.getParcelById);
  */
 router.put('/:parcelId/cancel', checkAuth, ParcelCtrl.cancelParcel);
 
+/**
+ * routes to edit destination of a parcel delivery order
+ * @method PUT
+ */
+router.put('/:parcelId/destination', checkAuth, ParcelCtrl.editDestination);
+
 module.exports = router;

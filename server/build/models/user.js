@@ -161,27 +161,32 @@ var User = function () {
 
   }, {
     key: 'editParcelDestination',
-    value: function editParcelDestination(userId, parcelId, destination) {
-      // read parcel json file
-      var parcelData = this.app.readDataFile(parcelFilePath);
+    value: async function editParcelDestination(userId, parcelId, destination) {
+      this.userId = userId;
+      this.parcelId = parcelId;
+      this.destination = destination;
 
-      var parcel = parcelData.find(function (el) {
-        return el.orderId === parcelId && el.sender.id === userId;
-      });
+      var query = 'SELECT status FROM parcels WHERE id_parcel = $1 AND id_user = $2';
 
-      if (!userId || !parcelId || !destination) {
+      var parcel = await (0, _db2.default)(query, [parcelId, userId]);
+
+      if (parcel.rows.length <= 0) {
         return null;
       }
 
-      if (!parcel || parcel.status === 'delivered') {
+      var status = parcel.rows[0].status.trim();
+      console.log(status);
+
+      // dont edit destination if already cancelled or delivered or in transit
+      if (status === _constant2.default.DEFAULT_STATUS.delivered || status === _constant2.default.DEFAULT_STATUS.cancelled || status === _constant2.default.DEFAULT_STATUS.transit) {
         return false;
       }
 
-      // edit its destination
-      parcel.destination = destination;
+      var queryDestination = 'UPDATE parcels SET destination = $1 \n    WHERE id_parcel = $2 AND id_user = $3 RETURNING *';
 
-      this.app.writeDataFile(parcelFilePath, parcelData);
-      return parcel;
+      var edit = await (0, _db2.default)(queryDestination, [destination.trim(), parcelId, userId]);
+
+      return edit.rows[0];
     }
 
     /**
@@ -202,7 +207,7 @@ var User = function () {
 
       var parcel = await (0, _db2.default)(query, [parcelId, userId]);
 
-      if (parcel.length <= 0) {
+      if (parcel.rows.length <= 0) {
         return null;
       }
 

@@ -40,4 +40,10 @@ router.get('/:parcelId', _auth2.default, _parcel2.default.getParcelById);
  */
 router.put('/:parcelId/cancel', _auth2.default, _parcel2.default.cancelParcel);
 
+/**
+ * routes to edit destination of a parcel delivery order
+ * @method PUT
+ */
+router.put('/:parcelId/destination', _auth2.default, _parcel2.default.editDestination);
+
 module.exports = router;
