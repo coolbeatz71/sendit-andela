@@ -69,77 +69,48 @@ export default class Admin {
   }
 
   /**
-   * get the admin Id using his email
+   * edit the status of parcel by the admin
    *
-   * @param  string email
-   * @return string
-   */
-  getAdminIdByEmail(email) {
-    this.email = email;
-    let myId;
-    const adminData = this.app.readDataFile(adminFilePath);
-
-    adminData.forEach((item) => {
-      if (item.email === this.email) {
-        myId = item.id;
-      }
-    });
-
-    return myId;
-  }
-
-  /**
-   * check whether the admin token is valid or not
-   *
-   * @param  string  authKey
-   * @return boolean
-   */
-  isTokenValid(authKey) {
-    const adminData = this.app.readDataFile(adminFilePath);
-    const admin = adminData.find(item => item.token === authKey);
-
-    return !!admin;
-  }
-
-  /**
-   * get admin Id using the token (authKey)
-   *
-   * @param  string authKey
-   * @return object || false
-   */
-  getAdminIdByToken(authKey) {
-    const userData = this.app.readDataFile(adminFilePath);
-    const user = userData.find(item => item.token === authKey);
-
-    return user ? user.id : false;
-  }
-
-  /**
-   * edit presentLocation or status for a delivery order
-   * @param  string userId
+   * @param  string adminId
    * @param  string parcelId
-   * @param  object params
-   * @return {[type]}
+   * @param  string  status
+   * @return boolean || array
    */
-  editParcel(parcelId, params = {}) {
-    // get presentLocation and status
-    const { presentLocation, status } = params;
+  async editParcelStatus(parcelId, newStatus) {
+    this.parcelId = parcelId;
+    this.newStatus = newStatus;
 
-    // read parcel json file
-    const parcelData = this.app.readDataFile(parcelFilePath);
+    if (newStatus === constants.DEFAULT_STATUS.cancelled) {
+      return undefined;
+    }
 
-    const parcel = parcelData.find(el => el.orderId === parcelId);
+    const query = 'SELECT status FROM parcels WHERE id_parcel = $1';
 
-    if (!parcel || !presentLocation || !status || parcel.status === 'delivered') {
+    const parcel = await execute(query, [
+      parcelId,
+    ]);
+
+    if (parcel.rows.length <= 0) {
+      return null;
+    }
+
+    const status = parcel.rows[0].status.trim();
+    console.log(status);
+
+    // dont edit status if already cancelled
+    if (status === constants.DEFAULT_STATUS.cancelled) {
       return false;
     }
 
-    // edit its presentLocation or status
-    parcel.presentLocation = presentLocation;
-    parcel.status = status;
+    const queryStatus = `UPDATE parcels SET status = $1 
+    WHERE id_parcel = $2 RETURNING *`;
 
-    this.app.writeDataFile(parcelFilePath, parcelData);
-    return parcel;
+    const edit = await execute(queryStatus, [
+      newStatus.trim(),
+      parcelId,
+    ]);
+
+    return edit.rows[0];
   }
 
   /**

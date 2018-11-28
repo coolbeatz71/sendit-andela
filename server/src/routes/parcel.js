@@ -1,5 +1,6 @@
 import express from 'express';
 import ParcelCtrl from '../controllers/parcel';
+import AdminCtrl from '../controllers/admin';
 import checkAuth from '../middleware/auth';
 
 const router = express.Router();
@@ -33,5 +34,11 @@ router.put('/:parcelId/cancel', checkAuth, ParcelCtrl.cancelParcel);
  * @method PUT
  */
 router.put('/:parcelId/destination', checkAuth, ParcelCtrl.editDestination);
+
+/**
+ * routes to edit status of a parcel delivery order
+ * @method PUT
+ */
+router.put('/:parcelId/status', checkAuth, AdminCtrl.editStatus);
 
 module.exports = router;
