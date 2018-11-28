@@ -157,14 +157,21 @@ export default class Admin {
    * @param  string status
    * @return Number
    */
-  getParcelNumber(status) {
-    const parcelData = this.app.readDataFile(parcelFilePath);
+  async getParcelNumber(status) {
+    let query;
+    let parcel;
+    this.status = status;
 
-    // if status is undefined, we should getAllParcel
-    if (status) {
-      const parcel = parcelData.filter(el => el.status === status);
-      return parcel.length;
+    if (!status) {
+      query = 'SELECT id_parcel FROM parcels';
+      parcel = await execute(query);
+    } else {
+      query = 'SELECT id_parcel FROM parcels WHERE status = $1';
+      parcel = await execute(query, [
+        status,
+      ]);
     }
-    return parcelData.length;
+
+    return parcel.rows.length;
   }
 }

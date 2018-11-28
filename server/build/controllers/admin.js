@@ -241,6 +241,54 @@ var AdminCtrl = function () {
         }
       }
     }
+
+    /**
+     * count the number of parcels according to their status
+     *
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+
+  }, {
+    key: 'countParcels',
+    value: async function countParcels(request, response) {
+      var email = response.locals.email;
+      var _constants$DEFAULT_ST = _constant2.default.DEFAULT_STATUS,
+          pending = _constants$DEFAULT_ST.pending,
+          transit = _constants$DEFAULT_ST.transit,
+          delivered = _constants$DEFAULT_ST.delivered,
+          cancelled = _constants$DEFAULT_ST.cancelled;
+
+
+      var app = new _app2.default();
+      var isAdmin = await app.isEmailExist(email, _constant2.default.ADMIN);
+
+      if (!isAdmin) {
+        response.status(403).json({
+          status: 'fail',
+          message: 'Forbidden, Invalid admin authentication key'
+        });
+      }
+
+      var admin = new _admin2.default();
+      var all = await admin.getParcelNumber();
+      var parcelPending = await admin.getParcelNumber(pending);
+      var parcelInTransit = await admin.getParcelNumber(transit);
+      var parcelDelivered = await admin.getParcelNumber(delivered);
+      var parcelCancelled = await admin.getParcelNumber(cancelled);
+
+      response.status(200).json({
+        status: 'success',
+        parcel: {
+          all: all,
+          pending: parcelPending,
+          delivered: parcelDelivered,
+          inTransit: parcelInTransit,
+          cancelled: parcelCancelled
+        }
+      });
+    }
   }]);
 
   return AdminCtrl;

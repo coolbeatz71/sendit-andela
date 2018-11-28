@@ -209,4 +209,49 @@ export default class AdminCtrl {
       }
     }
   }
+
+  /**
+   * count the number of parcels according to their status
+   *
+   * @param  Request request
+   * @param  Response response
+   * @return object json
+   */
+  static async countParcels(request, response) {
+    const { email } = response.locals;
+    const {
+      pending,
+      transit,
+      delivered,
+      cancelled,
+    } = constants.DEFAULT_STATUS;
+
+    const app = new App();
+    const isAdmin = await app.isEmailExist(email, constants.ADMIN);
+
+    if (!isAdmin) {
+      response.status(403).json({
+        status: 'fail',
+        message: 'Forbidden, Invalid admin authentication key',
+      });
+    }
+
+    const admin = new Admin();
+    const all = await admin.getParcelNumber();
+    const parcelPending = await admin.getParcelNumber(pending);
+    const parcelInTransit = await admin.getParcelNumber(transit);
+    const parcelDelivered = await admin.getParcelNumber(delivered);
+    const parcelCancelled = await admin.getParcelNumber(cancelled);
+
+    response.status(200).json({
+      status: 'success',
+      parcel: {
+        all,
+        pending: parcelPending,
+        delivered: parcelDelivered,
+        inTransit: parcelInTransit,
+        cancelled: parcelCancelled,
+      },
+    });
+  }
 }
