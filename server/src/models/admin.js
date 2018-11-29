@@ -1,12 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import path from 'path';
 import App from './app';
 import constants from './constant';
 import execute from './db';
-
-const adminFilePath = path.resolve(__dirname, '../../assets/admin.json');
-const parcelFilePath = path.resolve(__dirname, '../../assets/parcels.json');
 
 export default class Admin {
   constructor(email, password) {

@@ -9,7 +9,7 @@
     "serve": "set NODE_ENV=dev&& nodemon server/build/index.js",
     "build-ui": "babel UI/js --watch -d UI/build/",
     "build-api": "babel server/src --watch -d server/build/",
-    "cover": "set NODE_ENV=test&& ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha server/build/test-cov",
+    "cover": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha server/build/test-cov",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
@@ -48,6 +48,7 @@
     "express-validator": "^5.3.0",
     "jsonwebtoken": "^8.4.0",
     "morgan": "^1.9.1",
+    "nodemailer": "^4.7.0",
     "pg": "^7.6.1"
   }
 }

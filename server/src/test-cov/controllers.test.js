@@ -9,6 +9,12 @@ import Admin from './../models/admin';
 import App from './../models/app';
 import constants from './../models/constant';
 
+// import controllers
+import AdminCtrl from './../controllers/admin';
+import AuthCtrl from './../controllers/auth';
+import ParcelCtrl from './../controllers/parcel';
+import UserCtrl from './../controllers/user';
+
 const { expect, assert } = chai;
 const should = chai.should();
 
@@ -145,6 +151,16 @@ describe('Testing methods[function] for App class', () => {
     await app.isEmailExist.should.be.a('function');
     await app.getIdByEmail.should.be.a('function');
     await app.getInfoById.should.be.a('function'); 
+  });
+});
+
+describe('Testing methods[function] for AdminCtrl', () => {
+  it('should be a function', async () => {
+    await AdminCtrl.adminSignIn.should.be.a('function');
+    await AdminCtrl.getAllParcels.should.be.a('function');
+    await AdminCtrl.editStatus.should.be.a('function'); 
+    await AdminCtrl.editPresentLocation.should.be.a('function'); 
+    await AdminCtrl.countParcels.should.be.a('function'); 
   });
 });
 

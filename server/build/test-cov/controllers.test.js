@@ -28,8 +28,25 @@ var _constant = require('./../models/constant');
 
 var _constant2 = _interopRequireDefault(_constant);
 
+var _admin3 = require('./../controllers/admin');
+
+var _admin4 = _interopRequireDefault(_admin3);
+
+var _auth = require('./../controllers/auth');
+
+var _auth2 = _interopRequireDefault(_auth);
+
+var _parcel3 = require('./../controllers/parcel');
+
+var _parcel4 = _interopRequireDefault(_parcel3);
+
+var _user3 = require('./../controllers/user');
+
+var _user4 = _interopRequireDefault(_user3);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import controllers
 var expect = _chai2.default.expect,
     assert = _chai2.default.assert;
 
@@ -170,5 +187,15 @@ describe('Testing methods[function] for App class', function () {
     await app.isEmailExist.should.be.a('function');
     await app.getIdByEmail.should.be.a('function');
     await app.getInfoById.should.be.a('function');
+  });
+});
+
+describe('Testing methods[function] for AdminCtrl', function () {
+  it('should be a function', async function () {
+    await _admin4.default.adminSignIn.should.be.a('function');
+    await _admin4.default.getAllParcels.should.be.a('function');
+    await _admin4.default.editStatus.should.be.a('function');
+    await _admin4.default.editPresentLocation.should.be.a('function');
+    await _admin4.default.countParcels.should.be.a('function');
   });
 });

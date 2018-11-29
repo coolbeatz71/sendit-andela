@@ -1,4 +1,3 @@
-import path from 'path';
 import App from './app';
 import execute from './db';
 import constants from './constant';
