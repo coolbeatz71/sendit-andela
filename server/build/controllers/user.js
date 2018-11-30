@@ -46,7 +46,7 @@ var UserCtrl = function () {
       var email = response.locals.email;
 
 
-      request.check('userId', 'the user id is required').notEmpty().isInt().withMessage('userId must be a number');
+      request.check('userId', 'The user id is required').notEmpty().isInt().withMessage('userId must be a number');
 
       var errors = request.validationErrors();
 
@@ -88,9 +88,9 @@ var UserCtrl = function () {
   }, {
     key: 'countParcels',
     value: async function countParcels(request, response) {
-      var _response$locals = response.locals,
-          id = _response$locals.id,
-          email = _response$locals.email;
+      var email = response.locals.email;
+
+      var userId = response.locals.id;
       var _constants$DEFAULT_ST = _constant2.default.DEFAULT_STATUS,
           pending = _constants$DEFAULT_ST.pending,
           transit = _constants$DEFAULT_ST.transit,
@@ -109,11 +109,11 @@ var UserCtrl = function () {
       }
 
       var user = new _user2.default();
-      var all = await user.getParcelNumber(id);
-      var parcelPending = await user.getParcelNumber(id, pending);
-      var parcelInTransit = await user.getParcelNumber(id, transit);
-      var parcelDelivered = await user.getParcelNumber(id, delivered);
-      var parcelCancelled = await user.getParcelNumber(id, cancelled);
+      var all = await user.getParcelNumber(userId);
+      var parcelPending = await user.getParcelNumber(userId, pending);
+      var parcelInTransit = await user.getParcelNumber(userId, transit);
+      var parcelDelivered = await user.getParcelNumber(userId, delivered);
+      var parcelCancelled = await user.getParcelNumber(userId, cancelled);
 
       response.status(200).json({
         status: 'success',

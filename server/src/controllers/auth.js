@@ -99,15 +99,10 @@ export default class AuthCtrl {
       const user = new User();
       const login = await user.loginUser(email, password);
 
-      if (login === constants.INVALID_EMAIL) {
+      if (login === constants.INVALID_EMAIL || login === constants.INVALID_PASSWORD) {
         response.status(404).json({
           status: 'fail',
-          message: 'User not found, Incorrect email address',
-        });
-      } else if (login === constants.INVALID_PASSWORD) {
-        response.status(404).json({
-          status: 'fail',
-          message: 'the password is incorrect',
+          message: 'User not found, Incorrect email or password',
         });
       } else {
         response.status(200).json({

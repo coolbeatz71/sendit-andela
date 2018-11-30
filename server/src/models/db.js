@@ -25,6 +25,77 @@ const pool = new Pool(dbConfig);
 // create the DB connection
 const connect = async () => pool.connect();
 
+// query to drop all tables
+const dropTables = () => {
+  const parcelsTable = 'DROP TABLE IF EXISTS parcels';
+  const adminTable = 'DROP TABLE IF EXISTS admin';
+  const usersTable = 'DROP TABLE IF EXISTS users';
+
+  const dropTablesQueries = `${parcelsTable}; ${adminTable}; ${usersTable}`;
+
+  pool.query(dropTablesQueries)
+    .then((res) => {
+      pool.end();
+    })
+    .catch((err) => {
+      pool.end();
+    });
+  pool.on('remove', () => {
+    process.exit(0);
+  });
+};
+
+const createTables = () => {
+  const usersTable = `CREATE TABLE IF NOT EXISTS
+      users(
+        id_user SERIAL PRIMARY KEY,
+        first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL,
+        password TEXT NOT NULL,
+        email TEXT NOT NULL
+      )`;
+
+  const adminTable = `CREATE TABLE IF NOT EXISTS
+      admin(
+        id_admin SERIAL PRIMARY KEY,
+        first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL,
+        password TEXT NOT NULL,
+        email TEXT NOT NULL
+      )`;
+
+  const parcelsTable = `CREATE TABLE IF NOT EXISTS
+      parcels(
+        id_parcel SERIAL PRIMARY KEY,
+        id_user INTEGER,
+        parcel_name TEXT NOT NULL,
+        description TEXT NOT NULL,
+        pickup_location TEXT NOT NULL,
+        destination TEXT NOT NULL,
+        present_location TEXT NULL,
+        weight VARCHAR(10) NULL,
+        price DECIMAL(12,3) NOT NULL,
+        status VARCHAR(20) NULL,
+        FOREIGN KEY (id_user) REFERENCES users (id_user)
+      )`;
+
+  const createTablesQueries = `${usersTable}; ${adminTable}; ${parcelsTable}`;
+
+  pool.query(createTablesQueries)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+  pool.on('remove', () => {
+    console.log('client removed');
+    process.exit(0);
+  });
+};
+
 /**
  * Execute a SQL query
  * @param  string query
@@ -42,4 +113,8 @@ const execute = async (query, data = []) => {
   }
 };
 
-export default execute;
+export {
+  dropTables, createTables, pool, execute,
+};
+
+require('make-runnable');

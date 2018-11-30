@@ -16,8 +16,6 @@ var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
 var _db = require('./db');
 
-var _db2 = _interopRequireDefault(_db);
-
 var _app = require('./app');
 
 var _app2 = _interopRequireDefault(_app);
@@ -30,34 +28,33 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var User = function () {
-  function User(firstName, lastName, email, password) {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var User = function (_App) {
+  _inherits(User, _App);
+
+  function User() {
     _classCallCheck(this, User);
 
-    var app = new _app2.default();
-    this.app = app;
-
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.password = password;
+    return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).apply(this, arguments));
   }
-
-  /**
-   * create a user in the server [signUp]
-   *
-   * @param  string firstName
-   * @param  string lastName
-   * @param  string email
-   * @param  string password
-   * @return object | constant
-   */
-
 
   _createClass(User, [{
     key: 'createUser',
+
+    /**
+     * create a user in the server [signUp]
+     *
+     * @param  string firstName
+     * @param  string lastName
+     * @param  string email
+     * @param  string password
+     * @return object | constant
+     */
     value: async function createUser(firstName, lastName, email, password) {
-      var isEmailExist = await this.app.isEmailExist(email, _constant2.default.USER);
+      var isEmailExist = await this.isEmailExist(email, _constant2.default.USER);
 
       // if the email exist
       if (isEmailExist) {
@@ -67,11 +64,12 @@ var User = function () {
       // generate the password hash
       var passwordHash = _bcrypt2.default.hashSync(password, 10);
 
+      var params = [firstName.trim(), lastName.trim(), email.trim(), passwordHash.trim()];
+
       // insert the user to the database
       var query = 'INSERT INTO users (first_name, last_name, email, password) \n    VALUES ($1, $2, $3, $4) RETURNING id_user';
 
-      var result = await (0, _db2.default)(query, [firstName.trim(), lastName.trim(), email.trim(), passwordHash.trim()]);
-
+      var result = await (0, _db.execute)(query, params);
       var userId = result.rows[0].id_user;
 
       // generate the user token with jwt
@@ -103,16 +101,18 @@ var User = function () {
       this.email = email;
       this.password = password;
 
-      var isEmailExist = await this.app.isEmailExist(email, _constant2.default.USER);
+      var isEmailExist = await this.isEmailExist(email, _constant2.default.USER);
 
       // if the email doesnt exist
       if (!isEmailExist) {
         return _constant2.default.INVALID_EMAIL;
       }
 
+      var param = [this.email];
+
       // get the user password
       var query = 'SELECT password FROM users WHERE email = $1';
-      var result = await (0, _db2.default)(query, [email]);
+      var result = await (0, _db.execute)(query, param);
 
       var hashPassword = result.rows[0].password.trim();
 
@@ -122,7 +122,7 @@ var User = function () {
       }
 
       // get the user Id
-      var id = await this.app.getIdByEmail(email, _constant2.default.USER);
+      var id = await this.getIdByEmail(email, _constant2.default.USER);
       var userId = id.id_user;
 
       // generate the user token with jwt
@@ -132,7 +132,7 @@ var User = function () {
       }, process.env.JWT_SECRET_TOKEN);
 
       // return user data
-      var data = await this.app.getInfoById(userId, _constant2.default.USER);
+      var data = await this.getInfoById(userId, _constant2.default.USER);
 
       return {
         id: userId,
@@ -159,25 +159,27 @@ var User = function () {
       this.parcelId = parcelId;
       this.destination = destination;
 
+      var param = [this.parcelId, this.userId];
+
       var query = 'SELECT status FROM parcels WHERE id_parcel = $1 AND id_user = $2';
+      var parcel = await (0, _db.execute)(query, param);
 
-      var parcel = await (0, _db2.default)(query, [parcelId, userId]);
-
-      if (parcel.rows.length <= 0) {
-        return null;
+      if (!parcel.rows.length) {
+        return _constant2.default.NO_ENTRY;
       }
 
       var status = parcel.rows[0].status.trim();
-      console.log(status);
 
       // dont edit destination if already cancelled or delivered or in transit
-      if (status === _constant2.default.DEFAULT_STATUS.delivered || status === _constant2.default.DEFAULT_STATUS.cancelled || status === _constant2.default.DEFAULT_STATUS.transit) {
+      if (status !== _constant2.default.DEFAULT_STATUS.pending) {
         return false;
       }
 
+      param.unshift(this.destination);
+
       var queryDestination = 'UPDATE parcels SET destination = $1 \n    WHERE id_parcel = $2 AND id_user = $3 RETURNING *';
 
-      var edit = await (0, _db2.default)(queryDestination, [destination.trim(), parcelId, userId]);
+      var edit = await (0, _db.execute)(queryDestination, param);
 
       return edit.rows[0];
     }
@@ -196,16 +198,16 @@ var User = function () {
       this.userId = userId;
       this.parcelId = parcelId;
 
+      var param = [this.parcelId, this.userId];
+
       var query = 'SELECT status FROM parcels WHERE id_parcel = $1 AND id_user = $2';
+      var parcel = await (0, _db.execute)(query, param);
 
-      var parcel = await (0, _db2.default)(query, [parcelId, userId]);
-
-      if (parcel.rows.length <= 0) {
-        return null;
+      if (!parcel.rows.length) {
+        return _constant2.default.NO_ENTRY;
       }
 
       var status = parcel.rows[0].status.trim();
-      console.log(status);
 
       // dont cancel if already cancelled or delivered
       if (status === _constant2.default.DEFAULT_STATUS.delivered || status === _constant2.default.DEFAULT_STATUS.cancelled) {
@@ -214,7 +216,8 @@ var User = function () {
 
       var queryCancel = 'UPDATE parcels SET status = $1 \n    WHERE id_parcel = $2 AND id_user = $3 RETURNING *';
 
-      var cancel = await (0, _db2.default)(queryCancel, [_constant2.default.DEFAULT_STATUS.cancelled.trim(), parcelId, userId]);
+      param.unshift(_constant2.default.DEFAULT_STATUS.cancelled.trim());
+      var cancel = await (0, _db.execute)(queryCancel, param);
 
       return cancel.rows[0];
     }
@@ -229,17 +232,19 @@ var User = function () {
   }, {
     key: 'getParcelNumber',
     value: async function getParcelNumber(userId, status) {
-      var query = void 0;
+      var query = '';
       var parcel = void 0;
       this.userId = userId;
       this.status = status;
+      var param = [this.userId];
 
-      if (!status) {
+      if (!this.status) {
         query = 'SELECT id_parcel FROM parcels WHERE id_user = $1';
-        parcel = await (0, _db2.default)(query, [userId]);
+        parcel = await (0, _db.execute)(query, param);
       } else {
         query = 'SELECT id_parcel FROM parcels WHERE status = $1 AND id_user = $2';
-        parcel = await (0, _db2.default)(query, [status, userId]);
+        param.unshift(this.status);
+        parcel = await (0, _db.execute)(query, param);
       }
 
       return parcel.rows.length;
@@ -247,6 +252,6 @@ var User = function () {
   }]);
 
   return User;
-}();
+}(_app2.default);
 
 exports.default = User;

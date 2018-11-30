@@ -12,8 +12,6 @@ var _constant2 = _interopRequireDefault(_constant);
 
 var _db = require('./db');
 
-var _db2 = _interopRequireDefault(_db);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34,9 +32,11 @@ var App = function () {
      * @return boolean
      */
     value: async function isEmailExist(email, role) {
-      var query = void 0;
+      var query = '';
+      var data = [];
       this.email = email;
       this.role = role;
+      data.push(this.email);
 
       switch (this.role) {
         case _constant2.default.USER:
@@ -50,7 +50,7 @@ var App = function () {
           break;
       }
 
-      var result = await (0, _db2.default)(query, [email]);
+      var result = await (0, _db.execute)(query, data);
       return result.rowCount > 0;
     }
 
@@ -65,9 +65,11 @@ var App = function () {
   }, {
     key: 'getIdByEmail',
     value: async function getIdByEmail(email, role) {
-      var query = void 0;
+      var query = '';
+      var data = [];
       this.email = email;
       this.role = role;
+      data.push(this.email);
 
       switch (this.role) {
         case _constant2.default.USER:
@@ -81,7 +83,7 @@ var App = function () {
           break;
       }
 
-      var result = await (0, _db2.default)(query, [email]);
+      var result = await (0, _db.execute)(query, data);
       return result.rows[0];
     }
 
@@ -96,9 +98,11 @@ var App = function () {
   }, {
     key: 'getInfoById',
     value: async function getInfoById(id, role) {
-      var query = void 0;
+      var query = '';
+      var data = [];
       this.id = id;
       this.role = role;
+      data.push(this.id);
 
       switch (this.role) {
         case _constant2.default.USER:
@@ -111,7 +115,7 @@ var App = function () {
           query = 'SELECT id_user, first_name, last_name, email FROM users WHERE id_user = $1';
           break;
       }
-      var result = await (0, _db2.default)(query, [id]);
+      var result = await (0, _db.execute)(query, data);
       return result.rows[0];
     }
   }]);

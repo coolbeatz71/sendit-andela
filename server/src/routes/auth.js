@@ -17,4 +17,4 @@ router.post('/signUp', AuthCtrl.userSignUp);
  */
 router.post('/login', AuthCtrl.userSignIn);
 
-module.exports = router;
+export default router;

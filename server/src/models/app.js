@@ -1,5 +1,5 @@
 import constants from './constant';
-import execute from './db';
+import { execute } from './db';
 
 export default class App {
   /**
@@ -10,9 +10,11 @@ export default class App {
    * @return boolean
    */
   async isEmailExist(email, role) {
-    let query;
+    let query = '';
+    const data = [];
     this.email = email;
     this.role = role;
+    data.push(this.email);
 
     switch (this.role) {
       case constants.USER:
@@ -26,7 +28,7 @@ export default class App {
         break;
     }
 
-    const result = await execute(query, [email]);
+    const result = await execute(query, data);
     return result.rowCount > 0;
   }
 
@@ -38,9 +40,11 @@ export default class App {
    * @return object
    */
   async getIdByEmail(email, role) {
-    let query;
+    let query = '';
+    const data = [];
     this.email = email;
     this.role = role;
+    data.push(this.email);
 
     switch (this.role) {
       case constants.USER:
@@ -54,7 +58,7 @@ export default class App {
         break;
     }
 
-    const result = await execute(query, [email]);
+    const result = await execute(query, data);
     return result.rows[0];
   }
 
@@ -66,9 +70,11 @@ export default class App {
    * @return object
    */
   async getInfoById(id, role) {
-    let query;
+    let query = '';
+    const data = [];
     this.id = id;
     this.role = role;
+    data.push(this.id);
 
     switch (this.role) {
       case constants.USER:
@@ -81,7 +87,7 @@ export default class App {
         query = 'SELECT id_user, first_name, last_name, email FROM users WHERE id_user = $1';
         break;
     }
-    const result = await execute(query, [id]);
+    const result = await execute(query, data);
     return result.rows[0];
   }
 }

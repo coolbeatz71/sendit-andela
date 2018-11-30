@@ -5,11 +5,12 @@
   "main": "build/index.js",
   "scripts": {
     "start": "set NODE_ENV=dev&& node ./server/build/index.js",
-    "test": "set NODE_ENV=test&& mocha server/build/test-cov --recursive",
+    "test": "set NODE_ENV=test&& mocha --timeout 15000 server/build/test-cov --recursive",
     "serve": "set NODE_ENV=dev&& nodemon server/build/index.js",
     "build-ui": "babel UI/js --watch -d UI/build/",
+    "createTables": "babel ./server/build/models/db dropTables && babel ./server/build/models/db createTables",
     "build-api": "babel server/src --watch -d server/build/",
-    "cover": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha server/build/test-cov",
+    "cover": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --timeout 15000 server/build/test-cov",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
@@ -47,6 +48,7 @@
     "express": "^4.16.4",
     "express-validator": "^5.3.0",
     "jsonwebtoken": "^8.4.0",
+    "make-runnable": "^1.3.6",
     "morgan": "^1.9.1",
     "nodemailer": "^4.7.0",
     "pg": "^7.6.1"

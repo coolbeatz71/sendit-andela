@@ -115,15 +115,10 @@ var AuthCtrl = function () {
         var user = new _user2.default();
         var login = await user.loginUser(email, password);
 
-        if (login === _constant2.default.INVALID_EMAIL) {
+        if (login === _constant2.default.INVALID_EMAIL || login === _constant2.default.INVALID_PASSWORD) {
           response.status(404).json({
             status: 'fail',
-            message: 'User not found, Incorrect email address'
-          });
-        } else if (login === _constant2.default.INVALID_PASSWORD) {
-          response.status(404).json({
-            status: 'fail',
-            message: 'the password is incorrect'
+            message: 'User not found, Incorrect email or password'
           });
         } else {
           response.status(200).json({

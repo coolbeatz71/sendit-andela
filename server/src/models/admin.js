@@ -2,17 +2,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import App from './app';
 import constants from './constant';
-import execute from './db';
+import { execute } from './db';
 
-export default class Admin {
-  constructor(email, password) {
-    const app = new App();
-    this.app = app;
-
-    this.email = email;
-    this.password = password;
-  }
-
+export default class Admin extends App {
   /**
    * login the admin to his account
    *
@@ -21,10 +13,13 @@ export default class Admin {
    * @return object | constant
    */
   async loginAdmin(email, password) {
+    const loginData = [];
     this.email = email;
     this.password = password;
 
-    const isEmailExist = await this.app.isEmailExist(email, constants.ADMIN);
+    loginData.push(this.email);
+
+    const isEmailExist = await this.isEmailExist(this.email, constants.ADMIN);
 
     // if the email doesnt exist
     if (!isEmailExist) {
@@ -33,17 +28,17 @@ export default class Admin {
 
     // get the admin password
     const query = 'SELECT password FROM admin WHERE email = $1';
-    const result = await execute(query, [email]);
+    const result = await execute(query, loginData);
 
     const hashPassword = result.rows[0].password.trim();
 
     // compare hashed and plain password
-    if (!bcrypt.compareSync(password, hashPassword)) {
+    if (!bcrypt.compareSync(this.password, hashPassword)) {
       return constants.INVALID_PASSWORD;
     }
 
     // get the admin Id
-    const id = await this.app.getIdByEmail(email, constants.ADMIN);
+    const id = await this.getIdByEmail(this.email, constants.ADMIN);
     const adminId = id.id_admin;
 
     // generate the user token with jwt
@@ -53,7 +48,7 @@ export default class Admin {
     }, process.env.JWT_SECRET_TOKEN);
 
     // return user data
-    const data = await this.app.getInfoById(adminId, constants.ADMIN);
+    const data = await this.getInfoById(adminId, constants.ADMIN);
 
     return {
       id: adminId,
@@ -72,38 +67,26 @@ export default class Admin {
    * @return boolean || array
    */
   async editParcelStatus(parcelId, newStatus) {
+    const param = [];
     this.parcelId = parcelId;
     this.newStatus = newStatus;
 
-    if (newStatus === constants.DEFAULT_STATUS.cancelled) {
-      return undefined;
-    }
+    param.push(this.parcelId);
 
     const query = 'SELECT status FROM parcels WHERE id_parcel = $1';
 
-    const parcel = await execute(query, [
-      parcelId,
-    ]);
+    const parcel = await execute(query, param);
 
-    if (parcel.rows.length <= 0) {
-      return null;
+    if (!parcel.rows.length) {
+      return constants.NO_ENTRY;
     }
 
-    const status = parcel.rows[0].status.trim();
-    console.log(status);
-
-    // dont edit status if already cancelled
-    if (status === constants.DEFAULT_STATUS.cancelled) {
-      return false;
-    }
+    param.unshift(this.newStatus);
 
     const queryStatus = `UPDATE parcels SET status = $1 
     WHERE id_parcel = $2 RETURNING *`;
 
-    const edit = await execute(queryStatus, [
-      newStatus.trim(),
-      parcelId,
-    ]);
+    const edit = await execute(queryStatus, param);
 
     return edit.rows[0];
   }
@@ -116,34 +99,26 @@ export default class Admin {
    * @return boolean || array
    */
   async editPresentLocation(parcelId, location) {
+    const param = [];
     this.parcelId = parcelId;
     this.location = location;
 
+    param.push(this.parcelId);
+
     const query = 'SELECT status FROM parcels WHERE id_parcel = $1';
 
-    const parcel = await execute(query, [
-      parcelId,
-    ]);
+    const parcel = await execute(query, param);
 
-    if (parcel.rows.length <= 0) {
-      return null;
+    if (!parcel.rows.length) {
+      return constants.NO_ENTRY;
     }
 
-    const status = parcel.rows[0].status.trim();
-    console.log(status);
-
-    // dont edit present location if parcel already cancelled
-    if (status === constants.DEFAULT_STATUS.cancelled) {
-      return false;
-    }
+    param.unshift(this.location);
 
     const queryLocation = `UPDATE parcels SET present_location = $1 
     WHERE id_parcel = $2 RETURNING *`;
 
-    const edit = await execute(queryLocation, [
-      location.trim(),
-      parcelId,
-    ]);
+    const edit = await execute(queryLocation, param);
 
     return edit.rows[0];
   }
@@ -154,18 +129,18 @@ export default class Admin {
    * @return Number
    */
   async getParcelNumber(status) {
-    let query;
+    let query = '';
     let parcel;
+    const param = [];
     this.status = status;
+    param.push(this.status);
 
-    if (!status) {
+    if (!this.status) {
       query = 'SELECT id_parcel FROM parcels';
       parcel = await execute(query);
     } else {
       query = 'SELECT id_parcel FROM parcels WHERE status = $1';
-      parcel = await execute(query, [
-        status,
-      ]);
+      parcel = await execute(query, param);
     }
 
     return parcel.rows.length;

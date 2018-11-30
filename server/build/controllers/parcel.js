@@ -60,8 +60,9 @@ var ParcelCtrl = function () {
           pickupLocation = _request$body.pickupLocation,
           destination = _request$body.destination,
           weight = _request$body.weight;
-      var id = response.locals.id;
 
+
+      var userId = response.locals.id;
 
       request.checkBody('parcelName', 'parcel name is required').notEmpty();
       request.checkBody('description', 'description is required').notEmpty();
@@ -72,7 +73,7 @@ var ParcelCtrl = function () {
       var errors = request.validationErrors();
 
       if (!parcelName || !description || !pickupLocation || !destination || !weight) {
-        response.status(404).json({
+        response.status(400).json({
           status: 'fail',
           message: 'Fill all required fields'
         });
@@ -85,7 +86,7 @@ var ParcelCtrl = function () {
         });
       } else {
         var parcel = new _parcel2.default();
-        var createParcel = await parcel.createParcel(id, parcelName, description, pickupLocation, destination, weight);
+        var createParcel = await parcel.createParcel(userId, parcelName, description, pickupLocation, destination, weight);
         response.status(201).json({
           status: 'success',
           parcel: createParcel
@@ -119,7 +120,7 @@ var ParcelCtrl = function () {
         var parcel = new _parcel2.default();
         var getParcel = await parcel.getParcelById(parcelId);
 
-        if (getParcel.length <= 0) {
+        if (!getParcel.length) {
           response.status(404).json({
             status: 'fail',
             message: 'No parcel found with this parcel Id'
@@ -144,8 +145,8 @@ var ParcelCtrl = function () {
     key: 'cancelParcel',
     value: async function cancelParcel(request, response) {
       var parcelId = request.params.parcelId;
-      var id = response.locals.id;
 
+      var userId = response.locals.id;
 
       request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');
 
@@ -158,7 +159,7 @@ var ParcelCtrl = function () {
         });
       } else {
         var user = new _user2.default();
-        var cancel = await user.cancelParcel(id, parcelId);
+        var cancel = await user.cancelParcel(userId, parcelId);
 
         if (cancel === null) {
           response.status(404).json({
@@ -191,8 +192,8 @@ var ParcelCtrl = function () {
     value: async function editDestination(request, response) {
       var parcelId = request.params.parcelId;
       var destination = request.body.destination;
-      var id = response.locals.id;
 
+      var userId = response.locals.id;
 
       request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');
 
@@ -207,7 +208,7 @@ var ParcelCtrl = function () {
         });
       } else {
         var user = new _user2.default();
-        var edit = await user.editParcelDestination(id, parcelId, destination);
+        var edit = await user.editParcelDestination(userId, parcelId, destination);
 
         if (edit === null) {
           response.status(404).json({

@@ -1,9 +1,22 @@
+env:
+  global:
+    - JWT_SECRET_TOKEN=andela@sigmacool
+    - NODE_ENV=test
+    - DB_HOST=localhost
+    - DB_USERNAME=root
+    - TEST_DATABASE=sendit_test
+    - DB_PASSWORD=1234glody
+    - DB_PORT=5432
+    - DATABASE_URL=postgres://postgres@localhost:5432/sendit_test
+
 language: node_js
 node_js: 
   - "stable"
 cache:
   directories:
     - "node_modules"
+services:
+    - postgresql
 after_success:
   - npm run coveralls
   - codeclimate-test-reporter < ./coverage/lcov.info

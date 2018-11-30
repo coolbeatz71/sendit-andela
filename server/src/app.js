@@ -2,10 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
-import authRoutes from './routes/auth';
-import userRoutes from './routes/user';
-import parcelRoutes from './routes/parcel';
-import adminRoutes from './routes/admin';
+import router from './routes/index';
 
 const app = express();
 const apiVersion = '/api/v1';
@@ -52,11 +49,7 @@ app.use(expressValidator({
 }));
 
 // endpoints
-app.use(`${apiVersion}/auth`, authRoutes);
-app.use(`${apiVersion}/users`, userRoutes);
-app.use(`${apiVersion}/parcels`, parcelRoutes);
-app.use(`${apiVersion}/admin`, adminRoutes);
-
+app.use(`${apiVersion}`, router);
 
 // handling request error
 app.use((request, response, next) => {

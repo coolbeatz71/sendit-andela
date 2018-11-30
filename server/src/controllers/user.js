@@ -15,7 +15,7 @@ export default class UserCtrl {
     const { userId } = request.params;
     const { email } = response.locals;
 
-    request.check('userId', 'the user id is required').notEmpty()
+    request.check('userId', 'The user id is required').notEmpty()
       .isInt()
       .withMessage('userId must be a number');
 
@@ -56,7 +56,8 @@ export default class UserCtrl {
    * @return object json
    */
   static async countParcels(request, response) {
-    const { id, email } = response.locals;
+    const { email } = response.locals;
+    const userId = response.locals.id;
     const {
       pending,
       transit,
@@ -75,11 +76,11 @@ export default class UserCtrl {
     }
 
     const user = new User();
-    const all = await user.getParcelNumber(id);
-    const parcelPending = await user.getParcelNumber(id, pending);
-    const parcelInTransit = await user.getParcelNumber(id, transit);
-    const parcelDelivered = await user.getParcelNumber(id, delivered);
-    const parcelCancelled = await user.getParcelNumber(id, cancelled);
+    const all = await user.getParcelNumber(userId);
+    const parcelPending = await user.getParcelNumber(userId, pending);
+    const parcelInTransit = await user.getParcelNumber(userId, transit);
+    const parcelDelivered = await user.getParcelNumber(userId, delivered);
+    const parcelCancelled = await user.getParcelNumber(userId, cancelled);
 
     response.status(200).json({
       status: 'success',

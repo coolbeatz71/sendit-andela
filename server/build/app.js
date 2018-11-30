@@ -16,21 +16,9 @@ var _expressValidator = require('express-validator');
 
 var _expressValidator2 = _interopRequireDefault(_expressValidator);
 
-var _auth = require('./routes/auth');
+var _index = require('./routes/index');
 
-var _auth2 = _interopRequireDefault(_auth);
-
-var _user = require('./routes/user');
-
-var _user2 = _interopRequireDefault(_user);
-
-var _parcel = require('./routes/parcel');
-
-var _parcel2 = _interopRequireDefault(_parcel);
-
-var _admin = require('./routes/admin');
-
-var _admin2 = _interopRequireDefault(_admin);
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78,10 +66,7 @@ app.use((0, _expressValidator2.default)({
 }));
 
 // endpoints
-app.use(apiVersion + '/auth', _auth2.default);
-app.use(apiVersion + '/users', _user2.default);
-app.use(apiVersion + '/parcels', _parcel2.default);
-app.use(apiVersion + '/admin', _admin2.default);
+app.use('' + apiVersion, _index2.default);
 
 // handling request error
 app.use(function (request, response, next) {

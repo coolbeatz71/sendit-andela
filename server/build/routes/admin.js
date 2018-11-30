@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -30,4 +34,4 @@ router.post('/login', _admin2.default.adminSignIn);
  */
 router.get('/parcels/count', _auth2.default, _admin2.default.countParcels);
 
-module.exports = router;
+exports.default = router;
