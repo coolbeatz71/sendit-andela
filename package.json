@@ -8,7 +8,7 @@
     "test": "set NODE_ENV=test&& mocha --timeout 15000 server/build/test-cov --recursive",
     "serve": "set NODE_ENV=dev&& nodemon server/build/index.js",
     "build-ui": "babel UI/js --watch -d UI/build/",
-    "createTables": "babel ./server/build/models/db dropTables && babel ./server/build/models/db createTables",
+    "createTables": "babel ./server/build/models/db.js dropTables && babel ./server/build/models/db.js createTables",
     "build-api": "babel server/src --watch -d server/build/",
     "cover": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --timeout 15000 server/build/test-cov",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"

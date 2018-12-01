@@ -24,18 +24,20 @@ _dotenv2.default.config({ path: envPath });
 // set dev or test environment
 var myEnv = process.env.NODE_ENV ? process.env.NODE_ENV.toUpperCase() + '_' : '';
 
-var dbConfig = {
-  user: process.env.DB_USERNAME,
-  host: process.env.DB_HOST,
-  database: process.env[myEnv + 'DATABASE'],
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT
-};
+// const dbConfig = {
+//   user: process.env.DB_USERNAME,
+//   host: process.env.DB_HOST,
+//   database: process.env[`${myEnv}DATABASE`],
+//   password: process.env.DB_PASSWORD,
+//   port: process.env.DB_PORT,
+// };
 
 /**
  * Credit to charles odili https://github.com/chalu/pre-bc-workshops/
  */
-var pool = new _pg.Pool(dbConfig);
+var pool = new _pg.Pool({
+  connectionString: process.env.HEROKU_DATABASE_URI
+});
 
 // create the DB connection
 var connect = async function connect() {
