@@ -1,15 +1,9 @@
-import path from 'path';
 import App from './app';
-import execute from './db';
+import { execute } from './db';
 import constants from './constant';
 
 
-export default class Parcel {
-  constructor() {
-    const app = new App();
-    this.app = app;
-  }
-
+export default class Parcel extends App {
   /**
    * create a parcel delivery order
    * @param  string senderId
@@ -29,15 +23,17 @@ export default class Parcel {
       return false;
     }
 
+    const param = [
+      senderId, parcelName.trim(), description.trim(), pickupLocation.trim(),
+      presentLocation.trim(), destination.trim(), weight, price, status.trim(),
+    ];
+
     const query = `INSERT INTO parcels 
     (id_user, parcel_name, description, pickup_location,
      present_location, destination, weight, price, status) 
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
 
-    const insert = await execute(query, [
-      senderId, parcelName.trim(), description.trim(), pickupLocation.trim(),
-      presentLocation.trim(), destination.trim(), weight, price, status.trim(),
-    ]);
+    const insert = await execute(query, param);
     const parcelInfo = insert.rows;
 
     return parcelInfo;
@@ -63,12 +59,11 @@ export default class Parcel {
    */
   async getAllParcelByUser(id) {
     this.id = id;
+    const param = [this.id];
 
     // select all parcel info to the database
     const query = 'SELECT * FROM parcels WHERE id_user = $1';
-    const result = await execute(query, [
-      id,
-    ]);
+    const result = await execute(query, param);
 
     return result.rows;
   }
@@ -81,12 +76,11 @@ export default class Parcel {
    */
   async getParcelById(orderId) {
     this.orderId = orderId;
+    const param = [orderId];
 
     // select all parcel info to the database
     const query = 'SELECT * FROM parcels WHERE id_parcel = $1';
-    const result = await execute(query, [
-      orderId,
-    ]);
+    const result = await execute(query, param);
 
     return result.rows;
   }

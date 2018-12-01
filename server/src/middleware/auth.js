@@ -37,4 +37,4 @@ const checkAuth = (request, response, next) => {
   }
 };
 
-module.exports = checkAuth;
+export default checkAuth;

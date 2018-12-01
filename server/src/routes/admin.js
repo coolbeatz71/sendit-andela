@@ -18,4 +18,4 @@ router.post('/login', AdminCtrl.adminSignIn);
  */
 router.get('/parcels/count', checkAuth, AdminCtrl.countParcels);
 
-module.exports = router;
+export default router;

@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
@@ -45,4 +49,4 @@ var checkAuth = function checkAuth(request, response, next) {
   }
 };
 
-module.exports = checkAuth;
+exports.default = checkAuth;

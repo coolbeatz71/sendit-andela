@@ -125,20 +125,10 @@ export default class AdminCtrl {
       const admin = new Admin();
       const edit = await admin.editParcelStatus(parcelId, status);
 
-      if (edit === undefined) {
-        response.status(401).json({
-          status: 'fail',
-          message: 'Not authorized to cancel parcel delievry order',
-        });
-      } else if (edit === null) {
+      if (edit === constants.NO_ENTRY) {
         response.status(404).json({
           status: 'fail',
           message: 'No parcel order found with this id',
-        });
-      } else if (!edit) {
-        response.status(401).json({
-          status: 'fail',
-          message: 'Not authorized to edit status of this parcel order',
         });
       } else {
         response.status(200).json({
@@ -191,15 +181,10 @@ export default class AdminCtrl {
       const admin = new Admin();
       const edit = await admin.editPresentLocation(parcelId, presentLocation);
 
-      if (edit === null) {
+      if (edit === constants.NO_ENTRY) {
         response.status(404).json({
           status: 'fail',
           message: 'No parcel order found with this id',
-        });
-      } else if (!edit) {
-        response.status(401).json({
-          status: 'fail',
-          message: 'Not authorized to edit present location of this parcel order',
         });
       } else {
         response.status(200).json({

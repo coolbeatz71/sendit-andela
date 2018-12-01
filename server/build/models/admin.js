@@ -14,10 +14,6 @@ var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
 var _app = require('./app');
 
 var _app2 = _interopRequireDefault(_app);
@@ -28,42 +24,41 @@ var _constant2 = _interopRequireDefault(_constant);
 
 var _db = require('./db');
 
-var _db2 = _interopRequireDefault(_db);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var adminFilePath = _path2.default.resolve(__dirname, '../../assets/admin.json');
-var parcelFilePath = _path2.default.resolve(__dirname, '../../assets/parcels.json');
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-var Admin = function () {
-  function Admin(email, password) {
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Admin = function (_App) {
+  _inherits(Admin, _App);
+
+  function Admin() {
     _classCallCheck(this, Admin);
 
-    var app = new _app2.default();
-    this.app = app;
-
-    this.email = email;
-    this.password = password;
+    return _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).apply(this, arguments));
   }
-
-  /**
-   * login the admin to his account
-   *
-   * @param  string email
-   * @param  string password
-   * @return object | constant
-   */
-
 
   _createClass(Admin, [{
     key: 'loginAdmin',
+
+    /**
+     * login the admin to his account
+     *
+     * @param  string email
+     * @param  string password
+     * @return object | constant
+     */
     value: async function loginAdmin(email, password) {
+      var loginData = [];
       this.email = email;
       this.password = password;
 
-      var isEmailExist = await this.app.isEmailExist(email, _constant2.default.ADMIN);
+      loginData.push(this.email);
+
+      var isEmailExist = await this.isEmailExist(this.email, _constant2.default.ADMIN);
 
       // if the email doesnt exist
       if (!isEmailExist) {
@@ -72,17 +67,17 @@ var Admin = function () {
 
       // get the admin password
       var query = 'SELECT password FROM admin WHERE email = $1';
-      var result = await (0, _db2.default)(query, [email]);
+      var result = await (0, _db.execute)(query, loginData);
 
       var hashPassword = result.rows[0].password.trim();
 
       // compare hashed and plain password
-      if (!_bcrypt2.default.compareSync(password, hashPassword)) {
+      if (!_bcrypt2.default.compareSync(this.password, hashPassword)) {
         return _constant2.default.INVALID_PASSWORD;
       }
 
       // get the admin Id
-      var id = await this.app.getIdByEmail(email, _constant2.default.ADMIN);
+      var id = await this.getIdByEmail(this.email, _constant2.default.ADMIN);
       var adminId = id.id_admin;
 
       // generate the user token with jwt
@@ -92,7 +87,7 @@ var Admin = function () {
       }, process.env.JWT_SECRET_TOKEN);
 
       // return user data
-      var data = await this.app.getInfoById(adminId, _constant2.default.ADMIN);
+      var data = await this.getInfoById(adminId, _constant2.default.ADMIN);
 
       return {
         id: adminId,
@@ -114,32 +109,25 @@ var Admin = function () {
   }, {
     key: 'editParcelStatus',
     value: async function editParcelStatus(parcelId, newStatus) {
+      var param = [];
       this.parcelId = parcelId;
       this.newStatus = newStatus;
 
-      if (newStatus === _constant2.default.DEFAULT_STATUS.cancelled) {
-        return undefined;
-      }
+      param.push(this.parcelId);
 
       var query = 'SELECT status FROM parcels WHERE id_parcel = $1';
 
-      var parcel = await (0, _db2.default)(query, [parcelId]);
+      var parcel = await (0, _db.execute)(query, param);
 
-      if (parcel.rows.length <= 0) {
-        return null;
+      if (!parcel.rows.length) {
+        return _constant2.default.NO_ENTRY;
       }
 
-      var status = parcel.rows[0].status.trim();
-      console.log(status);
-
-      // dont edit status if already cancelled
-      if (status === _constant2.default.DEFAULT_STATUS.cancelled) {
-        return false;
-      }
+      param.unshift(this.newStatus);
 
       var queryStatus = 'UPDATE parcels SET status = $1 \n    WHERE id_parcel = $2 RETURNING *';
 
-      var edit = await (0, _db2.default)(queryStatus, [newStatus.trim(), parcelId]);
+      var edit = await (0, _db.execute)(queryStatus, param);
 
       return edit.rows[0];
     }
@@ -155,28 +143,25 @@ var Admin = function () {
   }, {
     key: 'editPresentLocation',
     value: async function editPresentLocation(parcelId, location) {
+      var param = [];
       this.parcelId = parcelId;
       this.location = location;
 
+      param.push(this.parcelId);
+
       var query = 'SELECT status FROM parcels WHERE id_parcel = $1';
 
-      var parcel = await (0, _db2.default)(query, [parcelId]);
+      var parcel = await (0, _db.execute)(query, param);
 
-      if (parcel.rows.length <= 0) {
-        return null;
+      if (!parcel.rows.length) {
+        return _constant2.default.NO_ENTRY;
       }
 
-      var status = parcel.rows[0].status.trim();
-      console.log(status);
-
-      // dont edit present location if parcel already cancelled
-      if (status === _constant2.default.DEFAULT_STATUS.cancelled) {
-        return false;
-      }
+      param.unshift(this.location);
 
       var queryLocation = 'UPDATE parcels SET present_location = $1 \n    WHERE id_parcel = $2 RETURNING *';
 
-      var edit = await (0, _db2.default)(queryLocation, [location.trim(), parcelId]);
+      var edit = await (0, _db.execute)(queryLocation, param);
 
       return edit.rows[0];
     }
@@ -190,16 +175,18 @@ var Admin = function () {
   }, {
     key: 'getParcelNumber',
     value: async function getParcelNumber(status) {
-      var query = void 0;
+      var query = '';
       var parcel = void 0;
+      var param = [];
       this.status = status;
+      param.push(this.status);
 
-      if (!status) {
+      if (!this.status) {
         query = 'SELECT id_parcel FROM parcels';
-        parcel = await (0, _db2.default)(query);
+        parcel = await (0, _db.execute)(query);
       } else {
         query = 'SELECT id_parcel FROM parcels WHERE status = $1';
-        parcel = await (0, _db2.default)(query, [status]);
+        parcel = await (0, _db.execute)(query, param);
       }
 
       return parcel.rows.length;
@@ -207,6 +194,6 @@ var Admin = function () {
   }]);
 
   return Admin;
-}();
+}(_app2.default);
 
 exports.default = Admin;

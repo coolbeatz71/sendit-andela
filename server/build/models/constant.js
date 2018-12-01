@@ -6,16 +6,18 @@ Object.defineProperty(exports, "__esModule", {
 var constants = {
   USER: 'user_role',
   ADMIN: 'admin_role',
-  EMAIL_EXIST: 1,
-  INVALID_EMAIL: 2,
-  INVALID_PASSWORD: 3,
+  EMAIL_EXIST: 'email_exist',
+  INVALID_EMAIL: 'email_invalid',
+  INVALID_PASSWORD: 'password_invalid',
 
   DEFAULT_STATUS: {
     pending: 'pending',
     transit: 'in transit',
     delivered: 'delivered',
     cancelled: 'cancelled'
-  }
+  },
+
+  NO_ENTRY: 'no_entry'
 };
 
 exports.default = constants;

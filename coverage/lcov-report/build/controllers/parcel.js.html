@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for build/controllers/parcel.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">build/controllers</a> parcel.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">26.14% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>23/88</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">20.51% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>8/39</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">41.67% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>5/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.86% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>11/74</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+&nbsp;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="if path not taken" >I</span>if (protoProps) <span class="cstat-no" title="statement not covered" >defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="else path not taken" >E</span></span>if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // importing models
+&nbsp;
+&nbsp;
+var _parcel = require('../models/parcel');
+&nbsp;
+var _parcel2 = _interopRequireDefault(_parcel);
+&nbsp;
+var _user = require('../models/user');
+&nbsp;
+var _user2 = _interopRequireDefault(_user);
+&nbsp;
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : <span class="branch-1 cbranch-no" title="branch not covered" >{ default: obj };</span> }
+&nbsp;
+function <span class="fstat-no" title="function not covered" >_classCallCheck(</span>instance, Constructor) { <span class="cstat-no" title="statement not covered" >if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered" >throw new TypeError("Cannot call a class as a function"); </span>} </span>}
+&nbsp;
+var ParcelCtrl = function () {
+  function <span class="fstat-no" title="function not covered" >ParcelCtrl(</span>) {
+<span class="cstat-no" title="statement not covered" >    _classCallCheck(this, ParcelCtrl);</span>
+  }
+&nbsp;
+  _createClass(ParcelCtrl, null, [{
+    key: 'getAllParcels',
+&nbsp;
+    /**
+     * get All parcels for all users (for the admin)
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+    value: async function <span class="fstat-no" title="function not covered" >getAllParcels(</span>request, response) {
+      var parcel = <span class="cstat-no" title="statement not covered" >new _parcel2.default();</span>
+      var getParcel = <span class="cstat-no" title="statement not covered" >await parcel.getAllParcel();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      response.status(200).json({</span>
+        status: 'success',
+        parcel: getParcel
+      });
+    }
+&nbsp;
+    /**
+     * create a new parcel delivery order
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+&nbsp;
+  }, {
+    key: 'createParcel',
+    value: async function <span class="fstat-no" title="function not covered" >createParcel(</span>request, response) {
+      // get parcel data from the request body
+      var _request$body = <span class="cstat-no" title="statement not covered" >request.body,</span>
+          parcelName = <span class="cstat-no" title="statement not covered" >_request$body.parcelName,</span>
+          description = <span class="cstat-no" title="statement not covered" >_request$body.description,</span>
+          pickupLocation = <span class="cstat-no" title="statement not covered" >_request$body.pickupLocation,</span>
+          destination = <span class="cstat-no" title="statement not covered" >_request$body.destination,</span>
+          weight = <span class="cstat-no" title="statement not covered" >_request$body.weight;</span>
+&nbsp;
+      // change it to const userId = response.locals.id
+&nbsp;
+      var id = <span class="cstat-no" title="statement not covered" >response.locals.id.id;</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      request.checkBody('parcelName', 'parcel name is required').notEmpty();</span>
+<span class="cstat-no" title="statement not covered" >      request.checkBody('description', 'description is required').notEmpty();</span>
+<span class="cstat-no" title="statement not covered" >      request.checkBody('pickupLocation', 'pickupLocation is required').notEmpty();</span>
+<span class="cstat-no" title="statement not covered" >      request.checkBody('destination', 'destination is required').notEmpty();</span>
+<span class="cstat-no" title="statement not covered" >      request.checkBody('weight', 'parcel weight is required').notEmpty().isNumeric().withMessage('parcel weight must be a number');</span>
+&nbsp;
+      var errors = <span class="cstat-no" title="statement not covered" >request.validationErrors();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (!parcelName || !description || !pickupLocation || !destination || !weight) {</span>
+<span class="cstat-no" title="statement not covered" >        response.status(404).json({</span>
+          status: 'fail',
+          message: 'Fill all required fields'
+        });
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (errors) {</span>
+<span class="cstat-no" title="statement not covered" >        response.status(400).json({</span>
+          status: 'fail',
+          message: errors
+        });
+      } else {
+        var parcel = <span class="cstat-no" title="statement not covered" >new _parcel2.default();</span>
+        var createParcel = <span class="cstat-no" title="statement not covered" >await parcel.createParcel(id, parcelName, description, pickupLocation, destination, weight);</span>
+<span class="cstat-no" title="statement not covered" >        response.status(201).json({</span>
+          status: 'success',
+          parcel: createParcel
+        });
+      }
+    }
+&nbsp;
+    /**
+     * return a specific parcel delivery order (ADMIN)
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+&nbsp;
+  }, {
+    key: 'getParcelById',
+    value: async function <span class="fstat-no" title="function not covered" >getParcelById(</span>request, response) {
+      var parcelId = <span class="cstat-no" title="statement not covered" >request.params.parcelId;</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');</span>
+&nbsp;
+      var errors = <span class="cstat-no" title="statement not covered" >request.validationErrors();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (errors) {</span>
+<span class="cstat-no" title="statement not covered" >        response.status(400).json({</span>
+          status: 'fail',
+          message: errors
+        });
+      } else {
+        var parcel = <span class="cstat-no" title="statement not covered" >new _parcel2.default();</span>
+        var getParcel = <span class="cstat-no" title="statement not covered" >await parcel.getParcelById(parcelId);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (getParcel.length &lt;= 0) {</span>
+<span class="cstat-no" title="statement not covered" >          response.status(404).json({</span>
+            status: 'fail',
+            message: 'No parcel found with this parcel Id'
+          });
+        } else {
+<span class="cstat-no" title="statement not covered" >          response.status(200).json({</span>
+            status: 'success',
+            parcel: getParcel
+          });
+        }
+      }
+    }
+&nbsp;
+    /**
+     * cancel a particular parcel order
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+&nbsp;
+  }, {
+    key: 'cancelParcel',
+    value: async function <span class="fstat-no" title="function not covered" >cancelParcel(</span>request, response) {
+      var parcelId = <span class="cstat-no" title="statement not covered" >request.params.parcelId;</span>
+      var id = <span class="cstat-no" title="statement not covered" >response.locals.id;</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');</span>
+&nbsp;
+      var errors = <span class="cstat-no" title="statement not covered" >request.validationErrors();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (errors) {</span>
+<span class="cstat-no" title="statement not covered" >        response.status(400).json({</span>
+          status: 'fail',
+          message: errors
+        });
+      } else {
+        var user = <span class="cstat-no" title="statement not covered" >new _user2.default();</span>
+        var cancel = <span class="cstat-no" title="statement not covered" >await user.cancelParcel(id, parcelId);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (cancel === null) {</span>
+<span class="cstat-no" title="statement not covered" >          response.status(404).json({</span>
+            status: 'fail',
+            message: 'No parcel order found with this id'
+          });
+        } else <span class="cstat-no" title="statement not covered" >if (!cancel) {</span>
+<span class="cstat-no" title="statement not covered" >          response.status(401).json({</span>
+            status: 'fail',
+            message: 'Not authorized to cancel this parcel order'
+          });
+        } else {
+<span class="cstat-no" title="statement not covered" >          response.status(200).json({</span>
+            status: 'success',
+            parcel: cancel
+          });
+        }
+      }
+    }
+&nbsp;
+    /**
+     * edit destination of a particular parcel order
+     * @param  Request request
+     * @param  Response response
+     * @return object json
+     */
+&nbsp;
+  }, {
+    key: 'editDestination',
+    value: async function <span class="fstat-no" title="function not covered" >editDestination(</span>request, response) {
+      var parcelId = <span class="cstat-no" title="statement not covered" >request.params.parcelId;</span>
+      var destination = <span class="cstat-no" title="statement not covered" >request.body.destination;</span>
+      var id = <span class="cstat-no" title="statement not covered" >response.locals.id;</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      request.checkBody('destination', 'new destination is required').notEmpty().isAlpha().withMessage('new destination must only contains alphabetic sysmbols');</span>
+&nbsp;
+      var errors = <span class="cstat-no" title="statement not covered" >request.validationErrors();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (errors) {</span>
+<span class="cstat-no" title="statement not covered" >        response.status(400).json({</span>
+          status: 'fail',
+          message: errors
+        });
+      } else {
+        var user = <span class="cstat-no" title="statement not covered" >new _user2.default();</span>
+        var edit = <span class="cstat-no" title="statement not covered" >await user.editParcelDestination(id, parcelId, destination);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (edit === null) {</span>
+<span class="cstat-no" title="statement not covered" >          response.status(404).json({</span>
+            status: 'fail',
+            message: 'No parcel order found with this id'
+          });
+        } else <span class="cstat-no" title="statement not covered" >if (!edit) {</span>
+<span class="cstat-no" title="statement not covered" >          response.status(401).json({</span>
+            status: 'fail',
+            message: 'Not authorized to edit destination of this parcel order'
+          });
+        } else {
+<span class="cstat-no" title="statement not covered" >          response.status(200).json({</span>
+            status: 'success',
+            parcel: edit
+          });
+        }
+      }
+    }
+  }]);
+&nbsp;
+  return ParcelCtrl;
+}();
+&nbsp;
+exports.default = ParcelCtrl;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Nov 29 2018 13:29:27 GMT+0200 (South Africa Standard Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>

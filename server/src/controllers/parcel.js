@@ -31,7 +31,7 @@ export default class ParcelCtrl {
       parcelName, description, pickupLocation, destination, weight,
     } = request.body;
 
-    const { id } = response.locals;
+    const userId = response.locals.id;
 
     request.checkBody('parcelName', 'parcel name is required').notEmpty();
     request.checkBody('description', 'description is required').notEmpty();
@@ -43,7 +43,7 @@ export default class ParcelCtrl {
     const errors = request.validationErrors();
 
     if (!parcelName || !description || !pickupLocation || !destination || !weight) {
-      response.status(404).json({
+      response.status(400).json({
         status: 'fail',
         message: 'Fill all required fields',
       });
@@ -57,7 +57,7 @@ export default class ParcelCtrl {
     } else {
       const parcel = new Parcel();
       const createParcel = await parcel.createParcel(
-        id, parcelName, description, pickupLocation, destination, weight,
+        userId, parcelName, description, pickupLocation, destination, weight,
       );
       response.status(201).json({
         status: 'success',
@@ -89,7 +89,7 @@ export default class ParcelCtrl {
       const parcel = new Parcel();
       const getParcel = await parcel.getParcelById(parcelId);
 
-      if (getParcel.length <= 0) {
+      if (!getParcel.length) {
         response.status(404).json({
           status: 'fail',
           message: 'No parcel found with this parcel Id',
@@ -111,7 +111,7 @@ export default class ParcelCtrl {
    */
   static async cancelParcel(request, response) {
     const { parcelId } = request.params;
-    const { id } = response.locals;
+    const userId = response.locals.id;
 
     request.check('parcelId', 'parcel id is required')
       .notEmpty().isInt().withMessage('parcel id must be a number');
@@ -125,7 +125,7 @@ export default class ParcelCtrl {
       });
     } else {
       const user = new User();
-      const cancel = await user.cancelParcel(id, parcelId);
+      const cancel = await user.cancelParcel(userId, parcelId);
 
       if (cancel === null) {
         response.status(404).json({
@@ -155,7 +155,7 @@ export default class ParcelCtrl {
   static async editDestination(request, response) {
     const { parcelId } = request.params;
     const { destination } = request.body;
-    const { id } = response.locals;
+    const userId = response.locals.id;
 
     request.check('parcelId', 'parcel id is required')
       .notEmpty().isInt().withMessage('parcel id must be a number');
@@ -172,7 +172,7 @@ export default class ParcelCtrl {
       });
     } else {
       const user = new User();
-      const edit = await user.editParcelDestination(id, parcelId, destination);
+      const edit = await user.editParcelDestination(userId, parcelId, destination);
 
       if (edit === null) {
         response.status(404).json({
