@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
+import constants from '../models/constant';
 
-const secretToken = process.env.JWT_SECRET_TOKEN;
+const secretToken = constants.JWT_SECRET_TOKEN;
 
 /**
  * Middleware for the user and admin

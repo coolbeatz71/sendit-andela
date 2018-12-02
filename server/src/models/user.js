@@ -42,7 +42,7 @@ export default class User extends App {
     const userToken = jwt.sign({
       id: userId,
       email,
-    }, process.env.JWT_SECRET_TOKEN);
+    }, constants.JWT_SECRET_TOKEN);
 
     return {
       id: userId,
@@ -92,7 +92,7 @@ export default class User extends App {
     const userToken = jwt.sign({
       id: userId,
       email,
-    }, process.env.JWT_SECRET_TOKEN);
+    }, constants.JWT_SECRET_TOKEN);
 
     // return user data
     const data = await this.getInfoById(userId, constants.USER);
