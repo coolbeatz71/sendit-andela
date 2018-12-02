@@ -84,7 +84,7 @@ var Admin = function (_App) {
       var userToken = _jsonwebtoken2.default.sign({
         id: adminId,
         email: email
-      }, process.env.JWT_SECRET_TOKEN);
+      }, _constant2.default.JWT_SECRET_TOKEN);
 
       // return user data
       var data = await this.getInfoById(adminId, _constant2.default.ADMIN);

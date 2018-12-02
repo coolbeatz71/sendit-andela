@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import App from './app';
 import constants from './constant';
 import { execute } from './db';
-import constants from './constant';
 
 export default class Admin extends App {
   /**
