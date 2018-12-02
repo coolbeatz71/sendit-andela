@@ -8,9 +8,13 @@ var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
+var _constant = require('../models/constant');
+
+var _constant2 = _interopRequireDefault(_constant);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var secretToken = process.env.JWT_SECRET_TOKEN;
+var secretToken = _constant2.default.JWT_SECRET_TOKEN;
 
 /**
  * Middleware for the user and admin
