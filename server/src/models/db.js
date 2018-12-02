@@ -10,11 +10,11 @@ dotenv.config({ path: envPath });
 const myEnv = process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()}_` : '';
 
 const dbConfig = {
-  user: process.env[`${myEnv}_DB_USERNAME`],
-  host: process.env[`${myEnv}_DB_HOST`],
-  database: process.env[`${myEnv}_DATABASE`],
-  password: process.env[`${myEnv}_DB_PASSWORD`],
-  port: process.env[`${myEnv}_DB_PORT`],
+  user: process.env[`${myEnv}DB_USERNAME`],
+  host: process.env[`${myEnv}DB_HOST`],
+  database: process.env[`${myEnv}DATABASE`],
+  password: process.env[`${myEnv}DB_PASSWORD`],
+  port: process.env[`${myEnv}DB_PORT`],
 };
 
 /**
