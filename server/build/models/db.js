@@ -21,12 +21,23 @@ var envPath = _path2.default.resolve(__dirname, '../../../.env');
 
 _dotenv2.default.config({ path: envPath });
 
+// set dev or test environment
+var myEnv = process.env.NODE_ENV ? process.env.NODE_ENV.toUpperCase() + '_' : '';
+
+var dbConfig = {
+  user: process.env[myEnv + 'DB_USERNAME'],
+  host: process.env[myEnv + 'DB_HOST'],
+  database: process.env[myEnv + 'DATABASE'],
+  password: process.env[myEnv + 'DB_PASSWORD'],
+  port: process.env[myEnv + 'DB_PORT']
+};
+
+console.log(dbConfig);
+
 /**
  * Credit to charles odili https://github.com/chalu/pre-bc-workshops/
  */
-var pool = new _pg.Pool({
-  connectionString: 'postgres://zqovliavkubvcd:396486bb17d5f53e5a0309f27adfacac3a430caa7f9f60f265001304547b419c@ec2-50-19-249-121.compute-1.amazonaws.com:5432/d2f450emadmm6q'
-});
+var pool = new _pg.Pool(dbConfig);
 
 // create the DB connection
 var connect = async function connect() {

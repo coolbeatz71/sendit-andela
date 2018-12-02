@@ -11,8 +11,8 @@ const constants = {
     delivered: 'delivered',
     cancelled: 'cancelled',
   },
-
   NO_ENTRY: 'no_entry',
+  JWT_SECRET_TOKEN: 'andela@sigmacool',
 };
 
 export default constants;
