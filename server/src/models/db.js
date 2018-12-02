@@ -7,20 +7,15 @@ const envPath = path.resolve(__dirname, '../../../.env');
 dotenv.config({ path: envPath });
 
 // set dev or test environment
-const myEnv = process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()}_` : '';
+// const myEnv = process.env.NODE_ENV ? `${process.env.NODE_ENV.toUpperCase()}_` : '';
 
-const dbConfig = {
-  user: process.env[`${myEnv}_DB_USERNAME`],
-  host: process.env[`${myEnv}_DB_HOST`],
-  database: process.env[`${myEnv}_DATABASE`],
-  password: process.env[`${myEnv}_DB_PASSWORD`],
-  port: process.env[`${myEnv}_DB_PORT`],
-};
-
+const URI = 'postgres://zqovliavkubvcd:396486bb17d5f53e5a0309f27adfacac3a430caa7f9f60f265001304547b419c@ec2-50-19-249-121.compute-1.amazonaws.com:5432/d2f450emadmm6q';
 /**
  * Credit to charles odili https://github.com/chalu/pre-bc-workshops/
  */
-const pool = new Pool(dbConfig);
+const pool = new Pool({
+  connectionString: URI,
+});
 
 // create the DB connection
 const connect = async () => pool.connect();

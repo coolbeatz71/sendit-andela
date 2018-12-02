@@ -8,6 +8,7 @@ env:
     - DB_PASSWORD=1234glody
     - DB_PORT=5432
     - DATABASE_URL=postgres://postgres@localhost:5432/sendit_test
+
 language: node_js
 node_js: 
   - "stable"
@@ -16,9 +17,6 @@ cache:
     - "node_modules"
 services:
     - postgresql
-before_script:
-  - psql -c 'CREATE DATABASE sendit_test;' -U postgres
-  - npm run createTables
 after_success:
   - npm run coveralls
   - codeclimate-test-reporter < ./coverage/lcov.info

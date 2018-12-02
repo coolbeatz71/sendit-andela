@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import App from './app';
 import constants from './constant';
 import { execute } from './db';
-import constants from './constant';
 
 export default class Admin extends App {
   /**
@@ -46,7 +45,7 @@ export default class Admin extends App {
     const userToken = jwt.sign({
       id: adminId,
       email,
-    }, constants.JWT_SECRET_TOKEN);
+    }, process.env.JWT_SECRET_TOKEN);
 
     // return user data
     const data = await this.getInfoById(adminId, constants.ADMIN);

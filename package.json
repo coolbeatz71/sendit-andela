@@ -4,11 +4,11 @@
   "description": "SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.",
   "main": "build/index.js",
   "scripts": {
-    "start": "set NODE_ENV=prod&& node ./server/build/index.js",
+    "start": "set NODE_ENV=dev&& node ./server/build/index.js",
     "test": "set NODE_ENV=test&& mocha --timeout 15000 server/build/test-cov --recursive",
     "serve": "set NODE_ENV=dev&& nodemon server/build/index.js",
     "build-ui": "babel UI/js --watch -d UI/build/",
-    "createTables": "set NODE_ENV=test&& node ./server/build/models/db.js dropTables && node ./server/build/models/db.js createTables",
+    "createTables": "babel ./server/build/models/db.js dropTables && babel ./server/build/models/db.js createTables",
     "build-api": "babel server/src --watch -d server/build/",
     "cover": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --timeout 15000 server/build/test-cov",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
