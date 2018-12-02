@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./server/build/index.js",
     "test": "set NODE_ENV=test&& mocha --timeout 15000 server/build/test-cov --recursive",
-    "serve": "set NODE_ENV=dev&& nodemon server/build/index.js",
+    "start-dev": "set NODE_ENV=dev&& nodemon server/build/index.js",
     "build-ui": "babel UI/js --watch -d UI/build/",
     "createTables": "set NODE_ENV=test&& node ./server/build/models/db.js dropTables && node ./server/build/models/db.js createTables",
     "build-api": "babel server/src --watch -d server/build/",
