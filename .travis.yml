@@ -2,7 +2,7 @@ env:
   global:
     - JWT_SECRET_TOKEN=andela@sigmacool
     - NODE_ENV=test
-    - DB_USERNAME=root
+    - DB_USERNAME=postgres
     - DB_PASSWORD=1234glody
     - DB_HOST=localhost
     - DB_PORT=5432
@@ -16,7 +16,7 @@ cache:
 services:
     - postgresql
 before_script:
-  - psql -c 'CREATE DATABASE sendit_test;' -U postgres
+  - psql -c 'CREATE DATABASE send-it-tdd;' -U postgres
   - npm run createTables
 after_success:
   - npm run coveralls
