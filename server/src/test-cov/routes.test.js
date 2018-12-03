@@ -28,6 +28,13 @@ const authKeyAdmin = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW
 // clear all table
 before(async () => {
   try {
+    await execute(`INSERT INTO admin (first_name, last_name, password, email) VALUES (
+      $1, $2, $3, $4)`, [
+      'Mutombo',
+      'Admin',
+      '$2b$10$AHm9QNGBjyfFplip.S7ryOXOmIz0uyVBrYuLgsWsGoYg3Cfsgaope',
+      'admin@gmail.com',
+      ]);
     await execute('TRUNCATE users CASCADE; ALTER SEQUENCE users_id_user_seq RESTART WITH 1;');
     await execute('TRUNCATE parcels CASCADE; ALTER SEQUENCE parcels_id_parcel_seq RESTART WITH 1;');
   } catch (error) {

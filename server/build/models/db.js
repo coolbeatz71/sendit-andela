@@ -32,8 +32,6 @@ var dbConfig = {
   port: process.env.DB_PORT
 };
 
-console.log(dbConfig);
-
 var pool = new _pg.Pool(dbConfig);
 
 /**
