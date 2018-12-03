@@ -146,7 +146,7 @@ var AdminCtrl = function () {
 
       request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');
 
-      request.checkBody('status', 'new status is required').notEmpty().isAlpha().withMessage('new status must only contains alphabetic sysmbols');
+      request.checkBody('status', 'new status is required').notEmpty().withMessage('new status must only contains alphabetic sysmbols');
 
       var errors = request.validationErrors();
 
@@ -200,7 +200,7 @@ var AdminCtrl = function () {
 
       request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');
 
-      request.checkBody('presentLocation', 'present location is required').notEmpty().isAlpha().withMessage('present location must only contains alphabetic sysmbols');
+      request.checkBody('presentLocation', 'present location is required').notEmpty().withMessage('present location must only contains alphabetic sysmbols');
 
       var errors = request.validationErrors();
 

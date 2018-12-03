@@ -112,7 +112,7 @@ export default class AdminCtrl {
       .notEmpty().isInt().withMessage('parcel id must be a number');
 
     request.checkBody('status', 'new status is required')
-      .notEmpty().isAlpha().withMessage('new status must only contains alphabetic sysmbols');
+      .notEmpty().withMessage('new status must only contains alphabetic sysmbols');
 
     const errors = request.validationErrors();
 
@@ -167,7 +167,6 @@ export default class AdminCtrl {
 
     request.checkBody('presentLocation', 'present location is required')
       .notEmpty()
-      .isAlpha()
       .withMessage('present location must only contains alphabetic sysmbols');
 
     const errors = request.validationErrors();

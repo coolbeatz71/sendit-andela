@@ -21,12 +21,23 @@ const should = chai.should();
 // clear all table
 before(async () => {
   try {
-    await execute('TRUNCATE admin CASCADE; ALTER SEQUENCE admin_id_admin_seq RESTART WITH 1;');
+    await execute(`INSERT INTO admin (first_name, last_name, password, email) VALUES (
+      $1, $2, $3, $4)`, [
+      'Mutombo',
+      'Admin',
+      '$2b$10$AHm9QNGBjyfFplip.S7ryOXOmIz0uyVBrYuLgsWsGoYg3Cfsgaope',
+      'admin@gmail.com',
+      ]);
     await execute('TRUNCATE users CASCADE; ALTER SEQUENCE users_id_user_seq RESTART WITH 1;');
     await execute('TRUNCATE parcels CASCADE; ALTER SEQUENCE parcels_id_parcel_seq RESTART WITH 1;');
   } catch (error) {
     console.log(error);
   }
+});
+
+// clear admin table
+after(async () => {
+  await execute('TRUNCATE admin CASCADE; ALTER SEQUENCE admin_id_admin_seq RESTART WITH 1;');
 });
 
 describe('Testing methods[function] for AdminCtrl', () => {

@@ -1,6 +1,7 @@
 // importing models
 import Parcel from '../models/parcel';
 import User from '../models/user';
+import constants from '../models/constant';
 
 export default class ParcelCtrl {
   /**
@@ -127,7 +128,7 @@ export default class ParcelCtrl {
       const user = new User();
       const cancel = await user.cancelParcel(userId, parcelId);
 
-      if (cancel === null) {
+      if (cancel === constants.NO_ENTRY) {
         response.status(404).json({
           status: 'fail',
           message: 'No parcel order found with this id',
@@ -174,7 +175,7 @@ export default class ParcelCtrl {
       const user = new User();
       const edit = await user.editParcelDestination(userId, parcelId, destination);
 
-      if (edit === null) {
+      if (edit === constants.NO_ENTRY) {
         response.status(404).json({
           status: 'fail',
           message: 'No parcel order found with this id',

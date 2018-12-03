@@ -11,7 +11,7 @@
     "build-ui": "babel UI/js --watch -d UI/build/",
     "createTables": "set NODE_ENV=test&& node ./server/build/models/db.js dropTables && node ./server/build/models/db.js createTables",
     "build-api": "babel server/src --watch -d server/build/",
-    "cover": "set NODE_ENV=test&& istanbul cover ./node_modules/mocha/bin/_mocha server/build/test-cov",
+    "cover": "set NODE_ENV=test&& istanbul cover ./node_modules/mocha/bin/_mocha -- --timeout 15000 server/build/test-cov",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
