@@ -16,7 +16,7 @@ cache:
 services:
     - postgresql
 before_script:
-  - psql -c 'CREATE DATABASE send-it-tdd;' -U postgres
+  - psql -c 'CREATE DATABASE IF NOT EXISTS send-it-tdd;' -U postgres
   - npm run createTables
 after_success:
   - npm run coveralls
