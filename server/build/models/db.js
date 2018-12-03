@@ -25,16 +25,16 @@ _dotenv2.default.config({ path: envPath });
 var myEnv = process.env.NODE_ENV ? process.env.NODE_ENV.toUpperCase() + '_' : '';
 
 var dbConfig = {
-  user: process.env[myEnv + 'DB_USERNAME'],
-  host: process.env[myEnv + 'DB_HOST'],
+  user: process.env.DB_USERNAME,
+  host: process.env.DB_HOST,
   database: process.env[myEnv + 'DATABASE'],
-  password: process.env[myEnv + 'DB_PASSWORD'],
-  port: process.env[myEnv + '_DB_PORT']
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT
 };
 
-var pool = new _pg.Pool({
-  connectionString: 'postgres://zqovliavkubvcd:396486bb17d5f53e5a0309f27adfacac3a430caa7f9f60f265001304547b419c@ec2-50-19-249-121.compute-1.amazonaws.com:5432/d2f450emadmm6q'
-});
+console.log(dbConfig);
+
+var pool = new _pg.Pool(dbConfig);
 
 /**
  * Credit to charles odili https://github.com/chalu/pre-bc-workshops/

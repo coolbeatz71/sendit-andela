@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">32.74% </span>
+        <span class="strong">34.58% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>37/113</span>
+        <span class='fraction'>37/107</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">26.09% </span>
+        <span class="strong">30% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>12/46</span>
+        <span class='fraction'>12/40</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>6/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25.25% </span>
+        <span class="strong">26.88% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>25/99</span>
+        <span class='fraction'>25/93</span>
       </div>
     </div>
   </div>
@@ -324,22 +324,7 @@
 279
 280
 281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+282</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -505,16 +490,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -563,11 +538,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -796,20 +766,10 @@ var AdminCtrl = function () {
         var admin = <span class="cstat-no" title="statement not covered" >new _admin2.default();</span>
         var edit = <span class="cstat-no" title="statement not covered" >await admin.editParcelStatus(parcelId, status);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (edit === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >          response.status(401).json({</span>
-            status: 'fail',
-            message: 'Not authorized to cancel parcel delievry order'
-          });
-        } else <span class="cstat-no" title="statement not covered" >if (edit === null) {</span>
+<span class="cstat-no" title="statement not covered" >        if (edit === _constant2.default.NO_ENTRY) {</span>
 <span class="cstat-no" title="statement not covered" >          response.status(404).json({</span>
             status: 'fail',
             message: 'No parcel order found with this id'
-          });
-        } else <span class="cstat-no" title="statement not covered" >if (!edit) {</span>
-<span class="cstat-no" title="statement not covered" >          response.status(401).json({</span>
-            status: 'fail',
-            message: 'Not authorized to edit status of this parcel order'
           });
         } else {
 <span class="cstat-no" title="statement not covered" >          response.status(200).json({</span>
@@ -860,15 +820,10 @@ var AdminCtrl = function () {
         var admin = <span class="cstat-no" title="statement not covered" >new _admin2.default();</span>
         var edit = <span class="cstat-no" title="statement not covered" >await admin.editPresentLocation(parcelId, presentLocation);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (edit === null) {</span>
+<span class="cstat-no" title="statement not covered" >        if (edit === _constant2.default.NO_ENTRY) {</span>
 <span class="cstat-no" title="statement not covered" >          response.status(404).json({</span>
             status: 'fail',
             message: 'No parcel order found with this id'
-          });
-        } else <span class="cstat-no" title="statement not covered" >if (!edit) {</span>
-<span class="cstat-no" title="statement not covered" >          response.status(401).json({</span>
-            status: 'fail',
-            message: 'Not authorized to edit present location of this parcel order'
           });
         } else {
 <span class="cstat-no" title="statement not covered" >          response.status(200).json({</span>
@@ -937,7 +892,7 @@ exports.default = AdminCtrl;</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Nov 29 2018 13:29:27 GMT+0200 (South Africa Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 03 2018 20:51:26 GMT+0200 (South Africa Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>
