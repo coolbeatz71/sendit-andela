@@ -68,7 +68,6 @@ var userInfo = {
 // clear all table
 before(async function () {
   try {
-    await (0, _db.execute)('TRUNCATE admin CASCADE; ALTER SEQUENCE admin_id_admin_seq RESTART WITH 1;');
     await (0, _db.execute)('TRUNCATE users CASCADE; ALTER SEQUENCE users_id_user_seq RESTART WITH 1;');
     await (0, _db.execute)('TRUNCATE parcels CASCADE; ALTER SEQUENCE parcels_id_parcel_seq RESTART WITH 1;');
   } catch (error) {
