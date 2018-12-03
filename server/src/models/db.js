@@ -17,6 +17,8 @@ const dbConfig = {
   port: process.env.DB_PORT,
 };
 
+console.log(dbConfig);
+
 const pool = new Pool(dbConfig);
 
 /**
