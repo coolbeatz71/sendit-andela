@@ -1,166 +1,91 @@
-// /* eslint-disable */
-// import chai from 'chai';
-// import path from 'path';
+'use strict';
 
-// // importing models
-// import Parcel from './../models/parcel';
-// import User from './../models/user';
-// import Admin from './../models/admin';
-// import App from './../models/app';
-// import constants from './../models/constant';
+var _chai = require('chai');
 
-// // import controllers
-// import AdminCtrl from './../controllers/admin';
-// import AuthCtrl from './../controllers/auth';
-// import ParcelCtrl from './../controllers/parcel';
-// import UserCtrl from './../controllers/user';
+var _chai2 = _interopRequireDefault(_chai);
 
-// const { expect, assert } = chai;
-// const should = chai.should();
+var _constant = require('./../models/constant');
 
-// const user = new User();
-// const parcel = new Parcel();
-// const admin = new Admin();
-// const app = new App();
+var _constant2 = _interopRequireDefault(_constant);
 
-// const userInfo = {
-//   firstName: '',
-//   lastName: '',
-//   email: '',
-//   password: '',
-// };
+var _db = require('./../models/db');
 
-// //////////////////////////////////////
-// // Testing params for each classes  //
-// //////////////////////////////////////
+var _parcel = require('./../models/parcel');
 
-// describe('Testing params of each functions in classes without params', () => {
-//   describe('Admin class', () => {
-//     it('should return a constant', async () => {
-//       expect(await admin.loginAdmin()).to.be.a('number');
-//     });
+var _parcel2 = _interopRequireDefault(_parcel);
 
-//     it('should return null', async () => {
-//       expect(await admin.editParcelStatus()).to.be.null;
-//     });
+var _user = require('./../models/user');
 
-//     it('should return false', async () => {
-//       expect(await admin.editParcelStatus('1', constants.DEFAULT_STATUS.cancelled)).to.be.undefined;
-//     });
+var _user2 = _interopRequireDefault(_user);
 
-//     it('should return null', async () => {
-//       expect(await admin.editPresentLocation()).to.be.null;
-//     });
+var _admin = require('./../models/admin');
 
-//     it('should return number', async () => {
-//       expect(await admin.getParcelNumber()).to.be.a('number');
-//     });
+var _admin2 = _interopRequireDefault(_admin);
 
-//     it('should return a number', async () => {
-//       expect(await admin.getParcelNumber(constants.DEFAULT_STATUS.pending)).to.be.a('number');
-//     });
+var _app = require('./../models/app');
 
-//     it('should return a number', async () => {
-//       expect(await admin.getParcelNumber(constants.DEFAULT_STATUS.transit)).to.be.a('number');
-//     });
-//   });
+var _app2 = _interopRequireDefault(_app);
 
-//   describe('Parcel class', () => {
-//     it('should return false', async () => {
-//       expect(await parcel.createParcel()).to.be.false;
-//     });
+var _admin3 = require('./../controllers/admin');
 
-//     it('should return NaN', () => {
-//       expect(parcel.getParcelPrice()).to.be.NaN;
-//     });
-//   });
-// });
+var _admin4 = _interopRequireDefault(_admin3);
 
-// // //////////////////////////////////
-// // Testing instance of classes     //
-// // //////////////////////////////////
-// describe('Test instance of Each Class', () => {
-//   it('should be an instance of User', () => {
-//     expect(user).to.be.an.instanceof(User);
-//   });
+var _auth = require('./../controllers/auth');
 
-//   it('should be an instance of Parcel', () => {
-//     expect(parcel).to.be.an.instanceof(Parcel);
-//   });
+var _auth2 = _interopRequireDefault(_auth);
 
-//   it('should be an instance of Admin', () => {
-//     expect(admin).to.be.an.instanceof(Admin);
-//   });
-// });
+var _parcel3 = require('./../controllers/parcel');
 
-// describe('Testing methods[function] for User class', () => {
-//   it('should be a function', async () => {
-//     await user.createUser.should.be.a('function');
-//     await user.loginUser.should.be.a('function');
-//     await user.editParcelDestination.should.be.a('function');
-//     await user.cancelParcel.should.be.a('function');
-//     await user.getParcelNumber.should.be.a('function');
-//   });
-// });
+var _parcel4 = _interopRequireDefault(_parcel3);
 
-// describe('Testing methods[function] for Admin class', () => {
-//   it('should be a function', async () => {
-//     await admin.loginAdmin.should.be.a('function');
-//     await admin.getParcelNumber.should.be.a('function');
-//     await admin.editParcelStatus.should.be.a('function');
-//     await admin.editPresentLocation.should.be.a('function');
-//   });
-// });
+var _user3 = require('./../controllers/user');
 
-// describe('Testing property of object', () => {
-//   describe('userInfo object', () => {
-//     it('should have some property ', () => {
-//       expect(userInfo).to.have.property('firstName');
-//       expect(userInfo).to.have.property('lastName');
-//       expect(userInfo).to.have.property('email');
-//       expect(userInfo).to.have.property('password');
-//     });
-//   });
-// });
+var _user4 = _interopRequireDefault(_user3);
 
-// describe('Testing methods[function] for Admin class', () => {
-//   it('should be a function', async () => {
-//     await admin.getParcelNumber.should.be.a('function');
-//   });
-// });
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// describe('Testing methods[function] for User class', () => {
-//   it('should be a function', async () => {
-//     await user.getParcelNumber.should.be.a('function');
-//   });
-// });
+// import controllers
 
-// describe('Testing methods[function] for Parcel class', () => {
-//   it('should be a function', async () => {
-//     await parcel.createParcel.should.be.a('function');
-//     await parcel.getAllParcel.should.be.a('function');
-//     await parcel.getAllParcelByUser.should.be.a('function');
-//     await parcel.getParcelById.should.be.a('function');
-//     parcel.getParcelPrice.should.be.a('function');
 
-//   });
-// });
+// importing models
+var expect = _chai2.default.expect,
+    assert = _chai2.default.assert; /* eslint-disable */
 
-// describe('Testing methods[function] for App class', () => {
-//   it('should be a function', async () => {
-//     await app.isEmailExist.should.be.a('function');
-//     await app.getIdByEmail.should.be.a('function');
-//     await app.getInfoById.should.be.a('function');
-//   });
-// });
+var should = _chai2.default.should();
 
-// describe('Testing methods[function] for AdminCtrl', () => {
-//   it('should be a function', async () => {
-//     await AdminCtrl.adminSignIn.should.be.a('function');
-//     await AdminCtrl.getAllParcels.should.be.a('function');
-//     await AdminCtrl.editStatus.should.be.a('function');
-//     await AdminCtrl.editPresentLocation.should.be.a('function');
-//     await AdminCtrl.countParcels.should.be.a('function');
-//   });
-// });
-"use strict";
+// clear all table
+before(async function () {
+  try {
+    await (0, _db.execute)('TRUNCATE admin CASCADE; ALTER SEQUENCE admin_id_admin_seq RESTART WITH 1;');
+    await (0, _db.execute)('TRUNCATE users CASCADE; ALTER SEQUENCE users_id_user_seq RESTART WITH 1;');
+    await (0, _db.execute)('TRUNCATE parcels CASCADE; ALTER SEQUENCE parcels_id_parcel_seq RESTART WITH 1;');
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+describe('Testing methods[function] for AdminCtrl', function () {
+  it('should be a function', async function () {
+    await _admin4.default.adminSignIn.should.be.a('function');
+    await _admin4.default.getAllParcels.should.be.a('function');
+    await _admin4.default.editStatus.should.be.a('function');
+    await _admin4.default.editPresentLocation.should.be.a('function');
+    await _admin4.default.countParcels.should.be.a('function');
+  });
+});
+
+describe('Testing methods[function] for AuthCtrl', function () {
+  it('should be a function', async function () {
+    await _auth2.default.userSignIn.should.be.a('function');
+    await _auth2.default.userSignUp.should.be.a('function');
+  });
+});
+
+describe('Testing methods[function] for ParcelCtrl', function () {
+  it('should be a function', async function () {
+    await _parcel4.default.createParcel.should.be.a('function');
+    await _parcel4.default.getParcelById.should.be.a('function');
+    await _parcel4.default.cancelParcel.should.be.a('function');
+    await _parcel4.default.editDestination.should.be.a('function');
+  });
+});

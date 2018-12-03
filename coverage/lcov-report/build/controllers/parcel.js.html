@@ -278,9 +278,7 @@
 233
 234
 235
-236
-237
-238</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+236</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -344,9 +342,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -429,26 +425,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -457,6 +439,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -476,8 +472,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -580,10 +576,8 @@ var ParcelCtrl = function () {
           destination = <span class="cstat-no" title="statement not covered" >_request$body.destination,</span>
           weight = <span class="cstat-no" title="statement not covered" >_request$body.weight;</span>
 &nbsp;
-      // change it to const userId = response.locals.id
 &nbsp;
-      var id = <span class="cstat-no" title="statement not covered" >response.locals.id.id;</span>
-&nbsp;
+      var userId = <span class="cstat-no" title="statement not covered" >response.locals.id;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      request.checkBody('parcelName', 'parcel name is required').notEmpty();</span>
 <span class="cstat-no" title="statement not covered" >      request.checkBody('description', 'description is required').notEmpty();</span>
@@ -594,7 +588,7 @@ var ParcelCtrl = function () {
       var errors = <span class="cstat-no" title="statement not covered" >request.validationErrors();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (!parcelName || !description || !pickupLocation || !destination || !weight) {</span>
-<span class="cstat-no" title="statement not covered" >        response.status(404).json({</span>
+<span class="cstat-no" title="statement not covered" >        response.status(400).json({</span>
           status: 'fail',
           message: 'Fill all required fields'
         });
@@ -607,7 +601,7 @@ var ParcelCtrl = function () {
         });
       } else {
         var parcel = <span class="cstat-no" title="statement not covered" >new _parcel2.default();</span>
-        var createParcel = <span class="cstat-no" title="statement not covered" >await parcel.createParcel(id, parcelName, description, pickupLocation, destination, weight);</span>
+        var createParcel = <span class="cstat-no" title="statement not covered" >await parcel.createParcel(userId, parcelName, description, pickupLocation, destination, weight);</span>
 <span class="cstat-no" title="statement not covered" >        response.status(201).json({</span>
           status: 'success',
           parcel: createParcel
@@ -641,7 +635,7 @@ var ParcelCtrl = function () {
         var parcel = <span class="cstat-no" title="statement not covered" >new _parcel2.default();</span>
         var getParcel = <span class="cstat-no" title="statement not covered" >await parcel.getParcelById(parcelId);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (getParcel.length &lt;= 0) {</span>
+<span class="cstat-no" title="statement not covered" >        if (!getParcel.length) {</span>
 <span class="cstat-no" title="statement not covered" >          response.status(404).json({</span>
             status: 'fail',
             message: 'No parcel found with this parcel Id'
@@ -666,8 +660,8 @@ var ParcelCtrl = function () {
     key: 'cancelParcel',
     value: async function <span class="fstat-no" title="function not covered" >cancelParcel(</span>request, response) {
       var parcelId = <span class="cstat-no" title="statement not covered" >request.params.parcelId;</span>
-      var id = <span class="cstat-no" title="statement not covered" >response.locals.id;</span>
 &nbsp;
+      var userId = <span class="cstat-no" title="statement not covered" >response.locals.id;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');</span>
 &nbsp;
@@ -680,7 +674,7 @@ var ParcelCtrl = function () {
         });
       } else {
         var user = <span class="cstat-no" title="statement not covered" >new _user2.default();</span>
-        var cancel = <span class="cstat-no" title="statement not covered" >await user.cancelParcel(id, parcelId);</span>
+        var cancel = <span class="cstat-no" title="statement not covered" >await user.cancelParcel(userId, parcelId);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        if (cancel === null) {</span>
 <span class="cstat-no" title="statement not covered" >          response.status(404).json({</span>
@@ -713,8 +707,8 @@ var ParcelCtrl = function () {
     value: async function <span class="fstat-no" title="function not covered" >editDestination(</span>request, response) {
       var parcelId = <span class="cstat-no" title="statement not covered" >request.params.parcelId;</span>
       var destination = <span class="cstat-no" title="statement not covered" >request.body.destination;</span>
-      var id = <span class="cstat-no" title="statement not covered" >response.locals.id;</span>
 &nbsp;
+      var userId = <span class="cstat-no" title="statement not covered" >response.locals.id;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      request.check('parcelId', 'parcel id is required').notEmpty().isInt().withMessage('parcel id must be a number');</span>
 &nbsp;
@@ -729,7 +723,7 @@ var ParcelCtrl = function () {
         });
       } else {
         var user = <span class="cstat-no" title="statement not covered" >new _user2.default();</span>
-        var edit = <span class="cstat-no" title="statement not covered" >await user.editParcelDestination(id, parcelId, destination);</span>
+        var edit = <span class="cstat-no" title="statement not covered" >await user.editParcelDestination(userId, parcelId, destination);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        if (edit === null) {</span>
 <span class="cstat-no" title="statement not covered" >          response.status(404).json({</span>
@@ -760,7 +754,7 @@ exports.default = ParcelCtrl;</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Nov 29 2018 13:29:27 GMT+0200 (South Africa Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 03 2018 20:51:26 GMT+0200 (South Africa Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

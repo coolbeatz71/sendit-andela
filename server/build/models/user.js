@@ -76,7 +76,7 @@ var User = function (_App) {
       var userToken = _jsonwebtoken2.default.sign({
         id: userId,
         email: email
-      }, _constant2.default.JWT_SECRET_TOKEN);
+      }, process.env.JWT_SECRET_TOKEN);
 
       return {
         id: userId,
@@ -129,7 +129,7 @@ var User = function (_App) {
       var userToken = _jsonwebtoken2.default.sign({
         id: userId,
         email: email
-      }, _constant2.default.JWT_SECRET_TOKEN);
+      }, process.env.JWT_SECRET_TOKEN);
 
       // return user data
       var data = await this.getInfoById(userId, _constant2.default.USER);
