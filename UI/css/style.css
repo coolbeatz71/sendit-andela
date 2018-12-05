@@ -401,11 +401,15 @@ td, th {
     padding: 8px;
 }
 
-tr:nth-child(even) {
+th{
+    font-size: 16px;
+}
+
+tbody tr:nth-child(even) {
     background-color: #eee;
 }
 
-tr:nth-child(odd) {
+tbody tr:nth-child(odd) {
     background-color: #fff;
 }
 
@@ -639,10 +643,10 @@ select option{
     padding: 16px;
 }
 
-#info tr:nth-child(even) {
+#info tr:nth-child(odd) {
     background-color: #eee;
 }
 
-#info tr:nth-child(odd) {
+#info tr:nth-child(even) {
     background-color: #fff;
 }
