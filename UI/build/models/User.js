@@ -16,46 +16,42 @@ var User = function () {
     value: function signUp(firstName, lastName, email, password) {
       if (!firstName || !lastName || !email || !password) {
         return false;
-      } else {
-        var userInfo = {
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password
-        };
-
-        return HttpRequest.post(endPoint + '/user/signUp', userInfo).then(function (result) {
-          if (!result.body.error) {
-            localStorage.setItem('apiKey', result.body.data.token);
-            localStorage.setItem('data', JSON.stringify(result.body.data));
-            return result;
-          } else {
-            return result;
-          }
-        });
       }
+      var userInfo = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password
+      };
+
+      return HttpRequest.post(endPoint + '/user/signUp', userInfo).then(function (result) {
+        if (!result.body.error) {
+          localStorage.setItem('apiKey', result.body.data.token);
+          localStorage.setItem('data', JSON.stringify(result.body.data));
+          return result;
+        }
+        return result;
+      });
     }
   }, {
     key: 'signIn',
     value: function signIn(email, password) {
       if (!email || !password) {
         return false;
-      } else {
-        var userInfo = {
-          email: email,
-          password: password
-        };
-
-        return HttpRequest.post(endPoint + '/user/signIn', userInfo).then(function (result) {
-          if (!result.body.error) {
-            localStorage.setItem('apiKey', result.body.data.token);
-            localStorage.setItem('data', JSON.stringify(result.body.data));
-            return result;
-          } else {
-            return result;
-          }
-        });
       }
+      var userInfo = {
+        email: email,
+        password: password
+      };
+
+      return HttpRequest.post(endPoint + '/user/signIn', userInfo).then(function (result) {
+        if (!result.body.error) {
+          localStorage.setItem('apiKey', result.body.data.token);
+          localStorage.setItem('data', JSON.stringify(result.body.data));
+          return result;
+        }
+        return result;
+      });
     }
   }]);
 

@@ -17,15 +17,13 @@ btnSignIn.addEventListener('click', function (e) {
     var user = new User();
     user.signIn(email, password).then(function (result) {
       if (!result.body.error) {
-        window.location.href = "userProfile.html";
+        window.location.href = 'userProfile.html';
+      } else if (result.body.emptyParams) {
+        alert('Please, email and password are required');
+      } else if (result.body.wrongParams) {
+        alert('Incorrect email or password');
       } else {
-        if (result.body.emptyParams) {
-          alert('Please, email and password are required');
-        } else if (result.body.wrongParams) {
-          alert('Incorrect email or password');
-        } else {
-          alert('Internal server error');
-        }
+        alert('Internal server error');
       }
     });
   }
@@ -43,15 +41,13 @@ btnSignUp.addEventListener('click', function (e) {
   user.signUp(firstName, lastName, email, password).then(function (result) {
     console.log(result);
     if (!result.body.error) {
-      window.location.href = "userProfile.html";
+      window.location.href = 'userProfile.html';
+    } else if (result.body.emptyParams) {
+      alert('Please, email and password are required');
+    } else if (result.body.userExist) {
+      alert('Thsi email already used by an account');
     } else {
-      if (result.body.emptyParams) {
-        alert('Please, email and password are required');
-      } else if (result.body.userExist) {
-        alert('Thsi email already used by an account');
-      } else {
-        alert('Internal server error');
-      }
+      alert('Internal server error');
     }
   });
 });
