@@ -8,9 +8,9 @@ btnSignIn.addEventListener('click', (e) => {
   const password = document.getElementById('passwordSignIn').value.trim();
 
   if (!email) {
-    alert('The email address must not be empty');
+    swal('Require field', 'The email address must not be empty!', 'error');
   } else if (!password) {
-    alert('The password must not be empty');
+    swal('Require field', 'The password must not be empty!', 'error');
   } else {
     const user = new User();
     user.signIn(email, password)
