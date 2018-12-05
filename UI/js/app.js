@@ -1,4 +1,3 @@
-/* eslint-disable */
 const modal = document.querySelector('#modal-sign-up');
 const btnStart = document.querySelector('.btn-start');
 const btnClose = document.querySelector('.btn-close-modal');
@@ -155,6 +154,44 @@ isElementExist(btnCreateParcel, () => {
 isElementExist(linkAllParcels, () => {
   linkAllParcels.addEventListener('click', () => {
     setAllParcel();
+    tableAllParcels.innerHTML = '';
+    const parcel = new Parcel();
+    parcel.getAllParcelByUser()
+      .then((result) => {
+        if (!result.body.error) {
+          if (!result.body.data) {
+            tableAllParcels.innerHTML = `
+              <h3 class="no-data">Nothing to display</h3>  
+            `;
+          } else {
+            const parcels = result.body.data;
+            parcels.forEach((el) => {
+              tableAllParcels.innerHTML += `
+                  <tr>
+                    <td>${el.orderId}</td>
+                    <td>${el.parcelName}</td>
+                    <td>${el.presentLocation}</td>
+                    <td>${el.destination}</td>
+                    <td>${el.status}</td>
+                    <td>
+                        <div class="btn-group-action">
+                            <button data-id="${el.orderId}" id="btn-details">details</button>
+                            <button data-id="${el.orderId}" id="btn-edit">edit</button>
+                            <button data-id="${el.orderId}" id="btn-cancel">cancel</button>
+                        </div>
+                    </td>
+                </tr>
+                `;
+            });
+          }
+        } else if (result.body.authKeyMissed) {
+          alert('Auth Missed');
+          window.location.href = 'index.html';
+        } else if (result.body.authKeyInvalid) {
+          alert('Auth Invalid');
+          window.location.href = 'index.html';
+        }
+      });
   });
 });
 
@@ -166,20 +203,147 @@ window.addEventListener('load', () => {
 });
 
 isElementExist(linkTransitParcels, () => {
-  linkTransitParcels.addEventListener('click', () => {
+  linkTransitParcels.addEventListener('click', (e) => {
+    e.preventDefault();
     setTransitParcel();
+    tableTransitParcel.innerHTML = '';
+    const parcel = new Parcel();
+    parcel.getAllParcelByUser()
+      .then((result) => {
+        if (!result.body.error) {
+          if (!result.body.data) {
+            tableTransitParcel.innerHTML = `
+              <h3 class="no-data">Nothing to display</h3>  
+            `;
+          } else {
+            const parcels = result.body.data;
+            const transitOrder = parcels.filter(el => el.status === 'in transit');
+            if (transitOrder.length > 0) {
+              transitOrder.forEach((el) => {
+                tableTransitParcel.innerHTML += `
+                    <tr>
+                      <td>${el.orderId}</td>
+                      <td>${el.parcelName}</td>
+                      <td>${el.presentLocation}</td>
+                      <td>${el.destination}</td>
+                      <td>${el.status}</td>
+                      <td>
+                          <div class="btn-group-action">
+                              <button data-id="${el.orderId}" id="btn-details">details</button>
+                              <button data-id="${el.orderId}" id="btn-edit">edit</button>
+                              <button data-id="${el.orderId}" id="btn-cancel">cancel</button>
+                          </div>
+                      </td>
+                  </tr>
+                  `;
+              });
+            } else {
+              tableTransitParcel.innerHTML += `
+                  <h3>Nothing to display</h3>
+                `;
+            }
+          }
+        } else if (result.body.authKeyMissed) {
+          alert('Auth Missed');
+          window.location.href = 'index.html';
+        } else if (result.body.authKeyInvalid) {
+          alert('Auth Invalid');
+          window.location.href = 'index.html';
+        }
+      });
   });
 });
 
 isElementExist(linkDeliveredParcels, () => {
   linkDeliveredParcels.addEventListener('click', () => {
     setDeliveredParcel();
+    tableDeliveredParcel.innerHTML = '';
+    const parcel = new Parcel();
+    parcel.getAllParcelByUser()
+      .then((result) => {
+        if (!result.body.error) {
+          if (!result.body.data) {
+            tableDeliveredParcel.innerHTML = `
+              <h3 class="no-data">Nothing to display</h3>  
+            `;
+          } else {
+            const parcels = result.body.data;
+            const deliveredOrder = parcels.filter(el => el.status === 'delivered');
+            if (deliveredOrder.length > 0) {
+              deliveredOrder.forEach((el) => {
+                tableDeliveredParcel.innerHTML += `
+                    <tr>
+                      <td>${el.orderId}</td>
+                      <td>${el.parcelName}</td>
+                      <td>${el.presentLocation}</td>
+                      <td>${el.destination}</td>
+                      <td>${el.status}</td>
+                      <td>
+                          <div class="btn-group-action">
+                              <button data-id="${el.orderId}" id="btn-details">details</button>
+                          </div>
+                      </td>
+                  </tr>
+                  `;
+              });
+            } else {
+              tableDeliveredParcel.innerHTML += `
+                  <h3>Nothing to display</h3>
+                `;
+            }
+          }
+        } else if (result.body.authKeyMissed) {
+          alert('Auth Missed');
+          window.location.href = 'index.html';
+        } else if (result.body.authKeyInvalid) {
+          alert('Auth Invalid');
+          window.location.href = 'index.html';
+        }
+      });
   });
 });
 
 isElementExist(linkCancelledParcels, () => {
   linkCancelledParcels.addEventListener('click', () => {
     setCancelledParcel();
+    tableCancelledParcel.innerHTML = '';
+    const parcel = new Parcel();
+    parcel.getAllParcelByUser()
+      .then((result) => {
+        if (!result.body.error) {
+          if (!result.body.data) {
+            tableCancelledParcel.innerHTML = `
+              <h3 class="no-data">Nothing to display</h3>  
+            `;
+          } else {
+            const parcels = result.body.data;
+            const cancelledOrder = parcels.filter(el => el.status === 'cancelled');
+            if (cancelledOrder.length > 0) {
+              cancelledOrder.forEach((el) => {
+                tableCancelledParcel.innerHTML += `
+                    <tr>
+                      <td>${el.orderId}</td>
+                      <td>${el.parcelName}</td>
+                      <td>${el.presentLocation}</td>
+                      <td>${el.destination}</td>
+                      <td>${el.status}</td>
+                  </tr>
+                  `;
+              });
+            } else {
+              tableCancelledParcel.innerHTML += `
+                  <h3>Nothing to display</h3>
+                `;
+            }
+          }
+        } else if (result.body.authKeyMissed) {
+          alert('Auth Missed');
+          window.location.href = 'index.html';
+        } else if (result.body.authKeyInvalid) {
+          alert('Auth Invalid');
+          window.location.href = 'index.html';
+        }
+      });
   });
 });
 

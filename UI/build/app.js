@@ -1,6 +1,5 @@
 'use strict';
 
-/* eslint-disable */
 var modal = document.querySelector('#modal-sign-up');
 var btnStart = document.querySelector('.btn-start');
 var btnClose = document.querySelector('.btn-close-modal');
@@ -157,6 +156,26 @@ isElementExist(btnCreateParcel, function () {
 isElementExist(linkAllParcels, function () {
   linkAllParcels.addEventListener('click', function () {
     setAllParcel();
+    tableAllParcels.innerHTML = '';
+    var parcel = new Parcel();
+    parcel.getAllParcelByUser().then(function (result) {
+      if (!result.body.error) {
+        if (!result.body.data) {
+          tableAllParcels.innerHTML = '\n              <h3 class="no-data">Nothing to display</h3>  \n            ';
+        } else {
+          var parcels = result.body.data;
+          parcels.forEach(function (el) {
+            tableAllParcels.innerHTML += '\n                  <tr>\n                    <td>' + el.orderId + '</td>\n                    <td>' + el.parcelName + '</td>\n                    <td>' + el.presentLocation + '</td>\n                    <td>' + el.destination + '</td>\n                    <td>' + el.status + '</td>\n                    <td>\n                        <div class="btn-group-action">\n                            <button data-id="' + el.orderId + '" id="btn-details">details</button>\n                            <button data-id="' + el.orderId + '" id="btn-edit">edit</button>\n                            <button data-id="' + el.orderId + '" id="btn-cancel">cancel</button>\n                        </div>\n                    </td>\n                </tr>\n                ';
+          });
+        }
+      } else if (result.body.authKeyMissed) {
+        alert('Auth Missed');
+        window.location.href = 'index.html';
+      } else if (result.body.authKeyInvalid) {
+        alert('Auth Invalid');
+        window.location.href = 'index.html';
+      }
+    });
   });
 });
 
@@ -176,20 +195,102 @@ window.addEventListener('load', function () {
 });
 
 isElementExist(linkTransitParcels, function () {
-  linkTransitParcels.addEventListener('click', function () {
+  linkTransitParcels.addEventListener('click', function (e) {
+    e.preventDefault();
     setTransitParcel();
+    tableTransitParcel.innerHTML = '';
+    var parcel = new Parcel();
+    parcel.getAllParcelByUser().then(function (result) {
+      if (!result.body.error) {
+        if (!result.body.data) {
+          tableTransitParcel.innerHTML = '\n              <h3 class="no-data">Nothing to display</h3>  \n            ';
+        } else {
+          var parcels = result.body.data;
+          var transitOrder = parcels.filter(function (el) {
+            return el.status === 'in transit';
+          });
+          if (transitOrder.length > 0) {
+            transitOrder.forEach(function (el) {
+              tableTransitParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.orderId + '</td>\n                      <td>' + el.parcelName + '</td>\n                      <td>' + el.presentLocation + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.orderId + '" id="btn-details">details</button>\n                              <button data-id="' + el.orderId + '" id="btn-edit">edit</button>\n                              <button data-id="' + el.orderId + '" id="btn-cancel">cancel</button>\n                          </div>\n                      </td>\n                  </tr>\n                  ';
+            });
+          } else {
+            tableTransitParcel.innerHTML += '\n                  <h3>Nothing to display</h3>\n                ';
+          }
+        }
+      } else if (result.body.authKeyMissed) {
+        alert('Auth Missed');
+        window.location.href = 'index.html';
+      } else if (result.body.authKeyInvalid) {
+        alert('Auth Invalid');
+        window.location.href = 'index.html';
+      }
+    });
   });
 });
 
 isElementExist(linkDeliveredParcels, function () {
   linkDeliveredParcels.addEventListener('click', function () {
     setDeliveredParcel();
+    tableDeliveredParcel.innerHTML = '';
+    var parcel = new Parcel();
+    parcel.getAllParcelByUser().then(function (result) {
+      if (!result.body.error) {
+        if (!result.body.data) {
+          tableDeliveredParcel.innerHTML = '\n              <h3 class="no-data">Nothing to display</h3>  \n            ';
+        } else {
+          var parcels = result.body.data;
+          var deliveredOrder = parcels.filter(function (el) {
+            return el.status === 'delivered';
+          });
+          if (deliveredOrder.length > 0) {
+            deliveredOrder.forEach(function (el) {
+              tableDeliveredParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.orderId + '</td>\n                      <td>' + el.parcelName + '</td>\n                      <td>' + el.presentLocation + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.orderId + '" id="btn-details">details</button>\n                          </div>\n                      </td>\n                  </tr>\n                  ';
+            });
+          } else {
+            tableDeliveredParcel.innerHTML += '\n                  <h3>Nothing to display</h3>\n                ';
+          }
+        }
+      } else if (result.body.authKeyMissed) {
+        alert('Auth Missed');
+        window.location.href = 'index.html';
+      } else if (result.body.authKeyInvalid) {
+        alert('Auth Invalid');
+        window.location.href = 'index.html';
+      }
+    });
   });
 });
 
 isElementExist(linkCancelledParcels, function () {
   linkCancelledParcels.addEventListener('click', function () {
     setCancelledParcel();
+    tableCancelledParcel.innerHTML = '';
+    var parcel = new Parcel();
+    parcel.getAllParcelByUser().then(function (result) {
+      if (!result.body.error) {
+        if (!result.body.data) {
+          tableCancelledParcel.innerHTML = '\n              <h3 class="no-data">Nothing to display</h3>  \n            ';
+        } else {
+          var parcels = result.body.data;
+          var cancelledOrder = parcels.filter(function (el) {
+            return el.status === 'cancelled';
+          });
+          if (cancelledOrder.length > 0) {
+            cancelledOrder.forEach(function (el) {
+              tableCancelledParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.orderId + '</td>\n                      <td>' + el.parcelName + '</td>\n                      <td>' + el.presentLocation + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                  </tr>\n                  ';
+            });
+          } else {
+            tableCancelledParcel.innerHTML += '\n                  <h3>Nothing to display</h3>\n                ';
+          }
+        }
+      } else if (result.body.authKeyMissed) {
+        alert('Auth Missed');
+        window.location.href = 'index.html';
+      } else if (result.body.authKeyInvalid) {
+        alert('Auth Invalid');
+        window.location.href = 'index.html';
+      }
+    });
   });
 });
 
