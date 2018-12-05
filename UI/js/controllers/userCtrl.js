@@ -13,18 +13,18 @@ btnSignIn.addEventListener('click', (e) => {
     swal('Require field', 'The password must not be empty!', 'error');
   } else if (!validator.isEmail(email)) {
     swal('Oops!!', 'Invalid email format', 'error');
+  } else if (!validator.isAlphanumeric(password)) {
+    swal('Oops!!', 'The password must contains alphabetic or numeric symbols', 'error');
   } else {
     const user = new User();
     user.signIn(email, password)
       .then((result) => {
-        if (!result.body.error) {
+        if (result.status === 'success') {
           window.location.href = 'userProfile.html';
-        } else if (result.body.emptyParams) {
-          alert('Please, email and password are required');
-        } else if (result.body.wrongParams) {
-          alert('Incorrect email or password');
+        } else if (result.status === 'fail') {
+          swal('Oops!!', `${result.message}`, 'error');
         } else {
-          alert('Internal server error');
+          swal('Oops!!', 'Internal server error', 'error');
         }
       });
   }

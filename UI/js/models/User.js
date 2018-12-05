@@ -13,9 +13,9 @@ class User {
 
     return HttpRequest.post(`${endPoint}/auth/signUp`, userInfo)
       .then((result) => {
-        if (!result.body.error) {
-          localStorage.setItem('apiKey', result.body.data.token);
-          localStorage.setItem('data', JSON.stringify(result.body.data));
+        if (result.status === 'success') {
+          localStorage.setItem('apiKey', result.user.token);
+          localStorage.setItem('data', JSON.stringify(result.user));
           return result;
         }
         return result;
@@ -33,9 +33,9 @@ class User {
 
     return HttpRequest.post(`${endPoint}/auth/login`, userInfo)
       .then((result) => {
-        if (!result.body.error) {
-          localStorage.setItem('apiKey', result.body.data.token);
-          localStorage.setItem('data', JSON.stringify(result.body.data));
+        if (result.status === 'success') {
+          localStorage.setItem('apiKey', result.user.token);
+          localStorage.setItem('data', JSON.stringify(result.user));
           return result;
         }
         return result;
