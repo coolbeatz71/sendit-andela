@@ -13,6 +13,8 @@ btnSignIn.addEventListener('click', function (e) {
     swal('Require field', 'The email address must not be empty!', 'error');
   } else if (!password) {
     swal('Require field', 'The password must not be empty!', 'error');
+  } else if (!validator.isEmail(email)) {
+    swal('Oops!!', 'Invalid email format', 'error');
   } else {
     var user = new User();
     user.signIn(email, password).then(function (result) {

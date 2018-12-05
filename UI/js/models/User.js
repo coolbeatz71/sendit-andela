@@ -11,7 +11,7 @@ class User {
       password,
     };
 
-    return HttpRequest.post(`${endPoint}/user/signUp`, userInfo)
+    return HttpRequest.post(`${endPoint}/auth/signUp`, userInfo)
       .then((result) => {
         if (!result.body.error) {
           localStorage.setItem('apiKey', result.body.data.token);
@@ -31,7 +31,7 @@ class User {
       password,
     };
 
-    return HttpRequest.post(`${endPoint}/user/signIn`, userInfo)
+    return HttpRequest.post(`${endPoint}/auth/login`, userInfo)
       .then((result) => {
         if (!result.body.error) {
           localStorage.setItem('apiKey', result.body.data.token);

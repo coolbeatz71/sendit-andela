@@ -19,13 +19,17 @@ class HttpRequest {
         }),
       });
 
-      fetch(request).then((response) => {
-        response.json();
-      }).then((response) => {
-        resolve(response);
-      }).catch((error) => {
-        reject(error);
-      });
+      // add the spinner overlay
+      const spinner = loadingOverlay().activate();
+
+      fetch(request).then(response => response.json())
+        .then((body) => {
+          console.log(body);
+          loadingOverlay().cancel(spinner);
+          resolve(body);
+        }).catch((error) => {
+          reject(error);
+        });
     });
   }
 
@@ -47,16 +51,19 @@ class HttpRequest {
           'Content-Type': 'application/json; charset=utf-8',
           Accept: 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(this.data),
       };
+      // add the spinner overlay
+      const spinner = loadingOverlay().activate();
 
-      fetch(this.url, options).then((response) => {
-        response.json();
-      }).then((response) => {
-        resolve(response);
-      }).catch((error) => {
-        reject(error);
-      });
+      fetch(this.url, options).then(response => response.json())
+        .then((body) => {
+          console.log(body);
+          loadingOverlay().cancel(spinner);
+          resolve(body);
+        }).catch((error) => {
+          reject(error);
+        });
     });
   }
 
@@ -84,13 +91,17 @@ class HttpRequest {
         body: JSON.stringify(data),
       };
 
-      fetch(this.url, options).then((response) => {
-        response.json();
-      }).then((response) => {
-        resolve(response);
-      }).catch((error) => {
-        reject(error);
-      });
+      // add the spinner overlay
+      const spinner = loadingOverlay().activate();
+
+      fetch(this.url, options).then(response => response.json())
+        .then((body) => {
+          console.log(body);
+          loadingOverlay().cancel(spinner);
+          resolve(body);
+        }).catch((error) => {
+          reject(error);
+        });
     });
   }
 
@@ -117,13 +128,17 @@ class HttpRequest {
         body: JSON.stringify(data),
       };
 
-      fetch(this.url, options).then((response) => {
-        response.json();
-      }).then((response) => {
-        resolve(response);
-      }).catch((error) => {
-        reject(error);
-      });
+      // add the spinner overlay
+      const spinner = loadingOverlay().activate();
+
+      fetch(this.url, options).then(response => response.json())
+        .then((body) => {
+          console.log(body);
+          loadingOverlay().cancel(spinner);
+          resolve(body);
+        }).catch((error) => {
+          reject(error);
+        });
     });
   }
 }

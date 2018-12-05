@@ -34,10 +34,15 @@ var HttpRequest = function () {
           })
         });
 
+        // add the spinner overlay
+        var spinner = loadingOverlay().activate();
+
         fetch(request).then(function (response) {
-          response.json();
-        }).then(function (response) {
-          resolve(response);
+          return response.json();
+        }).then(function (body) {
+          console.log(body);
+          loadingOverlay().cancel(spinner);
+          resolve(body);
         }).catch(function (error) {
           reject(error);
         });
@@ -67,13 +72,17 @@ var HttpRequest = function () {
             'Content-Type': 'application/json; charset=utf-8',
             Accept: 'application/json'
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(_this2.data)
         };
+        // add the spinner overlay
+        var spinner = loadingOverlay().activate();
 
         fetch(_this2.url, options).then(function (response) {
-          response.json();
-        }).then(function (response) {
-          resolve(response);
+          return response.json();
+        }).then(function (body) {
+          console.log(body);
+          loadingOverlay().cancel(spinner);
+          resolve(body);
         }).catch(function (error) {
           reject(error);
         });
@@ -109,10 +118,15 @@ var HttpRequest = function () {
           body: JSON.stringify(data)
         };
 
+        // add the spinner overlay
+        var spinner = loadingOverlay().activate();
+
         fetch(_this3.url, options).then(function (response) {
-          response.json();
-        }).then(function (response) {
-          resolve(response);
+          return response.json();
+        }).then(function (body) {
+          console.log(body);
+          loadingOverlay().cancel(spinner);
+          resolve(body);
         }).catch(function (error) {
           reject(error);
         });
@@ -147,10 +161,15 @@ var HttpRequest = function () {
           body: JSON.stringify(data)
         };
 
+        // add the spinner overlay
+        var spinner = loadingOverlay().activate();
+
         fetch(_this4.url, options).then(function (response) {
-          response.json();
-        }).then(function (response) {
-          resolve(response);
+          return response.json();
+        }).then(function (body) {
+          console.log(body);
+          loadingOverlay().cancel(spinner);
+          resolve(body);
         }).catch(function (error) {
           reject(error);
         });
