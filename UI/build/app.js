@@ -16,11 +16,13 @@ var btnCancel = document.querySelectorAll('#btn-cancel');
 var btnEditAdmin = document.querySelectorAll('#btn-edit-admin');
 
 var linkAllParcels = document.getElementById('link-all-parcels');
+var linkPendingParcels = document.getElementById('link-pending-parcels');
 var linkTransitParcels = document.getElementById('link-transit-parcels');
 var linkDeliveredParcels = document.getElementById('link-delivered-parcels');
 var linkCancelledParcels = document.getElementById('link-cancelled-parcels');
 
 var allParcels = document.getElementById('all-parcels');
+var pendingParcels = document.getElementById('pending-parcels');
 var transitParcels = document.getElementById('transit-parcels');
 var deliveredParcels = document.getElementById('delivered-parcels');
 var cancelledParcels = document.getElementById('cancelled-parcels');
@@ -81,6 +83,15 @@ var _gotoSignInAdmin = function _gotoSignInAdmin() {
 
 var setAllParcel = function setAllParcel() {
   setDisplay(allParcels, 'block');
+  setDisplay(pendingParcels, 'none');
+  setDisplay(transitParcels, 'none');
+  setDisplay(deliveredParcels, 'none');
+  setDisplay(cancelledParcels, 'none');
+};
+
+var setPendingParcel = function setPendingParcel() {
+  setDisplay(allParcels, 'none');
+  setDisplay(pendingParcels, 'block');
   setDisplay(transitParcels, 'none');
   setDisplay(deliveredParcels, 'none');
   setDisplay(cancelledParcels, 'none');
@@ -88,6 +99,7 @@ var setAllParcel = function setAllParcel() {
 
 var setTransitParcel = function setTransitParcel() {
   setDisplay(allParcels, 'none');
+  setDisplay(pendingParcels, 'none');
   setDisplay(transitParcels, 'block');
   setDisplay(deliveredParcels, 'none');
   setDisplay(cancelledParcels, 'none');
@@ -95,6 +107,7 @@ var setTransitParcel = function setTransitParcel() {
 
 var setDeliveredParcel = function setDeliveredParcel() {
   setDisplay(allParcels, 'none');
+  setDisplay(pendingParcels, 'none');
   setDisplay(transitParcels, 'none');
   setDisplay(deliveredParcels, 'block');
   setDisplay(cancelledParcels, 'none');
@@ -102,6 +115,7 @@ var setDeliveredParcel = function setDeliveredParcel() {
 
 var setCancelledParcel = function setCancelledParcel() {
   setDisplay(allParcels, 'none');
+  setDisplay(pendingParcels, 'none');
   setDisplay(transitParcels, 'none');
   setDisplay(deliveredParcels, 'none');
   setDisplay(cancelledParcels, 'block');
@@ -183,6 +197,9 @@ window.addEventListener('load', function () {
   isElementExist(allParcels, function () {
     setDisplay(allParcels, 'block');
   });
+  isElementExist(pendingParcels, function () {
+    setDisplay(pendingParcels, 'none');
+  });
   isElementExist(transitParcels, function () {
     setDisplay(transitParcels, 'none');
   });
@@ -215,6 +232,39 @@ isElementExist(linkTransitParcels, function () {
             });
           } else {
             tableTransitParcel.innerHTML += '\n                  <h3>Nothing to display</h3>\n                ';
+          }
+        }
+      } else if (result.body.authKeyMissed) {
+        alert('Auth Missed');
+        window.location.href = 'index.html';
+      } else if (result.body.authKeyInvalid) {
+        alert('Auth Invalid');
+        window.location.href = 'index.html';
+      }
+    });
+  });
+});
+
+isElementExist(linkPendingParcels, function () {
+  linkPendingParcels.addEventListener('click', function () {
+    setPendingParcel();
+    tableDeliveredParcel.innerHTML = '';
+    var parcel = new Parcel();
+    parcel.getAllParcelByUser().then(function (result) {
+      if (!result.body.error) {
+        if (!result.body.data) {
+          tableDeliveredParcel.innerHTML = '\n              <h3 class="no-data">Nothing to display</h3>  \n            ';
+        } else {
+          var parcels = result.body.data;
+          var deliveredOrder = parcels.filter(function (el) {
+            return el.status === 'delivered';
+          });
+          if (deliveredOrder.length > 0) {
+            deliveredOrder.forEach(function (el) {
+              tableDeliveredParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.orderId + '</td>\n                      <td>' + el.parcelName + '</td>\n                      <td>' + el.presentLocation + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.orderId + '" id="btn-details">details</button>\n                          </div>\n                      </td>\n                  </tr>\n                  ';
+            });
+          } else {
+            tableDeliveredParcel.innerHTML += '\n                  <h3>Nothing to display</h3>\n                ';
           }
         }
       } else if (result.body.authKeyMissed) {

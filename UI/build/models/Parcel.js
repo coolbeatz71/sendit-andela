@@ -16,7 +16,7 @@ var Parcel = function () {
     value: function getAllParcel() {
       var apiKey = localStorage.getItem('apiKey');
 
-      return HttpRequest.getWithHeader(endPoint + '/parcels/', 'Bearer ' + apiKey).then(function (result) {
+      return HttpRequest.getWithHeader(endPoint + '/parcels/', apiKey).then(function (result) {
         return result;
       });
     }
@@ -32,8 +32,9 @@ var Parcel = function () {
     value: function getAllParcelByUser() {
       var userId = this.getUserId();
       var apiKey = localStorage.getItem('apiKey');
+      console.log(apiKey);
 
-      return HttpRequest.getWithHeader(endPoint + '/user/' + userId + '/parcels/', 'Bearer ' + apiKey).then(function (result) {
+      return HttpRequest.getWithHeader(endPoint + '/users/' + userId + '/parcels/', apiKey).then(function (result) {
         return result;
       });
     }
@@ -42,7 +43,7 @@ var Parcel = function () {
     value: function countParcelByUser() {
       var apiKey = localStorage.getItem('apiKey');
 
-      return HttpRequest.getWithHeader(endPoint + '/user/parcels/count', 'Bearer ' + apiKey).then(function (result) {
+      return HttpRequest.getWithHeader(endPoint + '/users/parcels/count', apiKey).then(function (result) {
         return result;
       });
     }

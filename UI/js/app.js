@@ -14,11 +14,13 @@ const btnCancel = document.querySelectorAll('#btn-cancel');
 const btnEditAdmin = document.querySelectorAll('#btn-edit-admin');
 
 const linkAllParcels = document.getElementById('link-all-parcels');
+const linkPendingParcels = document.getElementById('link-pending-parcels');
 const linkTransitParcels = document.getElementById('link-transit-parcels');
 const linkDeliveredParcels = document.getElementById('link-delivered-parcels');
 const linkCancelledParcels = document.getElementById('link-cancelled-parcels');
 
 const allParcels = document.getElementById('all-parcels');
+const pendingParcels = document.getElementById('pending-parcels');
 const transitParcels = document.getElementById('transit-parcels');
 const deliveredParcels = document.getElementById('delivered-parcels');
 const cancelledParcels = document.getElementById('cancelled-parcels');
@@ -79,6 +81,15 @@ const _gotoSignInAdmin = () => {
 
 const setAllParcel = () => {
   setDisplay(allParcels, 'block');
+  setDisplay(pendingParcels, 'none');
+  setDisplay(transitParcels, 'none');
+  setDisplay(deliveredParcels, 'none');
+  setDisplay(cancelledParcels, 'none');
+};
+
+const setPendingParcel = () => {
+  setDisplay(allParcels, 'none');
+  setDisplay(pendingParcels, 'block');
   setDisplay(transitParcels, 'none');
   setDisplay(deliveredParcels, 'none');
   setDisplay(cancelledParcels, 'none');
@@ -86,6 +97,7 @@ const setAllParcel = () => {
 
 const setTransitParcel = () => {
   setDisplay(allParcels, 'none');
+  setDisplay(pendingParcels, 'none');
   setDisplay(transitParcels, 'block');
   setDisplay(deliveredParcels, 'none');
   setDisplay(cancelledParcels, 'none');
@@ -93,6 +105,7 @@ const setTransitParcel = () => {
 
 const setDeliveredParcel = () => {
   setDisplay(allParcels, 'none');
+  setDisplay(pendingParcels, 'none');
   setDisplay(transitParcels, 'none');
   setDisplay(deliveredParcels, 'block');
   setDisplay(cancelledParcels, 'none');
@@ -100,6 +113,7 @@ const setDeliveredParcel = () => {
 
 const setCancelledParcel = () => {
   setDisplay(allParcels, 'none');
+  setDisplay(pendingParcels, 'none');
   setDisplay(transitParcels, 'none');
   setDisplay(deliveredParcels, 'none');
   setDisplay(cancelledParcels, 'block');
@@ -197,6 +211,7 @@ isElementExist(linkAllParcels, () => {
 
 window.addEventListener('load', () => {
   isElementExist(allParcels, () => { setDisplay(allParcels, 'block'); });
+  isElementExist(pendingParcels, () => { setDisplay(pendingParcels, 'none'); });
   isElementExist(transitParcels, () => { setDisplay(transitParcels, 'none'); });
   isElementExist(deliveredParcels, () => { setDisplay(deliveredParcels, 'none'); });
   isElementExist(cancelledParcels, () => { setDisplay(cancelledParcels, 'none'); });
@@ -239,6 +254,55 @@ isElementExist(linkTransitParcels, () => {
               });
             } else {
               tableTransitParcel.innerHTML += `
+                  <h3>Nothing to display</h3>
+                `;
+            }
+          }
+        } else if (result.body.authKeyMissed) {
+          alert('Auth Missed');
+          window.location.href = 'index.html';
+        } else if (result.body.authKeyInvalid) {
+          alert('Auth Invalid');
+          window.location.href = 'index.html';
+        }
+      });
+  });
+});
+
+isElementExist(linkPendingParcels, () => {
+  linkPendingParcels.addEventListener('click', () => {
+    setPendingParcel();
+    tableDeliveredParcel.innerHTML = '';
+    const parcel = new Parcel();
+    parcel.getAllParcelByUser()
+      .then((result) => {
+        if (!result.body.error) {
+          if (!result.body.data) {
+            tableDeliveredParcel.innerHTML = `
+              <h3 class="no-data">Nothing to display</h3>  
+            `;
+          } else {
+            const parcels = result.body.data;
+            const deliveredOrder = parcels.filter(el => el.status === 'delivered');
+            if (deliveredOrder.length > 0) {
+              deliveredOrder.forEach((el) => {
+                tableDeliveredParcel.innerHTML += `
+                    <tr>
+                      <td>${el.orderId}</td>
+                      <td>${el.parcelName}</td>
+                      <td>${el.presentLocation}</td>
+                      <td>${el.destination}</td>
+                      <td>${el.status}</td>
+                      <td>
+                          <div class="btn-group-action">
+                              <button data-id="${el.orderId}" id="btn-details">details</button>
+                          </div>
+                      </td>
+                  </tr>
+                  `;
+              });
+            } else {
+              tableDeliveredParcel.innerHTML += `
                   <h3>Nothing to display</h3>
                 `;
             }

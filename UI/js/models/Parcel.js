@@ -1,36 +1,31 @@
-let endPoint = `${apiUrl.domain}:${apiUrl.port}${apiUrl.resource}`;
+const endPoint = `${apiUrl.domain}:${apiUrl.port}${apiUrl.resource}`;
 class Parcel {
-  getAllParcel(){
+  getAllParcel() {
     const apiKey = localStorage.getItem('apiKey');
 
-    return HttpRequest.getWithHeader(`${endPoint}/parcels/`, `Bearer ${apiKey}`)
-    .then((result) => {
-      return result;
-    });
+    return HttpRequest.getWithHeader(`${endPoint}/parcels/`, apiKey)
+      .then(result => result);
   }
 
-  getUserId(){
+  getUserId() {
     const userData = JSON.parse(localStorage.getItem('data'));
     const userId = userData.id;
     return userId;
   }
 
-  getAllParcelByUser(){
+  getAllParcelByUser() {
     const userId = this.getUserId();
     const apiKey = localStorage.getItem('apiKey');
+    console.log(apiKey);
 
-    return HttpRequest.getWithHeader(`${endPoint}/user/${userId}/parcels/`, `Bearer ${apiKey}`)
-    .then((result) => {
-      return result;
-    });
+    return HttpRequest.getWithHeader(`${endPoint}/users/${userId}/parcels/`, apiKey)
+      .then(result => result);
   }
 
-  countParcelByUser(){
+  countParcelByUser() {
     const apiKey = localStorage.getItem('apiKey');
 
-    return HttpRequest.getWithHeader(`${endPoint}/user/parcels/count`, `Bearer ${apiKey}`)
-    .then((result) => {
-      return result;
-    });
+    return HttpRequest.getWithHeader(`${endPoint}/users/parcels/count`, apiKey)
+      .then(result => result);
   }
 }

@@ -309,10 +309,11 @@ header a:hover{
 /*footer*/
 footer{
     position: absolute;
-    top: 680px;
+    z-index: -1;
     margin-top: 270px;
     left: 0;
     right: 0;
+    bottom: 0;
     background: #c0c0c0;
     text-align: center;
     font-weight: bold;
@@ -327,14 +328,14 @@ footer{
     padding-top: 52px;
     z-index: 1;
     width: 15%;
-    background: rgb(124, 124, 170, .4);
+    background: #e7e7e7;
     box-shadow: 0px 2px 1px black;
     height: 100%;
 }
 
 .sidenav li{
     display: block;
-    border-bottom: 2px solid rgba(255, 255, 255, .4);
+    border-bottom: 1px solid #a7a4a4;
     font-size: 16px;
     padding: 0;
     cursor: pointer;
@@ -360,7 +361,6 @@ footer{
     position: absolute;
     padding-top: 5px;
     top: 58px;
-    bottom: 0;
     left: 190px;
     right: 0;
 }
@@ -649,4 +649,13 @@ select option{
 
 #info tr:nth-child(even) {
     background-color: #fff;
+}
+
+/*disable all table contains for parcels*/
+#all-parcels, 
+#pending-parcels,
+#transit-parcels, 
+#delivered-parcels,
+#cancelled-parcels {
+    display: none;
 }

@@ -65,6 +65,28 @@
                 </div>
             </div>
         </div>
+        <div class="container" id="pending-parcels">
+            <button class="btn-create">New Parcel</button>
+            <h2>Pending Parcel orders</h2>
+            <hr>
+            <div class="table-area">
+                    <!-- all parcels -->              
+                    <table>
+                        <thead>
+                            <tr>
+                                <th id="id-parcel">Id n°</th>
+                                <th>Name</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Status</th>
+                                <th id="action-parcel">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-pending-parcel">
+                        </tbody>
+                    </table>
+                </div>
+        </div>
         <div class="container" id="transit-parcels">
             <button class="btn-create">New Parcel</button>
             <h2>Parcels in transit</h2>
@@ -182,6 +204,9 @@
             </div>
         </div>
     </div>
+    <footer>
+        <p>SendIT by Mutombo Jean-Vincent copyright &copy; 2018</p>
+    </footer>
     <script src="build/loadingOverlay.js"></script>
     <script src="bower_components/validator-js/validator.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
