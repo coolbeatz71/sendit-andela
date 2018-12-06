@@ -1,7 +1,6 @@
 'use strict';
 
 var apiUrl = {
-  domain: 'http://localhost',
-  port: 8080,
+  domain: 'https://sendit-rest-api.herokuapp.com',
   resource: '/api/v1'
 };

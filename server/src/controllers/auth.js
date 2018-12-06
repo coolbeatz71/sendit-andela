@@ -43,6 +43,7 @@ export default class AuthCtrl {
     if (errors) {
       response.status(400).json({
         status: 'fail',
+        error: 'validation',
         message: errors,
       });
     } else {
@@ -52,7 +53,7 @@ export default class AuthCtrl {
       if (signUp === constants.EMAIL_EXIST) {
         response.status(409).json({
           status: 'fail',
-          message: 'the entered email is already used by an account',
+          message: 'The entered email is already used by an account',
         });
       } else {
         response.status(201).json({
@@ -93,6 +94,7 @@ export default class AuthCtrl {
     if (errors) {
       response.status(400).json({
         status: 'fail',
+        error: 'validation',
         message: errors,
       });
     } else {
