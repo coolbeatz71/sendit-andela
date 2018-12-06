@@ -24,10 +24,10 @@ var User = function () {
         password: password
       };
 
-      return HttpRequest.post(endPoint + '/user/signUp', userInfo).then(function (result) {
-        if (!result.body.error) {
-          localStorage.setItem('apiKey', result.body.data.token);
-          localStorage.setItem('data', JSON.stringify(result.body.data));
+      return HttpRequest.post(endPoint + '/auth/signUp', userInfo).then(function (result) {
+        if (result.status === 'success') {
+          localStorage.setItem('apiKey', result.user.token);
+          localStorage.setItem('data', JSON.stringify(result.user));
           return result;
         }
         return result;
@@ -44,10 +44,10 @@ var User = function () {
         password: password
       };
 
-      return HttpRequest.post(endPoint + '/user/signIn', userInfo).then(function (result) {
-        if (!result.body.error) {
-          localStorage.setItem('apiKey', result.body.data.token);
-          localStorage.setItem('data', JSON.stringify(result.body.data));
+      return HttpRequest.post(endPoint + '/auth/login', userInfo).then(function (result) {
+        if (result.status === 'success') {
+          localStorage.setItem('apiKey', result.user.token);
+          localStorage.setItem('data', JSON.stringify(result.user));
           return result;
         }
         return result;
