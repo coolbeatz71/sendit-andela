@@ -1,4 +1,4 @@
-const endPoint = `${apiUrl.domain}:${apiUrl.port}${apiUrl.resource}`;
+const endPoint = `${apiUrl.domain}${apiUrl.resource}`;
 class Parcel {
   getAllParcel() {
     const apiKey = localStorage.getItem('apiKey');
@@ -11,6 +11,21 @@ class Parcel {
     const userData = JSON.parse(localStorage.getItem('data'));
     const userId = userData.id;
     return userId;
+  }
+
+  createParcel(parcelName, description, pickupLocation, destination, weight) {
+    const parcelInfo = {
+      parcelName,
+      description,
+      pickupLocation,
+      destination,
+      weight,
+    };
+
+    const apiKey = localStorage.getItem('apiKey');
+
+    return HttpRequest.postWithHeader(`${endPoint}/parcels`, parcelInfo, apiKey)
+      .then(result => result);
   }
 
   getAllParcelByUser() {

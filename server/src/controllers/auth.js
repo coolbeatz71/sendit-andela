@@ -43,6 +43,7 @@ export default class AuthCtrl {
     if (errors) {
       response.status(400).json({
         status: 'fail',
+        error: 'validation',
         message: errors,
       });
     } else {
@@ -93,6 +94,7 @@ export default class AuthCtrl {
     if (errors) {
       response.status(400).json({
         status: 'fail',
+        error: 'validation',
         message: errors,
       });
     } else {

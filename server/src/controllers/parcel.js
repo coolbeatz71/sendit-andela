@@ -53,6 +53,7 @@ export default class ParcelCtrl {
     if (errors) {
       response.status(400).json({
         status: 'fail',
+        error: 'validation',
         message: errors,
       });
     } else {
@@ -84,6 +85,7 @@ export default class ParcelCtrl {
     if (errors) {
       response.status(400).json({
         status: 'fail',
+        error: 'validation',
         message: errors,
       });
     } else {
@@ -122,6 +124,7 @@ export default class ParcelCtrl {
     if (errors) {
       response.status(400).json({
         status: 'fail',
+        error: 'validation',
         message: errors,
       });
     } else {
@@ -169,6 +172,7 @@ export default class ParcelCtrl {
     if (errors) {
       response.status(400).json({
         status: 'fail',
+        error: 'validation',
         message: errors,
       });
     } else {

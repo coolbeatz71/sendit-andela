@@ -1,4 +1,4 @@
-const endPoint = `${apiUrl.domain}:${apiUrl.port}${apiUrl.resource}`;
+const endPoint = `${apiUrl.domain}${apiUrl.resource}`;
 class User {
   signUp(firstName, lastName, email, password) {
     if (!firstName || !lastName || !email || !password) {

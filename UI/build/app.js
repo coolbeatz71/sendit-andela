@@ -173,20 +173,20 @@ isElementExist(linkAllParcels, function () {
     tableAllParcels.innerHTML = '';
     var parcel = new Parcel();
     parcel.getAllParcelByUser().then(function (result) {
-      if (!result.body.error) {
-        if (!result.body.data) {
-          tableAllParcels.innerHTML = '\n              <h3 class="no-data">Nothing to display</h3>  \n            ';
+      if (result.status === 'success') {
+        if (!result.parcel.length) {
+          tableAllParcels.innerHTML = '\n              <tr>\n                <td colspan=\'6\'>\n                <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
         } else {
-          var parcels = result.body.data;
+          var parcels = result.parcel;
           parcels.forEach(function (el) {
-            tableAllParcels.innerHTML += '\n                  <tr>\n                    <td>' + el.orderId + '</td>\n                    <td>' + el.parcelName + '</td>\n                    <td>' + el.presentLocation + '</td>\n                    <td>' + el.destination + '</td>\n                    <td>' + el.status + '</td>\n                    <td>\n                        <div class="btn-group-action">\n                            <button data-id="' + el.orderId + '" id="btn-details">details</button>\n                            <button data-id="' + el.orderId + '" id="btn-edit">edit</button>\n                            <button data-id="' + el.orderId + '" id="btn-cancel">cancel</button>\n                        </div>\n                    </td>\n                </tr>\n                ';
+            tableAllParcels.innerHTML += '\n            <tr>\n              <td>' + el.id_parcel + '</td>\n              <td>' + el.parcel_name + '</td>\n              <td>' + el.pickup_location + '</td>\n              <td>' + el.destination + '</td>\n              <td>' + el.status + '</td>\n              <td>\n                  <div class="btn-group-action">\n                      <button data-id="' + el.id_parcel + '" id="btn-details">details</button>\n                      <button data-id="' + el.id_parcel + '" id="btn-edit">edit</button>\n                      <button data-id="' + el.id_parcel + '" id="btn-cancel">cancel</button>\n                  </div>\n              </td>\n            </tr>\n          ';
           });
         }
-      } else if (result.body.authKeyMissed) {
-        alert('Auth Missed');
+      } else if (result.auth === 'missing') {
+        swal('Not Authorized!!', 'Authentication key is required', 'error');
         window.location.href = 'index.html';
-      } else if (result.body.authKeyInvalid) {
-        alert('Auth Invalid');
+      } else if (result.auth === 'invalid') {
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error');
         window.location.href = 'index.html';
       }
     });
@@ -218,27 +218,27 @@ isElementExist(linkTransitParcels, function () {
     tableTransitParcel.innerHTML = '';
     var parcel = new Parcel();
     parcel.getAllParcelByUser().then(function (result) {
-      if (!result.body.error) {
-        if (!result.body.data) {
-          tableTransitParcel.innerHTML = '\n              <h3 class="no-data">Nothing to display</h3>  \n            ';
+      if (result.status === 'success') {
+        if (!result.parcel.length) {
+          tableTransitParcel.innerHTML = '\n              <tr>\n                <td colspan=\'6\'>\n                <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
         } else {
-          var parcels = result.body.data;
+          var parcels = result.parcel;
           var transitOrder = parcels.filter(function (el) {
             return el.status === 'in transit';
           });
           if (transitOrder.length > 0) {
             transitOrder.forEach(function (el) {
-              tableTransitParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.orderId + '</td>\n                      <td>' + el.parcelName + '</td>\n                      <td>' + el.presentLocation + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.orderId + '" id="btn-details">details</button>\n                              <button data-id="' + el.orderId + '" id="btn-edit">edit</button>\n                              <button data-id="' + el.orderId + '" id="btn-cancel">cancel</button>\n                          </div>\n                      </td>\n                  </tr>\n                  ';
+              tableTransitParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.id_parcel + '" id="btn-details">details</button>\n                              <button data-id="' + el.id_parcel + '" id="btn-edit">edit</button>\n                              <button data-id="' + el.id_parcel + '" id="btn-cancel">cancel</button>\n                          </div>\n                      </td>\n                    </tr>\n                  ';
             });
           } else {
-            tableTransitParcel.innerHTML += '\n                  <h3>Nothing to display</h3>\n                ';
+            tableTransitParcel.innerHTML += '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
           }
         }
-      } else if (result.body.authKeyMissed) {
-        alert('Auth Missed');
+      } else if (result.auth === 'missing') {
+        swal('Not Authorized!!', 'Authentication key is required', 'error');
         window.location.href = 'index.html';
-      } else if (result.body.authKeyInvalid) {
-        alert('Auth Invalid');
+      } else if (result.auth === 'invalid') {
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error');
         window.location.href = 'index.html';
       }
     });
@@ -248,30 +248,30 @@ isElementExist(linkTransitParcels, function () {
 isElementExist(linkPendingParcels, function () {
   linkPendingParcels.addEventListener('click', function () {
     setPendingParcel();
-    tableDeliveredParcel.innerHTML = '';
+    tablePendingParcel.innerHTML = '';
     var parcel = new Parcel();
     parcel.getAllParcelByUser().then(function (result) {
-      if (!result.body.error) {
-        if (!result.body.data) {
-          tableDeliveredParcel.innerHTML = '\n              <h3 class="no-data">Nothing to display</h3>  \n            ';
+      if (result.status === 'success') {
+        if (!result.parcel.length) {
+          tablePendingParcel.innerHTML = '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
         } else {
-          var parcels = result.body.data;
-          var deliveredOrder = parcels.filter(function (el) {
-            return el.status === 'delivered';
+          var parcels = result.parcel;
+          var pendingOrder = parcels.filter(function (el) {
+            return el.status === 'pending';
           });
-          if (deliveredOrder.length > 0) {
-            deliveredOrder.forEach(function (el) {
-              tableDeliveredParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.orderId + '</td>\n                      <td>' + el.parcelName + '</td>\n                      <td>' + el.presentLocation + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.orderId + '" id="btn-details">details</button>\n                          </div>\n                      </td>\n                  </tr>\n                  ';
+          if (pendingOrder.length > 0) {
+            pendingOrder.forEach(function (el) {
+              tablePendingParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                        <div class="btn-group-action">\n                            <button data-id="' + el.id_parcel + '" id="btn-details">details</button>\n                            <button data-id="' + el.id_parcel + '" id="btn-edit">edit</button>\n                            <button data-id="' + el.id_parcel + '" id="btn-cancel">cancel</button>\n                        </div>\n                      </td>\n                    </tr>\n                  ';
             });
           } else {
-            tableDeliveredParcel.innerHTML += '\n                  <h3>Nothing to display</h3>\n                ';
+            tablePendingParcel.innerHTML += '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
           }
         }
-      } else if (result.body.authKeyMissed) {
-        alert('Auth Missed');
+      } else if (result.auth === 'missing') {
+        swal('Not Authorized!!', 'Authentication key is required', 'error');
         window.location.href = 'index.html';
-      } else if (result.body.authKeyInvalid) {
-        alert('Auth Invalid');
+      } else if (result.auth === 'invalid') {
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error');
         window.location.href = 'index.html';
       }
     });
@@ -284,27 +284,27 @@ isElementExist(linkDeliveredParcels, function () {
     tableDeliveredParcel.innerHTML = '';
     var parcel = new Parcel();
     parcel.getAllParcelByUser().then(function (result) {
-      if (!result.body.error) {
-        if (!result.body.data) {
-          tableDeliveredParcel.innerHTML = '\n              <h3 class="no-data">Nothing to display</h3>  \n            ';
+      if (result.status === 'success') {
+        if (!result.parcel.length) {
+          tableDeliveredParcel.innerHTML = '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
         } else {
-          var parcels = result.body.data;
+          var parcels = result.parcel;
           var deliveredOrder = parcels.filter(function (el) {
             return el.status === 'delivered';
           });
           if (deliveredOrder.length > 0) {
             deliveredOrder.forEach(function (el) {
-              tableDeliveredParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.orderId + '</td>\n                      <td>' + el.parcelName + '</td>\n                      <td>' + el.presentLocation + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.orderId + '" id="btn-details">details</button>\n                          </div>\n                      </td>\n                  </tr>\n                  ';
+              tableDeliveredParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.id_parcel + '" id="btn-details">details</button>\n                          </div>\n                      </td>\n                    </tr>\n                  ';
             });
           } else {
-            tableDeliveredParcel.innerHTML += '\n                  <h3>Nothing to display</h3>\n                ';
+            tableDeliveredParcel.innerHTML += '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
           }
         }
-      } else if (result.body.authKeyMissed) {
-        alert('Auth Missed');
+      } else if (result.auth === 'missing') {
+        swal('Not Authorized!!', 'Authentication key is required', 'error');
         window.location.href = 'index.html';
-      } else if (result.body.authKeyInvalid) {
-        alert('Auth Invalid');
+      } else if (result.auth === 'invalid') {
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error');
         window.location.href = 'index.html';
       }
     });
@@ -317,27 +317,27 @@ isElementExist(linkCancelledParcels, function () {
     tableCancelledParcel.innerHTML = '';
     var parcel = new Parcel();
     parcel.getAllParcelByUser().then(function (result) {
-      if (!result.body.error) {
-        if (!result.body.data) {
-          tableCancelledParcel.innerHTML = '\n              <h3 class="no-data">Nothing to display</h3>  \n            ';
+      if (result.status === 'success') {
+        if (!result.parcel.length) {
+          tableCancelledParcel.innerHTML = '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
         } else {
-          var parcels = result.body.data;
+          var parcels = result.parcel;
           var cancelledOrder = parcels.filter(function (el) {
             return el.status === 'cancelled';
           });
           if (cancelledOrder.length > 0) {
             cancelledOrder.forEach(function (el) {
-              tableCancelledParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.orderId + '</td>\n                      <td>' + el.parcelName + '</td>\n                      <td>' + el.presentLocation + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                  </tr>\n                  ';
+              tableCancelledParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                    </tr>\n                  ';
             });
           } else {
-            tableCancelledParcel.innerHTML += '\n                  <h3>Nothing to display</h3>\n                ';
+            tableCancelledParcel.innerHTML += '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
           }
         }
-      } else if (result.body.authKeyMissed) {
-        alert('Auth Missed');
+      } else if (result.auth === 'missing') {
+        swal('Not Authorized!!', 'Authentication key is required', 'error');
         window.location.href = 'index.html';
-      } else if (result.body.authKeyInvalid) {
-        alert('Auth Invalid');
+      } else if (result.auth === 'invalid') {
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error');
         window.location.href = 'index.html';
       }
     });

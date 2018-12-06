@@ -172,37 +172,40 @@ isElementExist(linkAllParcels, () => {
     const parcel = new Parcel();
     parcel.getAllParcelByUser()
       .then((result) => {
-        if (!result.body.error) {
-          if (!result.body.data) {
+        if (result.status === 'success') {
+          if (!result.parcel.length) {
             tableAllParcels.innerHTML = `
-              <h3 class="no-data">Nothing to display</h3>  
-            `;
+              <tr>
+                <td colspan='6'>
+                <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
           } else {
-            const parcels = result.body.data;
+            const parcels = result.parcel;
             parcels.forEach((el) => {
               tableAllParcels.innerHTML += `
-                  <tr>
-                    <td>${el.orderId}</td>
-                    <td>${el.parcelName}</td>
-                    <td>${el.presentLocation}</td>
-                    <td>${el.destination}</td>
-                    <td>${el.status}</td>
-                    <td>
-                        <div class="btn-group-action">
-                            <button data-id="${el.orderId}" id="btn-details">details</button>
-                            <button data-id="${el.orderId}" id="btn-edit">edit</button>
-                            <button data-id="${el.orderId}" id="btn-cancel">cancel</button>
-                        </div>
-                    </td>
-                </tr>
-                `;
+            <tr>
+              <td>${el.id_parcel}</td>
+              <td>${el.parcel_name}</td>
+              <td>${el.pickup_location}</td>
+              <td>${el.destination}</td>
+              <td>${el.status}</td>
+              <td>
+                  <div class="btn-group-action">
+                      <button data-id="${el.id_parcel}" id="btn-details">details</button>
+                      <button data-id="${el.id_parcel}" id="btn-edit">edit</button>
+                      <button data-id="${el.id_parcel}" id="btn-cancel">cancel</button>
+                  </div>
+              </td>
+            </tr>
+          `;
             });
           }
-        } else if (result.body.authKeyMissed) {
-          alert('Auth Missed');
+        } else if (result.auth === 'missing') {
+          swal('Not Authorized!!', 'Authentication key is required', 'error');
           window.location.href = 'index.html';
-        } else if (result.body.authKeyInvalid) {
-          alert('Auth Invalid');
+        } else if (result.auth === 'invalid') {
+          swal('Not Authorized!!', 'Authentication key is invalid', 'error');
           window.location.href = 'index.html';
         }
       });
@@ -225,44 +228,50 @@ isElementExist(linkTransitParcels, () => {
     const parcel = new Parcel();
     parcel.getAllParcelByUser()
       .then((result) => {
-        if (!result.body.error) {
-          if (!result.body.data) {
+        if (result.status === 'success') {
+          if (!result.parcel.length) {
             tableTransitParcel.innerHTML = `
-              <h3 class="no-data">Nothing to display</h3>  
-            `;
+              <tr>
+                <td colspan='6'>
+                <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
           } else {
-            const parcels = result.body.data;
+            const parcels = result.parcel;
             const transitOrder = parcels.filter(el => el.status === 'in transit');
             if (transitOrder.length > 0) {
               transitOrder.forEach((el) => {
                 tableTransitParcel.innerHTML += `
                     <tr>
-                      <td>${el.orderId}</td>
-                      <td>${el.parcelName}</td>
-                      <td>${el.presentLocation}</td>
+                      <td>${el.id_parcel}</td>
+                      <td>${el.parcel_name}</td>
+                      <td>${el.pickup_location}</td>
                       <td>${el.destination}</td>
                       <td>${el.status}</td>
                       <td>
                           <div class="btn-group-action">
-                              <button data-id="${el.orderId}" id="btn-details">details</button>
-                              <button data-id="${el.orderId}" id="btn-edit">edit</button>
-                              <button data-id="${el.orderId}" id="btn-cancel">cancel</button>
+                              <button data-id="${el.id_parcel}" id="btn-details">details</button>
+                              <button data-id="${el.id_parcel}" id="btn-edit">edit</button>
+                              <button data-id="${el.id_parcel}" id="btn-cancel">cancel</button>
                           </div>
                       </td>
-                  </tr>
+                    </tr>
                   `;
               });
             } else {
               tableTransitParcel.innerHTML += `
-                  <h3>Nothing to display</h3>
-                `;
+              <tr>
+                <td colspan='6'>
+                  <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
             }
           }
-        } else if (result.body.authKeyMissed) {
-          alert('Auth Missed');
+        } else if (result.auth === 'missing') {
+          swal('Not Authorized!!', 'Authentication key is required', 'error');
           window.location.href = 'index.html';
-        } else if (result.body.authKeyInvalid) {
-          alert('Auth Invalid');
+        } else if (result.auth === 'invalid') {
+          swal('Not Authorized!!', 'Authentication key is invalid', 'error');
           window.location.href = 'index.html';
         }
       });
@@ -272,46 +281,54 @@ isElementExist(linkTransitParcels, () => {
 isElementExist(linkPendingParcels, () => {
   linkPendingParcels.addEventListener('click', () => {
     setPendingParcel();
-    tableDeliveredParcel.innerHTML = '';
+    tablePendingParcel.innerHTML = '';
     const parcel = new Parcel();
     parcel.getAllParcelByUser()
       .then((result) => {
-        if (!result.body.error) {
-          if (!result.body.data) {
-            tableDeliveredParcel.innerHTML = `
-              <h3 class="no-data">Nothing to display</h3>  
-            `;
+        if (result.status === 'success') {
+          if (!result.parcel.length) {
+            tablePendingParcel.innerHTML = `
+              <tr>
+                <td colspan='6'>
+                  <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
           } else {
-            const parcels = result.body.data;
-            const deliveredOrder = parcels.filter(el => el.status === 'delivered');
-            if (deliveredOrder.length > 0) {
-              deliveredOrder.forEach((el) => {
-                tableDeliveredParcel.innerHTML += `
+            const parcels = result.parcel;
+            const pendingOrder = parcels.filter(el => el.status === 'pending');
+            if (pendingOrder.length > 0) {
+              pendingOrder.forEach((el) => {
+                tablePendingParcel.innerHTML += `
                     <tr>
-                      <td>${el.orderId}</td>
-                      <td>${el.parcelName}</td>
-                      <td>${el.presentLocation}</td>
+                      <td>${el.id_parcel}</td>
+                      <td>${el.parcel_name}</td>
+                      <td>${el.pickup_location}</td>
                       <td>${el.destination}</td>
                       <td>${el.status}</td>
                       <td>
-                          <div class="btn-group-action">
-                              <button data-id="${el.orderId}" id="btn-details">details</button>
-                          </div>
+                        <div class="btn-group-action">
+                            <button data-id="${el.id_parcel}" id="btn-details">details</button>
+                            <button data-id="${el.id_parcel}" id="btn-edit">edit</button>
+                            <button data-id="${el.id_parcel}" id="btn-cancel">cancel</button>
+                        </div>
                       </td>
-                  </tr>
+                    </tr>
                   `;
               });
             } else {
-              tableDeliveredParcel.innerHTML += `
-                  <h3>Nothing to display</h3>
-                `;
+              tablePendingParcel.innerHTML += `
+              <tr>
+                <td colspan='6'>
+                  <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
             }
           }
-        } else if (result.body.authKeyMissed) {
-          alert('Auth Missed');
+        } else if (result.auth === 'missing') {
+          swal('Not Authorized!!', 'Authentication key is required', 'error');
           window.location.href = 'index.html';
-        } else if (result.body.authKeyInvalid) {
-          alert('Auth Invalid');
+        } else if (result.auth === 'invalid') {
+          swal('Not Authorized!!', 'Authentication key is invalid', 'error');
           window.location.href = 'index.html';
         }
       });
@@ -325,42 +342,48 @@ isElementExist(linkDeliveredParcels, () => {
     const parcel = new Parcel();
     parcel.getAllParcelByUser()
       .then((result) => {
-        if (!result.body.error) {
-          if (!result.body.data) {
+        if (result.status === 'success') {
+          if (!result.parcel.length) {
             tableDeliveredParcel.innerHTML = `
-              <h3 class="no-data">Nothing to display</h3>  
-            `;
+              <tr>
+                <td colspan='6'>
+                  <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
           } else {
-            const parcels = result.body.data;
+            const parcels = result.parcel;
             const deliveredOrder = parcels.filter(el => el.status === 'delivered');
             if (deliveredOrder.length > 0) {
               deliveredOrder.forEach((el) => {
                 tableDeliveredParcel.innerHTML += `
                     <tr>
-                      <td>${el.orderId}</td>
-                      <td>${el.parcelName}</td>
-                      <td>${el.presentLocation}</td>
+                      <td>${el.id_parcel}</td>
+                      <td>${el.parcel_name}</td>
+                      <td>${el.pickup_location}</td>
                       <td>${el.destination}</td>
                       <td>${el.status}</td>
                       <td>
                           <div class="btn-group-action">
-                              <button data-id="${el.orderId}" id="btn-details">details</button>
+                              <button data-id="${el.id_parcel}" id="btn-details">details</button>
                           </div>
                       </td>
-                  </tr>
+                    </tr>
                   `;
               });
             } else {
               tableDeliveredParcel.innerHTML += `
-                  <h3>Nothing to display</h3>
-                `;
+              <tr>
+                <td colspan='6'>
+                  <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
             }
           }
-        } else if (result.body.authKeyMissed) {
-          alert('Auth Missed');
+        } else if (result.auth === 'missing') {
+          swal('Not Authorized!!', 'Authentication key is required', 'error');
           window.location.href = 'index.html';
-        } else if (result.body.authKeyInvalid) {
-          alert('Auth Invalid');
+        } else if (result.auth === 'invalid') {
+          swal('Not Authorized!!', 'Authentication key is invalid', 'error');
           window.location.href = 'index.html';
         }
       });
@@ -374,37 +397,43 @@ isElementExist(linkCancelledParcels, () => {
     const parcel = new Parcel();
     parcel.getAllParcelByUser()
       .then((result) => {
-        if (!result.body.error) {
-          if (!result.body.data) {
+        if (result.status === 'success') {
+          if (!result.parcel.length) {
             tableCancelledParcel.innerHTML = `
-              <h3 class="no-data">Nothing to display</h3>  
-            `;
+              <tr>
+                <td colspan='6'>
+                  <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
           } else {
-            const parcels = result.body.data;
+            const parcels = result.parcel;
             const cancelledOrder = parcels.filter(el => el.status === 'cancelled');
             if (cancelledOrder.length > 0) {
               cancelledOrder.forEach((el) => {
                 tableCancelledParcel.innerHTML += `
                     <tr>
-                      <td>${el.orderId}</td>
-                      <td>${el.parcelName}</td>
-                      <td>${el.presentLocation}</td>
+                      <td>${el.id_parcel}</td>
+                      <td>${el.parcel_name}</td>
+                      <td>${el.pickup_location}</td>
                       <td>${el.destination}</td>
                       <td>${el.status}</td>
-                  </tr>
+                    </tr>
                   `;
               });
             } else {
               tableCancelledParcel.innerHTML += `
-                  <h3>Nothing to display</h3>
-                `;
+              <tr>
+                <td colspan='6'>
+                  <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
             }
           }
-        } else if (result.body.authKeyMissed) {
-          alert('Auth Missed');
+        } else if (result.auth === 'missing') {
+          swal('Not Authorized!!', 'Authentication key is required', 'error');
           window.location.href = 'index.html';
-        } else if (result.body.authKeyInvalid) {
-          alert('Auth Invalid');
+        } else if (result.auth === 'invalid') {
+          swal('Not Authorized!!', 'Authentication key is invalid', 'error');
           window.location.href = 'index.html';
         }
       });

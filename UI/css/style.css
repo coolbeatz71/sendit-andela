@@ -313,7 +313,7 @@ footer{
     margin-top: 270px;
     left: 0;
     right: 0;
-    bottom: 0;
+    top: 100%;
     background: #c0c0c0;
     text-align: center;
     font-weight: bold;
@@ -568,24 +568,24 @@ table .btn-group-action button{
     margin-top: 30px;
     margin-bottom: 30px;
     color: #fff;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
+    opacity: .8;
 }
 
 .parcel-number span{
     font-size: 30px;
     margin: 5px;
     padding: 5px;
-    color: #000;
-    background:#fff;
-    border-radius: 40px;
+    color: #fff;
 }
 
 .parcel-number .numbers{
-    width: 20%;
+    width: 15%;
     display: inline-block;
     text-decoration: none;
     padding: 18px;
+    box-shadow: 1px 1px 1px #c7c7c7;
 }
 
 .parcel-number .numbers:hover{
@@ -598,6 +598,10 @@ table .btn-group-action button{
 
 .parcel-number #delivered{
     background: #003cff;
+}
+
+.parcel-number #pending{
+    background: #FF7E00FF;
 }
 
 .parcel-number #transit{
@@ -658,4 +662,11 @@ select option{
 #delivered-parcels,
 #cancelled-parcels {
     display: none;
+}
+
+.no-data {
+    border: 1px solid white;
+    width: 100%;
+    clear: both;
+    text-align: center;
 }
