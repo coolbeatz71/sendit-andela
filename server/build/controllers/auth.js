@@ -58,6 +58,7 @@ var AuthCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
@@ -67,7 +68,7 @@ var AuthCtrl = function () {
         if (signUp === _constant2.default.EMAIL_EXIST) {
           response.status(409).json({
             status: 'fail',
-            message: 'the entered email is already used by an account'
+            message: 'The entered email is already used by an account'
           });
         } else {
           response.status(201).json({
@@ -109,6 +110,7 @@ var AuthCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {

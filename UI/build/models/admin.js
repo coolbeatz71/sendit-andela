@@ -6,12 +6,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var endPoint = '' + apiUrl.domain + apiUrl.resource;
 
-var User = function () {
-  function User() {
-    _classCallCheck(this, User);
+var Admin = function () {
+  function Admin() {
+    _classCallCheck(this, Admin);
   }
 
-  _createClass(User, [{
+  _createClass(Admin, [{
     key: 'signIn',
     value: function signIn(email, password) {
       if (!email || !password) {
@@ -22,10 +22,11 @@ var User = function () {
         password: password
       };
 
-      return HttpRequest.post(endPoint + '/admin/signIn', adminInfo).then(function (result) {
-        if (!result.body.error) {
-          localStorage.setItem('apiKey', result.body.data.token);
-          localStorage.setItem('data', JSON.stringify(result.body.data));
+      return HttpRequest.post(endPoint + '/admin/login', adminInfo).then(function (result) {
+        console.log(result);
+        if (result.status === 'success') {
+          localStorage.setItem('apiKey', result.user.token);
+          localStorage.setItem('data', JSON.stringify(result.user));
           return result;
         }
         return result;
@@ -33,5 +34,5 @@ var User = function () {
     }
   }]);
 
-  return User;
+  return Admin;
 }();

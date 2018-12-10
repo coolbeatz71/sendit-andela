@@ -42,15 +42,10 @@ export default class AdminCtrl {
       const admin = new Admin();
       const login = await admin.loginAdmin(email, password);
 
-      if (login === constants.INVALID_EMAIL) {
+      if (login === constants.INVALID_EMAIL || login === constants.INVALID_PASSWORD) {
         response.status(404).json({
           status: 'fail',
-          message: 'User not found, Incorrect email address',
-        });
-      } else if (login === constants.INVALID_PASSWORD) {
-        response.status(404).json({
-          status: 'fail',
-          message: 'the password is incorrect',
+          message: 'User not found, Incorrect email or password',
         });
       } else {
         response.status(200).json({
