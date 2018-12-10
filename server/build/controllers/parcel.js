@@ -86,6 +86,7 @@ var ParcelCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
@@ -118,6 +119,7 @@ var ParcelCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
@@ -159,6 +161,7 @@ var ParcelCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
@@ -208,6 +211,7 @@ var ParcelCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {

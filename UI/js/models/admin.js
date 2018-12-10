@@ -1,5 +1,5 @@
 const endPoint = `${apiUrl.domain}${apiUrl.resource}`;
-class User {
+class Admin {
   signIn(email, password) {
     if (!email || !password) {
       return false;
@@ -9,11 +9,12 @@ class User {
       password,
     };
 
-    return HttpRequest.post(`${endPoint}/admin/signIn`, adminInfo)
+    return HttpRequest.post(`${endPoint}/admin/login`, adminInfo)
       .then((result) => {
-        if (!result.body.error) {
-          localStorage.setItem('apiKey', result.body.data.token);
-          localStorage.setItem('data', JSON.stringify(result.body.data));
+        console.log(result);
+        if (result.status === 'success') {
+          localStorage.setItem('apiKey', result.user.token);
+          localStorage.setItem('data', JSON.stringify(result.user));
           return result;
         }
         return result;

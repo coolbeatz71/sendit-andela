@@ -63,21 +63,17 @@ var AdminCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
         var admin = new _admin2.default();
         var login = await admin.loginAdmin(email, password);
 
-        if (login === _constant2.default.INVALID_EMAIL) {
+        if (login === _constant2.default.INVALID_EMAIL || login === _constant2.default.INVALID_PASSWORD) {
           response.status(404).json({
             status: 'fail',
-            message: 'User not found, Incorrect email address'
-          });
-        } else if (login === _constant2.default.INVALID_PASSWORD) {
-          response.status(404).json({
-            status: 'fail',
-            message: 'the password is incorrect'
+            message: 'User not found, Incorrect email or password'
           });
         } else {
           response.status(200).json({
@@ -153,6 +149,7 @@ var AdminCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
@@ -207,6 +204,7 @@ var AdminCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {

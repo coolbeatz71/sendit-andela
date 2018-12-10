@@ -23,6 +23,7 @@ var checkAuth = function checkAuth(request, response, next) {
   if (!request.headers.authorization || request.headers.authorization.indexOf('Bearer ') === -1) {
     response.status(403).json({
       status: 'fail',
+      auth: 'missing',
       message: 'Not authorized, authentication key is required'
     });
   } else {
@@ -35,6 +36,7 @@ var checkAuth = function checkAuth(request, response, next) {
       if (err) {
         response.status(401).json({
           status: 'fail',
+          auth: 'invalid',
           message: 'Not authorized, invalid authentication key'
         });
       }
