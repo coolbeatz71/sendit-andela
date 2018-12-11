@@ -21,12 +21,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var router = _express2.default.Router();
 
 /**
- * route to fetch all parcels delivery orders
- * @method GET
- */
-router.get('/', _auth2.default, _parcel2.default.getAllParcels);
-
-/**
  * route to create a parcel delivery order
  * @method POST
  */
@@ -49,6 +43,12 @@ router.put('/:parcelId/cancel', _auth2.default, _parcel2.default.cancelParcel);
  * @method PUT
  */
 router.put('/:parcelId/destination', _auth2.default, _parcel2.default.editDestination);
+
+/**
+ * route to fetch all parcels delivery orders (by admin)
+ * @method GET
+ */
+router.get('/', _auth2.default, _admin2.default.getAllParcels);
 
 /**
  * routes to edit status of a parcel delivery order

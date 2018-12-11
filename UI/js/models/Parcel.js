@@ -43,4 +43,11 @@ class Parcel {
     return HttpRequest.getWithHeader(`${endPoint}/users/parcels/count`, apiKey)
       .then(result => result);
   }
+
+  countParcelByAdmin() {
+    const apiKey = localStorage.getItem('apiKey');
+
+    return HttpRequest.getWithHeader(`${endPoint}/admin/parcels/count`, apiKey)
+      .then(result => result);
+  }
 }

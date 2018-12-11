@@ -5,6 +5,13 @@ const tableDeliveredParcel = document.querySelector('#table-delivered-parcel');
 const tableTransitParcel = document.querySelector('#table-transit-parcel');
 const tableCancelledParcel = document.querySelector('#table-cancelled-parcel');
 
+// admin profile
+const adminLinkAllParcels = document.getElementById('admin-link-all-parcels');
+const adminLinkPendingParcels = document.getElementById('admin-link-pending-parcels');
+const adminLinkTransitParcels = document.getElementById('admin-link-transit-parcels');
+const adminLinkDeliveredParcels = document.getElementById('admin-link-delivered-parcels');
+const adminLinkCancelledParcels = document.getElementById('admin-link-cancelled-parcels');
+
 // create parcel
 const btnSendOrder = document.querySelector('#btn-send-order');
 const inputWeight = document.getElementById('weight');
@@ -84,7 +91,7 @@ window.addEventListener('load', () => {
     });
 });
 
-
+// create parcel
 btnSendOrder.addEventListener('click', (e) => {
   e.preventDefault();
   // create new parcel delivery order
@@ -147,4 +154,61 @@ btnSendOrder.addEventListener('click', (e) => {
 inputWeight.addEventListener('input', () => {
   const unitPrice = 500;
   inputPrice.value = `${inputWeight.value * unitPrice} Rwf`;
+});
+
+// Event to get all parcels in transit for all users
+adminLinkTransitParcels.addEventListener('click', (e) => {
+  e.preventDefault();
+  setTransitParcel();
+  tableTransitParcel.innerHTML = '';
+  const parcel = new Parcel();
+  parcel.getAllParcelByUser()
+    .then((result) => {
+      if (result.status === 'success') {
+        if (!result.parcel.length) {
+          tableTransitParcel.innerHTML = `
+              <tr>
+                <td colspan='6'>
+                <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
+        } else {
+          const parcels = result.parcel;
+          const transitOrder = parcels.filter(el => el.status === 'in transit');
+          if (transitOrder.length > 0) {
+            transitOrder.forEach((el) => {
+              tableTransitParcel.innerHTML += `
+                    <tr>
+                      <td>${el.id_parcel}</td>
+                      <td>${el.parcel_name}</td>
+                      <td>${el.pickup_location}</td>
+                      <td>${el.destination}</td>
+                      <td>${el.status}</td>
+                      <td>
+                          <div class="btn-group-action">
+                              <button data-id="${el.id_parcel}" id="btn-details">details</button>
+                              <button data-id="${el.id_parcel}" id="btn-edit">edit</button>
+                              <button data-id="${el.id_parcel}" id="btn-cancel">cancel</button>
+                          </div>
+                      </td>
+                    </tr>
+                  `;
+            });
+          } else {
+            tableTransitParcel.innerHTML += `
+              <tr>
+                <td colspan='6'>
+                  <h3 class="no-data">Nothing to display</h3>  
+                </td>
+              </tr>`;
+          }
+        }
+      } else if (result.auth === 'missing') {
+        swal('Not Authorized!!', 'Authentication key is required', 'error');
+        window.location.href = 'index.html';
+      } else if (result.auth === 'invalid') {
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error');
+        window.location.href = 'index.html';
+      }
+    });
 });

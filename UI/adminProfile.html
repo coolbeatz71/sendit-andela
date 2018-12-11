@@ -25,11 +25,11 @@
     <!-- sidenav bar  -->
     <aside class="sidenav" id="sidebar">
         <ul>
-            <li id="link-all-parcels"><a>All parcels</a></li>
-            <li id="link-pending-parcels"><a>Pending</a></li>
-            <li id="link-transit-parcels"><a>In transit</a></li>
-            <li id="link-delivered-parcels"><a>Delivered</a></li>
-            <li id="link-cancelled-parcels"><a>Canceled</a></li>
+            <li id="admin-link-all-parcels"><a>All parcels</a></li>
+            <li id="admin-link-pending-parcels"><a>Pending</a></li>
+            <li id="admin-link-transit-parcels"><a>In transit</a></li>
+            <li id="admin-link-delivered-parcels"><a>Delivered</a></li>
+            <li id="admin-link-cancelled-parcels"><a>Canceled</a></li>
         </ul>
     </aside>
     <!-- section for tables -->
@@ -39,15 +39,16 @@
             <ul class="parcel-number">
             </ul>
             <div class="display-parcels">
-                <h2>All my parcels</h2>
+                <h2>All parcels</h2>
                 <hr>
                 <div class="table-area">
                     <!-- all parcels -->              
                     <table>
                         <thead>
                             <tr>
-                                <th id="id-parcel">Id n°</th>
-                                <th>Name</th>
+                                <th>User id</th>
+                                <th>parcel id</th>
+                                <th>Parcel name</th>
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Status</th>
@@ -68,8 +69,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th id="id-parcel">Id n°</th>
-                                <th>Name</th>
+                                <th>User id</th>
+                                <th>parcel id</th>
+                                <th>Parcel name</th>
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Status</th>
@@ -89,8 +91,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th id="id-parcel">Id n°</th>
-                                <th>Name</th>
+                                <th>User id</th>
+                                <th>parcel id</th>
+                                <th>Parcel name</th>
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Status</th>
@@ -110,13 +113,14 @@
                 <table>
                     <thead>
                         <tr>
-                            <th id="id-parcel">Id n°</th>
-                            <th>Name</th>
+                            <th>User id</th>
+                            <th>parcel id</th>
+                            <th>Parcel name</th>
                             <th>From</th>
                             <th>To</th>
                             <th>Status</th>
                             <th id="action-parcel">Action</th>
-                        </tr>
+                        </tr>                
                     </thead>
                     <tbody id="table-delivered-parcel">
                     </tbody>
@@ -131,8 +135,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th id="id-parcel">Id n°</th>
-                                <th>Name</th>
+                                <th>User id</th>
+                                <th>parcel id</th>
+                                <th>Parcel name</th>
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Status</th>
@@ -152,8 +157,8 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="build/models/constant.js"></script>
     <script src="build/models/httpRequest.js"></script>
+    <script src="build/controllers/adminParcelCtrl.js"></script>
     <script src="build/models/parcel.js"></script>
-    <script src="build/controllers/parcelCtrl.js"></script>
     <script src="build/app.js"></script>
 </body>
 </html>

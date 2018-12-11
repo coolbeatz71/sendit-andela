@@ -64,6 +64,15 @@ var Parcel = function () {
         return result;
       });
     }
+  }, {
+    key: 'countParcelByAdmin',
+    value: function countParcelByAdmin() {
+      var apiKey = localStorage.getItem('apiKey');
+
+      return HttpRequest.getWithHeader(endPoint + '/admin/parcels/count', apiKey).then(function (result) {
+        return result;
+      });
+    }
   }]);
 
   return Parcel;
