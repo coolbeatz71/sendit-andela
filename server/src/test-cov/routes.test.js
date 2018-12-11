@@ -299,7 +299,7 @@ describe('/GET /parcels with valid Authorization Header', () => {
   it('should get all parcels and return status 200', (done) => {
     chai.request(app)
       .get(`${apiVersion}/parcels`)
-      .set('Authorization', `${authKeyUser}`)
+      .set('Authorization', `${authKeyAdmin}`)
       .end((err, res) => {
         res.should.have.status(200);
         done();
