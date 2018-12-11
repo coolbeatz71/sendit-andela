@@ -70,6 +70,7 @@ export default class AdminCtrl {
     if (!isAdmin) {
       response.status(403).json({
         status: 'fail',
+        auth: 'invalid',
         message: 'Forbidden, Invalid admin authentication key',
       });
     } else {
@@ -100,6 +101,7 @@ export default class AdminCtrl {
     if (!isAdmin) {
       response.status(403).json({
         status: 'fail',
+        auth: 'invalid',
         message: 'Forbidden, Invalid admin authentication key',
       });
     }
@@ -153,6 +155,7 @@ export default class AdminCtrl {
     if (!isAdmin) {
       response.status(403).json({
         status: 'fail',
+        auth: 'invalid',
         message: 'Forbidden, Invalid admin authentication key',
       });
     }
@@ -214,6 +217,7 @@ export default class AdminCtrl {
     if (!isAdmin) {
       response.status(403).json({
         status: 'fail',
+        auth: 'invalid',
         message: 'Forbidden, Invalid admin authentication key',
       });
     }

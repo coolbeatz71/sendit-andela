@@ -119,52 +119,6 @@ const setCancelledParcel = () => {
   setDisplay(cancelledParcels, 'block');
 };
 
-isElementExist(btnDetail, () => {
-  btnDetail.forEach((el) => {
-    el.addEventListener('click', () => {
-      console.log(window.location.href);
-      // may look for a way of sending params in urls
-      window.location.href = 'parcelDetail.html';
-    });
-  });
-});
-
-isElementExist(btnEdit, () => {
-  btnEdit.forEach((el) => {
-    el.addEventListener('click', () => {
-      console.log(window.location.href);
-      // may look for a way of sending params in urls
-      window.location.href = 'editParcel.html';
-    });
-  });
-});
-
-isElementExist(btnEditAdmin, () => {
-  btnEditAdmin.forEach((el) => {
-    el.addEventListener('click', () => {
-      console.log(window.location.href);
-      // may look for a way of sending params in urls
-      window.location.href = 'adminEditParcel.html';
-    });
-  });
-});
-
-isElementExist(btnCancel, () => {
-  btnCancel.forEach((el) => {
-    el.addEventListener('click', () => {
-      alert('It may cancel the delivery order');
-    });
-  });
-});
-
-isElementExist(btnCreateParcel, () => {
-  btnCreateParcel.forEach((el) => {
-    el.addEventListener('click', () => {
-      openModal();
-    });
-  });
-});
-
 isElementExist(linkAllParcels, () => {
   linkAllParcels.addEventListener('click', () => {
     setAllParcel();

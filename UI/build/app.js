@@ -121,52 +121,6 @@ var setCancelledParcel = function setCancelledParcel() {
   setDisplay(cancelledParcels, 'block');
 };
 
-isElementExist(btnDetail, function () {
-  btnDetail.forEach(function (el) {
-    el.addEventListener('click', function () {
-      console.log(window.location.href);
-      // may look for a way of sending params in urls
-      window.location.href = 'parcelDetail.html';
-    });
-  });
-});
-
-isElementExist(btnEdit, function () {
-  btnEdit.forEach(function (el) {
-    el.addEventListener('click', function () {
-      console.log(window.location.href);
-      // may look for a way of sending params in urls
-      window.location.href = 'editParcel.html';
-    });
-  });
-});
-
-isElementExist(btnEditAdmin, function () {
-  btnEditAdmin.forEach(function (el) {
-    el.addEventListener('click', function () {
-      console.log(window.location.href);
-      // may look for a way of sending params in urls
-      window.location.href = 'adminEditParcel.html';
-    });
-  });
-});
-
-isElementExist(btnCancel, function () {
-  btnCancel.forEach(function (el) {
-    el.addEventListener('click', function () {
-      alert('It may cancel the delivery order');
-    });
-  });
-});
-
-isElementExist(btnCreateParcel, function () {
-  btnCreateParcel.forEach(function (el) {
-    el.addEventListener('click', function () {
-      openModal();
-    });
-  });
-});
-
 isElementExist(linkAllParcels, function () {
   linkAllParcels.addEventListener('click', function () {
     setAllParcel();

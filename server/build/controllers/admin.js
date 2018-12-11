@@ -102,6 +102,7 @@ var AdminCtrl = function () {
       if (!isAdmin) {
         response.status(403).json({
           status: 'fail',
+          auth: 'invalid',
           message: 'Forbidden, Invalid admin authentication key'
         });
       } else {
@@ -136,6 +137,7 @@ var AdminCtrl = function () {
       if (!isAdmin) {
         response.status(403).json({
           status: 'fail',
+          auth: 'invalid',
           message: 'Forbidden, Invalid admin authentication key'
         });
       }
@@ -191,6 +193,7 @@ var AdminCtrl = function () {
       if (!isAdmin) {
         response.status(403).json({
           status: 'fail',
+          auth: 'invalid',
           message: 'Forbidden, Invalid admin authentication key'
         });
       }
@@ -250,6 +253,7 @@ var AdminCtrl = function () {
       if (!isAdmin) {
         response.status(403).json({
           status: 'fail',
+          auth: 'invalid',
           message: 'Forbidden, Invalid admin authentication key'
         });
       }

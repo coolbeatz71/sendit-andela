@@ -53,6 +53,7 @@ var UserCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
@@ -104,6 +105,7 @@ var UserCtrl = function () {
       if (!isUser) {
         response.status(403).json({
           status: 'fail',
+          auth: 'invalid',
           message: 'Forbidden, Invalid user authentication key'
         });
       }

@@ -7,13 +7,6 @@ var tableDeliveredParcel = document.querySelector('#table-delivered-parcel');
 var tableTransitParcel = document.querySelector('#table-transit-parcel');
 var tableCancelledParcel = document.querySelector('#table-cancelled-parcel');
 
-// admin profile
-var adminLinkAllParcels = document.getElementById('admin-link-all-parcels');
-var adminLinkPendingParcels = document.getElementById('admin-link-pending-parcels');
-var adminLinkTransitParcels = document.getElementById('admin-link-transit-parcels');
-var adminLinkDeliveredParcels = document.getElementById('admin-link-delivered-parcels');
-var adminLinkCancelledParcels = document.getElementById('admin-link-cancelled-parcels');
-
 // create parcel
 var btnSendOrder = document.querySelector('#btn-send-order');
 var inputWeight = document.getElementById('weight');
@@ -124,37 +117,4 @@ btnSendOrder.addEventListener('click', function (e) {
 inputWeight.addEventListener('input', function () {
   var unitPrice = 500;
   inputPrice.value = inputWeight.value * unitPrice + ' Rwf';
-});
-
-// Event to get all parcels in transit for all users
-adminLinkTransitParcels.addEventListener('click', function (e) {
-  e.preventDefault();
-  setTransitParcel();
-  tableTransitParcel.innerHTML = '';
-  var parcel = new Parcel();
-  parcel.getAllParcelByUser().then(function (result) {
-    if (result.status === 'success') {
-      if (!result.parcel.length) {
-        tableTransitParcel.innerHTML = '\n              <tr>\n                <td colspan=\'6\'>\n                <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
-      } else {
-        var parcels = result.parcel;
-        var transitOrder = parcels.filter(function (el) {
-          return el.status === 'in transit';
-        });
-        if (transitOrder.length > 0) {
-          transitOrder.forEach(function (el) {
-            tableTransitParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.id_parcel + '" id="btn-details">details</button>\n                              <button data-id="' + el.id_parcel + '" id="btn-edit">edit</button>\n                              <button data-id="' + el.id_parcel + '" id="btn-cancel">cancel</button>\n                          </div>\n                      </td>\n                    </tr>\n                  ';
-          });
-        } else {
-          tableTransitParcel.innerHTML += '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
-        }
-      }
-    } else if (result.auth === 'missing') {
-      swal('Not Authorized!!', 'Authentication key is required', 'error');
-      window.location.href = 'index.html';
-    } else if (result.auth === 'invalid') {
-      swal('Not Authorized!!', 'Authentication key is invalid', 'error');
-      window.location.href = 'index.html';
-    }
-  });
 });
