@@ -84,7 +84,7 @@ window.addEventListener('load', () => {
     });
 });
 
-
+// create parcel
 btnSendOrder.addEventListener('click', (e) => {
   e.preventDefault();
   // create new parcel delivery order

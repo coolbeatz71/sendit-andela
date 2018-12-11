@@ -264,7 +264,7 @@ describe('/GET /parcels without Authorization Header', function () {
 
 describe('/GET /parcels with valid Authorization Header', function () {
   it('should get all parcels and return status 200', function (done) {
-    _chai2.default.request(_app2.default).get(apiVersion + '/parcels').set('Authorization', '' + authKeyUser).end(function (err, res) {
+    _chai2.default.request(_app2.default).get(apiVersion + '/parcels').set('Authorization', '' + authKeyAdmin).end(function (err, res) {
       res.should.have.status(200);
       done();
     });

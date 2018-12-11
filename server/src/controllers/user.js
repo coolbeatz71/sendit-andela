@@ -24,6 +24,7 @@ export default class UserCtrl {
     if (errors) {
       response.status(400).json({
         status: 'fail',
+        error: 'validation',
         message: errors,
       });
     } else {
@@ -71,6 +72,7 @@ export default class UserCtrl {
     if (!isUser) {
       response.status(403).json({
         status: 'fail',
+        auth: 'invalid',
         message: 'Forbidden, Invalid user authentication key',
       });
     }

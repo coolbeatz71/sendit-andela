@@ -5,11 +5,6 @@ import checkAuth from '../middleware/auth';
 
 const router = express.Router();
 
-/**
- * route to fetch all parcels delivery orders
- * @method GET
- */
-router.get('/', checkAuth, ParcelCtrl.getAllParcels);
 
 /**
  * route to create a parcel delivery order
@@ -34,6 +29,12 @@ router.put('/:parcelId/cancel', checkAuth, ParcelCtrl.cancelParcel);
  * @method PUT
  */
 router.put('/:parcelId/destination', checkAuth, ParcelCtrl.editDestination);
+
+/**
+ * route to fetch all parcels delivery orders (by admin)
+ * @method GET
+ */
+router.get('/', checkAuth, AdminCtrl.getAllParcels);
 
 /**
  * routes to edit status of a parcel delivery order

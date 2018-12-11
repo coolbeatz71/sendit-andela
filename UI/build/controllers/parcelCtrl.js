@@ -56,6 +56,7 @@ window.addEventListener('load', function () {
   });
 });
 
+// create parcel
 btnSendOrder.addEventListener('click', function (e) {
   e.preventDefault();
   // create new parcel delivery order
