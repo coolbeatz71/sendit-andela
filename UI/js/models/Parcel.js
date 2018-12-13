@@ -1,16 +1,21 @@
 const endPoint = `${apiUrl.domain}${apiUrl.resource}`;
 class Parcel {
-  getAllParcel() {
+  getApiKey() {
     const apiKey = localStorage.getItem('apiKey');
-
-    return HttpRequest.getWithHeader(`${endPoint}/parcels/`, apiKey)
-      .then(result => result);
+    return apiKey;
   }
 
   getUserId() {
     const userData = JSON.parse(localStorage.getItem('data'));
     const userId = userData.id;
     return userId;
+  }
+
+  getAllParcel() {
+    const apiKey = this.getApiKey();
+
+    return HttpRequest.getWithHeader(`${endPoint}/parcels/`, apiKey)
+      .then(result => result);
   }
 
   createParcel(parcelName, description, pickupLocation, destination, weight) {
@@ -22,7 +27,7 @@ class Parcel {
       weight,
     };
 
-    const apiKey = localStorage.getItem('apiKey');
+    const apiKey = this.getApiKey();
 
     return HttpRequest.postWithHeader(`${endPoint}/parcels`, parcelInfo, apiKey)
       .then(result => result);
@@ -30,22 +35,29 @@ class Parcel {
 
   getAllParcelByUser() {
     const userId = this.getUserId();
-    const apiKey = localStorage.getItem('apiKey');
-    console.log(apiKey);
+    const apiKey = this.getApiKey();
 
     return HttpRequest.getWithHeader(`${endPoint}/users/${userId}/parcels/`, apiKey)
       .then(result => result);
   }
 
+  getParcelById(parcelId) {
+    const userId = this.getUserId();
+    const apiKey = this.getApiKey();
+
+    return HttpRequest.getWithHeader(`${endPoint}/parcels/${parcelId}`, apiKey)
+      .then(result => result);
+  }
+
   countParcelByUser() {
-    const apiKey = localStorage.getItem('apiKey');
+    const apiKey = this.getApiKey();
 
     return HttpRequest.getWithHeader(`${endPoint}/users/parcels/count`, apiKey)
       .then(result => result);
   }
 
   countParcelByAdmin() {
-    const apiKey = localStorage.getItem('apiKey');
+    const apiKey = this.getApiKey();
 
     return HttpRequest.getWithHeader(`${endPoint}/admin/parcels/count`, apiKey)
       .then(result => result);

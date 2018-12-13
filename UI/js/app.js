@@ -164,11 +164,15 @@ isElementExist(linkAllParcels, () => {
             });
           }
         } else if (result.auth === 'missing') {
-          swal('Not Authorized!!', 'Authentication key is required', 'error');
-          window.location.href = 'index.html';
+          swal('Not Authorized!!', 'Authentication key is required', 'error')
+            .then(() => {
+              window.location.href = 'index.html';
+            });
         } else if (result.auth === 'invalid') {
-          swal('Not Authorized!!', 'Authentication key is invalid', 'error');
-          window.location.href = 'index.html';
+          swal('Not Authorized!!', 'Authentication key is invalid', 'error')
+            .then(() => {
+              window.location.href = 'index.html';
+            });
         }
       });
   });
@@ -230,11 +234,15 @@ isElementExist(linkTransitParcels, () => {
             }
           }
         } else if (result.auth === 'missing') {
-          swal('Not Authorized!!', 'Authentication key is required', 'error');
-          window.location.href = 'index.html';
+          swal('Not Authorized!!', 'Authentication key is required', 'error')
+            .then(() => {
+              window.location.href = 'index.html';
+            });
         } else if (result.auth === 'invalid') {
-          swal('Not Authorized!!', 'Authentication key is invalid', 'error');
-          window.location.href = 'index.html';
+          swal('Not Authorized!!', 'Authentication key is invalid', 'error')
+            .then(() => {
+              window.location.href = 'index.html';
+            });
         }
       });
   });
@@ -287,11 +295,15 @@ isElementExist(linkPendingParcels, () => {
             }
           }
         } else if (result.auth === 'missing') {
-          swal('Not Authorized!!', 'Authentication key is required', 'error');
-          window.location.href = 'index.html';
+          swal('Not Authorized!!', 'Authentication key is required', 'error')
+            .then(() => {
+              window.location.href = 'index.html';
+            });
         } else if (result.auth === 'invalid') {
-          swal('Not Authorized!!', 'Authentication key is invalid', 'error');
-          window.location.href = 'index.html';
+          swal('Not Authorized!!', 'Authentication key is invalid', 'error')
+            .then(() => {
+              window.location.href = 'index.html';
+            });
         }
       });
   });
@@ -342,11 +354,15 @@ isElementExist(linkDeliveredParcels, () => {
             }
           }
         } else if (result.auth === 'missing') {
-          swal('Not Authorized!!', 'Authentication key is required', 'error');
-          window.location.href = 'index.html';
+          swal('Not Authorized!!', 'Authentication key is required', 'error')
+            .then(() => {
+              window.location.href = 'index.html';
+            });
         } else if (result.auth === 'invalid') {
-          swal('Not Authorized!!', 'Authentication key is invalid', 'error');
-          window.location.href = 'index.html';
+          swal('Not Authorized!!', 'Authentication key is invalid', 'error')
+            .then(() => {
+              window.location.href = 'index.html';
+            });
         }
       });
   });
@@ -392,11 +408,15 @@ isElementExist(linkCancelledParcels, () => {
             }
           }
         } else if (result.auth === 'missing') {
-          swal('Not Authorized!!', 'Authentication key is required', 'error');
-          window.location.href = 'index.html';
+          swal('Not Authorized!!', 'Authentication key is required', 'error')
+            .then(() => {
+              window.location.href = 'index.html';
+            });
         } else if (result.auth === 'invalid') {
-          swal('Not Authorized!!', 'Authentication key is invalid', 'error');
-          window.location.href = 'index.html';
+          swal('Not Authorized!!', 'Authentication key is invalid', 'error')
+            .then(() => {
+              window.location.href = 'index.html';
+            });
         }
       });
   });

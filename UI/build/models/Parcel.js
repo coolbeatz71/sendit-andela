@@ -12,13 +12,10 @@ var Parcel = function () {
   }
 
   _createClass(Parcel, [{
-    key: 'getAllParcel',
-    value: function getAllParcel() {
+    key: 'getApiKey',
+    value: function getApiKey() {
       var apiKey = localStorage.getItem('apiKey');
-
-      return HttpRequest.getWithHeader(endPoint + '/parcels/', apiKey).then(function (result) {
-        return result;
-      });
+      return apiKey;
     }
   }, {
     key: 'getUserId',
@@ -26,6 +23,15 @@ var Parcel = function () {
       var userData = JSON.parse(localStorage.getItem('data'));
       var userId = userData.id;
       return userId;
+    }
+  }, {
+    key: 'getAllParcel',
+    value: function getAllParcel() {
+      var apiKey = this.getApiKey();
+
+      return HttpRequest.getWithHeader(endPoint + '/parcels/', apiKey).then(function (result) {
+        return result;
+      });
     }
   }, {
     key: 'createParcel',
@@ -38,7 +44,7 @@ var Parcel = function () {
         weight: weight
       };
 
-      var apiKey = localStorage.getItem('apiKey');
+      var apiKey = this.getApiKey();
 
       return HttpRequest.postWithHeader(endPoint + '/parcels', parcelInfo, apiKey).then(function (result) {
         return result;
@@ -48,17 +54,26 @@ var Parcel = function () {
     key: 'getAllParcelByUser',
     value: function getAllParcelByUser() {
       var userId = this.getUserId();
-      var apiKey = localStorage.getItem('apiKey');
-      console.log(apiKey);
+      var apiKey = this.getApiKey();
 
       return HttpRequest.getWithHeader(endPoint + '/users/' + userId + '/parcels/', apiKey).then(function (result) {
         return result;
       });
     }
   }, {
+    key: 'getParcelById',
+    value: function getParcelById(parcelId) {
+      var userId = this.getUserId();
+      var apiKey = this.getApiKey();
+
+      return HttpRequest.getWithHeader(endPoint + '/parcels/' + parcelId, apiKey).then(function (result) {
+        return result;
+      });
+    }
+  }, {
     key: 'countParcelByUser',
     value: function countParcelByUser() {
-      var apiKey = localStorage.getItem('apiKey');
+      var apiKey = this.getApiKey();
 
       return HttpRequest.getWithHeader(endPoint + '/users/parcels/count', apiKey).then(function (result) {
         return result;
@@ -67,7 +82,7 @@ var Parcel = function () {
   }, {
     key: 'countParcelByAdmin',
     value: function countParcelByAdmin() {
-      var apiKey = localStorage.getItem('apiKey');
+      var apiKey = this.getApiKey();
 
       return HttpRequest.getWithHeader(endPoint + '/admin/parcels/count', apiKey).then(function (result) {
         return result;
