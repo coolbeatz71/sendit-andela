@@ -43,7 +43,7 @@ window.addEventListener('load', function () {
       } else {
         var parcels = result.parcel;
         parcels.forEach(function (el) {
-          tableAllParcels.innerHTML += '\n            <tr>\n              <td>' + el.id_parcel + '</td>\n              <td>' + el.parcel_name + '</td>\n              <td>' + el.pickup_location + '</td>\n              <td>' + el.destination + '</td>\n              <td>' + el.status + '</td>\n              <td>\n                  <div class="btn-group-action">\n                      <button data-id="' + el.id_parcel + '" id="btn-details">details</button>\n                      <button data-id="' + el.id_parcel + '" id="btn-edit">edit</button>\n                      <button data-id="' + el.id_parcel + '" id="btn-cancel">cancel</button>\n                  </div>\n              </td>\n          </tr>\n          ';
+          tableAllParcels.innerHTML += '\n            <tr>\n              <td>' + el.id_parcel + '</td>\n              <td>' + el.parcel_name + '</td>\n              <td>' + el.pickup_location + '</td>\n              <td>' + el.destination + '</td>\n              <td>' + el.status + '</td>\n              <td>\n                <div class="btn-group-action">\n                  <button data-id="' + el.id_parcel + '" onclick="getParcelDetailUser(this)" id="btn-details">details</button>\n                  <button data-id="' + el.id_parcel + '" onclick="editParcelUser(this)" id="btn-edit">edit</button>\n                  <button data-id="' + el.id_parcel + '" onclick="cancelParcelUser(this)" id="btn-cancel">cancel</button>\n                </div>\n              </td>\n          </tr>\n          ';
         });
       }
     } else if (result.auth === 'missing') {

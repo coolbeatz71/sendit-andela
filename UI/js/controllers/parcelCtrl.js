@@ -64,11 +64,11 @@ window.addEventListener('load', () => {
               <td>${el.destination}</td>
               <td>${el.status}</td>
               <td>
-                  <div class="btn-group-action">
-                      <button data-id="${el.id_parcel}" id="btn-details">details</button>
-                      <button data-id="${el.id_parcel}" id="btn-edit">edit</button>
-                      <button data-id="${el.id_parcel}" id="btn-cancel">cancel</button>
-                  </div>
+                <div class="btn-group-action">
+                  <button data-id="${el.id_parcel}" onclick="getParcelDetailUser(this)" id="btn-details">details</button>
+                  <button data-id="${el.id_parcel}" onclick="editParcelUser(this)" id="btn-edit">edit</button>
+                  <button data-id="${el.id_parcel}" onclick="cancelParcelUser(this)" id="btn-cancel">cancel</button>
+                </div>
               </td>
           </tr>
           `;

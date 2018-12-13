@@ -119,6 +119,14 @@ const setCancelledParcel = () => {
   setDisplay(cancelledParcels, 'block');
 };
 
+isElementExist(btnCreateParcel, () => {
+  btnCreateParcel.forEach((el) => {
+    el.addEventListener('click', () => {
+      openModal();
+    });
+  });
+});
+
 isElementExist(linkAllParcels, () => {
   linkAllParcels.addEventListener('click', () => {
     setAllParcel();
@@ -146,9 +154,9 @@ isElementExist(linkAllParcels, () => {
               <td>${el.status}</td>
               <td>
                   <div class="btn-group-action">
-                      <button data-id="${el.id_parcel}" id="btn-details">details</button>
-                      <button data-id="${el.id_parcel}" id="btn-edit">edit</button>
-                      <button data-id="${el.id_parcel}" id="btn-cancel">cancel</button>
+                    <button data-id="${el.id_parcel}" onclick="getParcelDetailUser(this)" id="btn-details">details</button>
+                    <button data-id="${el.id_parcel}" onclick="editParcelUser(this)" id="btn-edit">edit</button>
+                    <button data-id="${el.id_parcel}" onclick="cancelParcelUser(this)" id="btn-cancel">cancel</button>
                   </div>
               </td>
             </tr>
@@ -204,9 +212,9 @@ isElementExist(linkTransitParcels, () => {
                       <td>${el.status}</td>
                       <td>
                           <div class="btn-group-action">
-                              <button data-id="${el.id_parcel}" id="btn-details">details</button>
-                              <button data-id="${el.id_parcel}" id="btn-edit">edit</button>
-                              <button data-id="${el.id_parcel}" id="btn-cancel">cancel</button>
+                            <button data-id="${el.id_parcel}" onclick="getParcelDetailUser(this)" id="btn-details">details</button>
+                            <button data-id="${el.id_parcel}" onclick="editParcelUser(this)" id="btn-edit">edit</button>
+                            <button data-id="${el.id_parcel}" onclick="cancelParcelUser(this)" id="btn-cancel">cancel</button>
                           </div>
                       </td>
                     </tr>
@@ -261,9 +269,9 @@ isElementExist(linkPendingParcels, () => {
                       <td>${el.status}</td>
                       <td>
                         <div class="btn-group-action">
-                            <button data-id="${el.id_parcel}" id="btn-details">details</button>
-                            <button data-id="${el.id_parcel}" id="btn-edit">edit</button>
-                            <button data-id="${el.id_parcel}" id="btn-cancel">cancel</button>
+                            <button data-id="${el.id_parcel}" onclick="getParcelDetailUser(this)" id="btn-details">details</button>
+                            <button data-id="${el.id_parcel}" onclick="editParcelUser(this)" id="btn-edit">edit</button>
+                            <button data-id="${el.id_parcel}" onclick="cancelParcelUser(this)" id="btn-cancel">cancel</button>
                         </div>
                       </td>
                     </tr>
@@ -318,7 +326,7 @@ isElementExist(linkDeliveredParcels, () => {
                       <td>${el.status}</td>
                       <td>
                           <div class="btn-group-action">
-                              <button data-id="${el.id_parcel}" id="btn-details">details</button>
+                              <button data-id="${el.id_parcel}" onclick="getParcelDetailUser(this)" id="btn-details">details</button>
                           </div>
                       </td>
                     </tr>
@@ -449,3 +457,29 @@ isElementExist(signInAdmin, () => {
     _gotoSignInAdmin();
   });
 });
+
+/**
+ * fetch parcel details for one user
+ * @param HTMLElement target
+ */
+const getParcelDetailUser = (target) => {
+  const parcelId = target.dataset.id;
+  window.location.href = `parcelDetail.html?parcelId=${parcelId}`;
+};
+
+/**
+ * edit parcel for one user (destination)
+ * @param HTMLElement target
+ */
+const editParcelUser = (target) => {
+  const parcelId = target.dataset.id;
+  window.location.href = `editParcel.html?parcelId=${parcelId}`;
+};
+
+/**
+ * cancel a parcel for a user
+ * @param  HTML element target
+ */
+const cancelParcelUser = (target) => {
+  const parcelId = target.dataset.id;
+};
