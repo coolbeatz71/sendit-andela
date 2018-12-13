@@ -72,4 +72,13 @@ class Parcel {
     return HttpRequest.putWithHeader(`${endPoint}/parcels/${parcelId}/destination`, parcelInfo, apiKey)
       .then(result => result);
   }
+
+  cancelParcel(parcelId) {
+    const apiKey = this.getApiKey();
+
+    console.log(apiKey);
+
+    return HttpRequest.putWithHeader(`${endPoint}/parcels/${parcelId}/cancel`, {}, apiKey)
+      .then(result => result);
+  }
 }

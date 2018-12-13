@@ -100,6 +100,17 @@ var Parcel = function () {
         return result;
       });
     }
+  }, {
+    key: 'cancelParcel',
+    value: function cancelParcel(parcelId) {
+      var apiKey = this.getApiKey();
+
+      console.log(apiKey);
+
+      return HttpRequest.putWithHeader(endPoint + '/parcels/' + parcelId + '/cancel', {}, apiKey).then(function (result) {
+        return result;
+      });
+    }
   }]);
 
   return Parcel;

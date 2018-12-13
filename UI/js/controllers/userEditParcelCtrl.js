@@ -1,5 +1,6 @@
 // get HTML element
 const btnEditParcel = document.querySelector('.btn-save');
+const btnCancelEdit = document.querySelector('.btn-cancel');
 
 // get the query string
 let queryString = decodeURIComponent(window.location.search);
@@ -42,4 +43,15 @@ btnEditParcel.addEventListener('click', (e) => {
         }
       });
   }
+});
+
+btnCancelEdit.addEventListener('click', (e) => {
+  e.preventDefault();
+  swal('Are you sure you want to do this?', {
+    buttons: ['No', true],
+  }).then((value) => {
+    if (value) {
+      window.location.href = 'userProfile.html';
+    }
+  });
 });

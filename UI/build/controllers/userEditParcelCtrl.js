@@ -2,6 +2,7 @@
 
 // get HTML element
 var btnEditParcel = document.querySelector('.btn-save');
+var btnCancelEdit = document.querySelector('.btn-cancel');
 
 // get the query string
 var queryString = decodeURIComponent(window.location.search);
@@ -40,4 +41,15 @@ btnEditParcel.addEventListener('click', function (e) {
       }
     });
   }
+});
+
+btnCancelEdit.addEventListener('click', function (e) {
+  e.preventDefault();
+  swal('Are you sure you want to do this?', {
+    buttons: ['No', true]
+  }).then(function (value) {
+    if (value) {
+      window.location.href = 'userProfile.html';
+    }
+  });
 });
