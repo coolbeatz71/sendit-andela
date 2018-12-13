@@ -74,7 +74,7 @@ var Parcel = function (_App) {
     key: 'getAllParcel',
     value: async function getAllParcel() {
       // select all parcel info to the database
-      var query = 'SELECT * FROM parcels';
+      var query = 'SELECT * FROM parcels ORDER BY id_parcel DESC';
       var result = await (0, _db.execute)(query);
 
       return result.rows;
@@ -94,7 +94,7 @@ var Parcel = function (_App) {
       var param = [this.id];
 
       // select all parcel info to the database
-      var query = 'SELECT * FROM parcels WHERE id_user = $1';
+      var query = 'SELECT * FROM parcels WHERE id_user = $1 ORDER BY id_parcel DESC';
       var result = await (0, _db.execute)(query, param);
 
       return result.rows;

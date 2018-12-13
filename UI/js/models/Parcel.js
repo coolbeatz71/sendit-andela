@@ -62,4 +62,14 @@ class Parcel {
     return HttpRequest.getWithHeader(`${endPoint}/admin/parcels/count`, apiKey)
       .then(result => result);
   }
+
+  editDestination(parcelId, newDestination) {
+    const apiKey = this.getApiKey();
+    const parcelInfo = {
+      destination: newDestination,
+    };
+
+    return HttpRequest.putWithHeader(`${endPoint}/parcels/${parcelId}/destination`, parcelInfo, apiKey)
+      .then(result => result);
+  }
 }
