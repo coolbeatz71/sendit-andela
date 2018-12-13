@@ -396,4 +396,27 @@ var editParcelUser = function editParcelUser(target) {
  */
 var cancelParcelUser = function cancelParcelUser(target) {
   var parcelId = target.dataset.id;
+  var parcel = new Parcel();
+
+  if (!Number.isInteger(parseInt(parcelId, 10))) {
+    swal('Oops!!', 'The parcel id must be a number', 'error');
+  } else {
+    parcel.cancelParcel(parcelId).then(function (result) {
+      if (result.status === 'success') {
+        swal('Success', 'parcel delivery order successfully cancelled', 'success').then(function () {
+          window.location.href = 'userProfile.html';
+        });
+      } else if (result === 'fail') {
+        swal('Oops!!', '' + result.message, 'error');
+      } else if (result.auth === 'missing') {
+        swal('Not Authorized!!', 'Authentication key is required', 'error').then(function () {
+          window.location.href = 'index.html';
+        });
+      } else if (result.auth === 'invalid') {
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error').then(function () {
+          window.location.href = 'index.html';
+        });
+      }
+    });
+  }
 };
