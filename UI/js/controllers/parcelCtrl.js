@@ -31,11 +31,15 @@ window.addEventListener('load', () => {
         <li class="numbers" id="cancelled">Cancelled: <span>${result.parcel.cancelled}</span></li>  
       `;
       } else if (result.auth === 'missing') {
-        swal('Not Authorized!!', 'Authentication key is required', 'error');
-        window.location.href = 'index.html';
+        swal('Not Authorized!!', 'Authentication key is required', 'error')
+          .then(() => {
+            window.location.href = 'index.html';
+          });
       } else if (result.auth === 'invalid') {
-        swal('Not Authorized!!', 'Authentication key is invalid', 'error');
-        window.location.href = 'index.html';
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error')
+          .then(() => {
+            window.location.href = 'index.html';
+          });
       }
     });
 
@@ -75,11 +79,15 @@ window.addEventListener('load', () => {
           });
         }
       } else if (result.auth === 'missing') {
-        swal('Not Authorized!!', 'Authentication key is required', 'error');
-        window.location.href = 'index.html';
+        swal('Not Authorized!!', 'Authentication key is required', 'error')
+          .then(() => {
+            window.location.href = 'index.html';
+          });
       } else if (result.auth === 'invalid') {
-        swal('Not Authorized!!', 'Authentication key is invalid', 'error');
-        window.location.href = 'index.html';
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error')
+          .then(() => {
+            window.location.href = 'index.html';
+          });
       }
     });
 });
