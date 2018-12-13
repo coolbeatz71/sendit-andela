@@ -121,6 +121,14 @@ var setCancelledParcel = function setCancelledParcel() {
   setDisplay(cancelledParcels, 'block');
 };
 
+isElementExist(btnCreateParcel, function () {
+  btnCreateParcel.forEach(function (el) {
+    el.addEventListener('click', function () {
+      openModal();
+    });
+  });
+});
+
 isElementExist(linkAllParcels, function () {
   linkAllParcels.addEventListener('click', function () {
     setAllParcel();
@@ -133,7 +141,7 @@ isElementExist(linkAllParcels, function () {
         } else {
           var parcels = result.parcel;
           parcels.forEach(function (el) {
-            tableAllParcels.innerHTML += '\n            <tr>\n              <td>' + el.id_parcel + '</td>\n              <td>' + el.parcel_name + '</td>\n              <td>' + el.pickup_location + '</td>\n              <td>' + el.destination + '</td>\n              <td>' + el.status + '</td>\n              <td>\n                  <div class="btn-group-action">\n                      <button data-id="' + el.id_parcel + '" id="btn-details">details</button>\n                      <button data-id="' + el.id_parcel + '" id="btn-edit">edit</button>\n                      <button data-id="' + el.id_parcel + '" id="btn-cancel">cancel</button>\n                  </div>\n              </td>\n            </tr>\n          ';
+            tableAllParcels.innerHTML += '\n            <tr>\n              <td>' + el.id_parcel + '</td>\n              <td>' + el.parcel_name + '</td>\n              <td>' + el.pickup_location + '</td>\n              <td>' + el.destination + '</td>\n              <td>' + el.status + '</td>\n              <td>\n                  <div class="btn-group-action">\n                    <button data-id="' + el.id_parcel + '" onclick="getParcelDetailUser(this)" id="btn-details">details</button>\n                    <button data-id="' + el.id_parcel + '" onclick="editParcelUser(this)" id="btn-edit">edit</button>\n                    <button data-id="' + el.id_parcel + '" onclick="cancelParcelUser(this)" id="btn-cancel">cancel</button>\n                  </div>\n              </td>\n            </tr>\n          ';
           });
         }
       } else if (result.auth === 'missing') {
@@ -182,7 +190,7 @@ isElementExist(linkTransitParcels, function () {
           });
           if (transitOrder.length > 0) {
             transitOrder.forEach(function (el) {
-              tableTransitParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.id_parcel + '" id="btn-details">details</button>\n                              <button data-id="' + el.id_parcel + '" id="btn-edit">edit</button>\n                              <button data-id="' + el.id_parcel + '" id="btn-cancel">cancel</button>\n                          </div>\n                      </td>\n                    </tr>\n                  ';
+              tableTransitParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                            <button data-id="' + el.id_parcel + '" onclick="getParcelDetailUser(this)" id="btn-details">details</button>\n                            <button data-id="' + el.id_parcel + '" onclick="editParcelUser(this)" id="btn-edit">edit</button>\n                            <button data-id="' + el.id_parcel + '" onclick="cancelParcelUser(this)" id="btn-cancel">cancel</button>\n                          </div>\n                      </td>\n                    </tr>\n                  ';
             });
           } else {
             tableTransitParcel.innerHTML += '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
@@ -215,7 +223,7 @@ isElementExist(linkPendingParcels, function () {
           });
           if (pendingOrder.length > 0) {
             pendingOrder.forEach(function (el) {
-              tablePendingParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                        <div class="btn-group-action">\n                            <button data-id="' + el.id_parcel + '" id="btn-details">details</button>\n                            <button data-id="' + el.id_parcel + '" id="btn-edit">edit</button>\n                            <button data-id="' + el.id_parcel + '" id="btn-cancel">cancel</button>\n                        </div>\n                      </td>\n                    </tr>\n                  ';
+              tablePendingParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                        <div class="btn-group-action">\n                            <button data-id="' + el.id_parcel + '" onclick="getParcelDetailUser(this)" id="btn-details">details</button>\n                            <button data-id="' + el.id_parcel + '" onclick="editParcelUser(this)" id="btn-edit">edit</button>\n                            <button data-id="' + el.id_parcel + '" onclick="cancelParcelUser(this)" id="btn-cancel">cancel</button>\n                        </div>\n                      </td>\n                    </tr>\n                  ';
             });
           } else {
             tablePendingParcel.innerHTML += '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
@@ -248,7 +256,7 @@ isElementExist(linkDeliveredParcels, function () {
           });
           if (deliveredOrder.length > 0) {
             deliveredOrder.forEach(function (el) {
-              tableDeliveredParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.id_parcel + '" id="btn-details">details</button>\n                          </div>\n                      </td>\n                    </tr>\n                  ';
+              tableDeliveredParcel.innerHTML += '\n                    <tr>\n                      <td>' + el.id_parcel + '</td>\n                      <td>' + el.parcel_name + '</td>\n                      <td>' + el.pickup_location + '</td>\n                      <td>' + el.destination + '</td>\n                      <td>' + el.status + '</td>\n                      <td>\n                          <div class="btn-group-action">\n                              <button data-id="' + el.id_parcel + '" onclick="getParcelDetailUser(this)" id="btn-details">details</button>\n                          </div>\n                      </td>\n                    </tr>\n                  ';
             });
           } else {
             tableDeliveredParcel.innerHTML += '\n              <tr>\n                <td colspan=\'6\'>\n                  <h3 class="no-data">Nothing to display</h3>  \n                </td>\n              </tr>';
@@ -353,3 +361,29 @@ isElementExist(signInAdmin, function () {
     _gotoSignInAdmin();
   });
 });
+
+/**
+ * fetch parcel details for one user
+ * @param HTMLElement target
+ */
+var getParcelDetailUser = function getParcelDetailUser(target) {
+  var parcelId = target.dataset.id;
+  window.location.href = 'parcelDetail.html?parcelId=' + parcelId;
+};
+
+/**
+ * edit parcel for one user (destination)
+ * @param HTMLElement target
+ */
+var editParcelUser = function editParcelUser(target) {
+  var parcelId = target.dataset.id;
+  window.location.href = 'editParcel.html?parcelId=' + parcelId;
+};
+
+/**
+ * cancel a parcel for a user
+ * @param  HTML element target
+ */
+var cancelParcelUser = function cancelParcelUser(target) {
+  var parcelId = target.dataset.id;
+};
