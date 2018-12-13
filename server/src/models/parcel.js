@@ -45,7 +45,7 @@ export default class Parcel extends App {
    */
   async getAllParcel() {
     // select all parcel info to the database
-    const query = 'SELECT * FROM parcels';
+    const query = 'SELECT * FROM parcels ORDER BY id_parcel DESC';
     const result = await execute(query);
 
     return result.rows;
@@ -62,7 +62,7 @@ export default class Parcel extends App {
     const param = [this.id];
 
     // select all parcel info to the database
-    const query = 'SELECT * FROM parcels WHERE id_user = $1';
+    const query = 'SELECT * FROM parcels WHERE id_user = $1 ORDER BY id_parcel DESC';
     const result = await execute(query, param);
 
     return result.rows;
