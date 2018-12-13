@@ -88,6 +88,18 @@ var Parcel = function () {
         return result;
       });
     }
+  }, {
+    key: 'editDestination',
+    value: function editDestination(parcelId, newDestination) {
+      var apiKey = this.getApiKey();
+      var parcelInfo = {
+        destination: newDestination
+      };
+
+      return HttpRequest.putWithHeader(endPoint + '/parcels/' + parcelId + '/destination', parcelInfo, apiKey).then(function (result) {
+        return result;
+      });
+    }
   }]);
 
   return Parcel;
