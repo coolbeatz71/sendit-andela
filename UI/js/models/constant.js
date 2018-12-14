@@ -1,4 +1,4 @@
 const apiUrl = {
-  domain: 'http://localhost:8080',
+  domain: 'https://sendit-rest-api.herokuapp.com',
   resource: '/api/v1',
 };
