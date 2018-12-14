@@ -36,7 +36,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var router = _express2.default.Router();
 
-router.use('/', _swaggerUiExpress2.default.serve, _swaggerUiExpress2.default.setup(_apiDocsSwagger2.default));
+router.use('/docs', _swaggerUiExpress2.default.serve, _swaggerUiExpress2.default.setup(_apiDocsSwagger2.default));
 router.use('/auth', _auth2.default);
 router.use('/users', _user2.default);
 router.use('/parcels', _parcel2.default);
