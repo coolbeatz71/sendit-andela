@@ -32,25 +32,33 @@
     <section class="main">
         <div class="container" id="all-parcels">
             <button class="btn-cancel">Back</button>
-            <button class="btn-save">Save</button>
             <h2>Edit Parcel</h2>
             <hr>
             <div class="form-container" id="create-parcel">
                 <form id="create-parcel-form">
                     <!-- pickup input -->
-                        <label for="from">Present Location</label>
-                        <select id="from">
-                            <option value=""> -- select country --</option>
-                            <option value="rwanda">Rwanda</option>
-                            <option value="nigeria">Nigeria</option>
-                            <option value="kenya">Kenya</option>
-                            <option value="uganda">Uganda</option>
-                        </select>
+                    <label for="from">Present Location</label>
+                    <select id="from">
+                        <option value=""> -- select country --</option>
+                        <option value="rwanda">Rwanda</option>
+                        <option value="nigeria">Nigeria</option>
+                        <option value="kenya">Kenya</option>
+                        <option value="uganda">Uganda</option>
+                    </select>
+                    <button id="btn-edit-location" class="btn-submit" name="submit">Save</button>
+                </form>
+            </div>
+            <br>
+            <div class="form-container" id="create-parcel">
+                <form id="create-parcel-form">
                     <label>Status</label>
                     <select id="status">
-                        <option>Delivered</option>
-                        <option>In transit</option>
+                        <option value="pending">Pending</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="in transit">In transit</option>
+                        <option value="cancelled">Cancelled</option>
                     </select>
+                    <button id="btn-edit-status" class="btn-submit" name="submit">Save</button>
                 </form>
             </div>
         </div>

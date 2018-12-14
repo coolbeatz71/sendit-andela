@@ -101,6 +101,30 @@ var Parcel = function () {
       });
     }
   }, {
+    key: 'editPresentLocation',
+    value: function editPresentLocation(parcelId, presentLocation) {
+      var apiKey = this.getApiKey();
+      var parcelInfo = {
+        presentLocation: presentLocation
+      };
+
+      return HttpRequest.putWithHeader(endPoint + '/parcels/' + parcelId + '/presentLocation', parcelInfo, apiKey).then(function (result) {
+        return result;
+      });
+    }
+  }, {
+    key: 'editStatus',
+    value: function editStatus(parcelId, status) {
+      var apiKey = this.getApiKey();
+      var parcelInfo = {
+        status: status
+      };
+
+      return HttpRequest.putWithHeader(endPoint + '/parcels/' + parcelId + '/status', parcelInfo, apiKey).then(function (result) {
+        return result;
+      });
+    }
+  }, {
     key: 'cancelParcel',
     value: function cancelParcel(parcelId) {
       var apiKey = this.getApiKey();

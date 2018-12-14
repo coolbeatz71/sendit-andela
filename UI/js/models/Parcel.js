@@ -73,6 +73,26 @@ class Parcel {
       .then(result => result);
   }
 
+  editPresentLocation(parcelId, presentLocation) {
+    const apiKey = this.getApiKey();
+    const parcelInfo = {
+      presentLocation,
+    };
+
+    return HttpRequest.putWithHeader(`${endPoint}/parcels/${parcelId}/presentLocation`, parcelInfo, apiKey)
+      .then(result => result);
+  }
+
+  editStatus(parcelId, status) {
+    const apiKey = this.getApiKey();
+    const parcelInfo = {
+      status,
+    };
+
+    return HttpRequest.putWithHeader(`${endPoint}/parcels/${parcelId}/status`, parcelInfo, apiKey)
+      .then(result => result);
+  }
+
   cancelParcel(parcelId) {
     const apiKey = this.getApiKey();
 
