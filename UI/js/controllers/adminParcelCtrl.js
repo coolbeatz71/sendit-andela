@@ -43,9 +43,8 @@ adminLinkTransitParcels.addEventListener('click', (e) => {
                       <td>${el.status}</td>
                       <td>
                           <div class="btn-group-action">
-                              <button onclick="getParcelDetailUser(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-details">details</button>
-                              <button onclick="editParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-edit">edit</button>
-                              <button onclick="cancelParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-cancel">cancel</button>
+                              <button onclick="getParcelDetailAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-details">details</button>
+                              <button onclick="editParcelAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-edit">edit</button>
                           </div>
                       </td>
                     </tr>
@@ -105,9 +104,8 @@ adminLinkPendingParcels.addEventListener('click', (e) => {
                       <td>${el.status}</td>
                       <td>
                           <div class="btn-group-action">
-                            <button onclick="getParcelDetailUser(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-details">details</button>
-                            <button onclick="editParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-edit">edit</button>
-                            <button onclick="cancelParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-cancel">cancel</button>
+                            <button onclick="getParcelDetailAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-details">details</button>
+                            <button onclick="editParcelAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-edit">edit</button>
                           </div>
                       </td>
                     </tr>
@@ -167,9 +165,8 @@ adminLinkDeliveredParcels.addEventListener('click', (e) => {
                       <td>${el.status}</td>
                       <td>
                           <div class="btn-group-action">
-                            <button onclick="getParcelDetailUser(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-details">details</button>
-                            <button onclick="editParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-edit">edit</button>
-                            <button onclick="cancelParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-cancel">cancel</button>
+                            <button onclick="getParcelDetailAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-details">details</button>
+                            <button onclick="editParcelAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-edit">edit</button>
                           </div>
                       </td>
                     </tr>
@@ -229,9 +226,8 @@ adminLinkCancelledParcels.addEventListener('click', (e) => {
                       <td>${el.status}</td>
                       <td>
                           <div class="btn-group-action">
-                            <button onclick="getParcelDetailUser(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-details">details</button>
-                            <button onclick="editParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-edit">edit</button>
-                            <button onclick="cancelParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-cancel">cancel</button>
+                            <button onclick="getParcelDetailAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-details">details</button>
+                            <button onclick="editParcelAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-edit">edit</button>
                           </div>
                       </td>
                     </tr>
@@ -290,9 +286,8 @@ adminLinkAllParcels.addEventListener('click', (e) => {
               <td>${el.status}</td>
               <td>
                   <div class="btn-group-action">
-                    <button onclick="getParcelDetailUser(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-details">details</button>
-                    <button onclick="editParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-edit">edit</button>
-                    <button onclick="cancelParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-cancel">cancel</button>
+                    <button onclick="getParcelDetailAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-details">details</button>
+                    <button onclick="editParcelAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-edit">edit</button>
                   </div>
               </td>
           </tr>
@@ -372,9 +367,8 @@ window.addEventListener('load', () => {
               <td>${el.status}</td>
               <td>
                   <div class="btn-group-action">
-                    <button onclick="getParcelDetailUser(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-details">details</button>
-                    <button onclick="editParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-edit">edit</button>
-                    <button onclick="cancelParcelAdmin(this)" data-id-user="${el.id_user}" data-id-parcel="${el.id_parcel}" id="btn-cancel">cancel</button>
+                    <button onclick="getParcelDetailAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-details">details</button>
+                    <button onclick="editParcelAdmin(this)" data-userId="${el.id_user}" data-parcelId="${el.id_parcel}" id="btn-edit">edit</button>
                   </div>
               </td>
           </tr>
@@ -394,3 +388,21 @@ window.addEventListener('load', () => {
       }
     });
 });
+
+/**
+ * fetch parcel details for one user by the admin
+ * @param HTMLElement target
+ */
+const getParcelDetailAdmin = (target) => {
+  const parcelId = target.dataset.parcelid;
+  window.location.href = `parcelDetail.html?parcelId=${parcelId}`;
+};
+
+/**
+ * edit parcel for one user by admin (present location || status)
+ * @param HTMLElement target
+ */
+const editParcelAdmin = (target) => {
+  const parcelId = target.dataset.parcelid;
+  window.location.href = `adminEditParcel.html?parcelId=${parcelId}`;
+};
