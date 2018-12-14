@@ -28,6 +28,9 @@ const cancelledParcels = document.getElementById('cancelled-parcels');
 const signInAdmin = document.querySelector('#sign-in-admin');
 const signInFormAdmin = document.querySelector('#sign-in-form-admin');
 
+// logout
+const btnLogout = document.querySelector('#logout');
+
 /*
     check if an element is in the DOM
     @params element
@@ -536,3 +539,15 @@ const cancelParcelUser = (target) => {
     });
   }
 };
+
+btnLogout.addEventListener('click', (e) => {
+  e.preventDefault();
+  swal('Are you sure you want to log out?', {
+    buttons: ['No', true],
+  }).then((value) => {
+    if (value) {
+      localStorage.removeItem('apiKey');
+      window.location.href = 'index.html';
+    }
+  });
+});
