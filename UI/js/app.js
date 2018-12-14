@@ -540,14 +540,17 @@ const cancelParcelUser = (target) => {
   }
 };
 
-btnLogout.addEventListener('click', (e) => {
-  e.preventDefault();
-  swal('Are you sure you want to log out?', {
-    buttons: ['No', true],
-  }).then((value) => {
-    if (value) {
-      localStorage.removeItem('apiKey');
-      window.location.href = 'index.html';
-    }
+// event to logout user and admin
+isElementExist(btnLogout, () => {
+  btnLogout.addEventListener('click', (e) => {
+    e.preventDefault();
+    swal('Are you sure you want to log out?', {
+      buttons: ['No', true],
+    }).then((value) => {
+      if (value) {
+        localStorage.removeItem('apiKey');
+        window.location.href = 'index.html';
+      }
+    });
   });
 });

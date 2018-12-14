@@ -430,14 +430,17 @@ var cancelParcelUser = function cancelParcelUser(target) {
   }
 };
 
-btnLogout.addEventListener('click', function (e) {
-  e.preventDefault();
-  swal('Are you sure you want to log out?', {
-    buttons: ['No', true]
-  }).then(function (value) {
-    if (value) {
-      localStorage.removeItem('apiKey');
-      window.location.href = 'index.html';
-    }
+// event to logout user and admin
+isElementExist(btnLogout, function () {
+  btnLogout.addEventListener('click', function (e) {
+    e.preventDefault();
+    swal('Are you sure you want to log out?', {
+      buttons: ['No', true]
+    }).then(function (value) {
+      if (value) {
+        localStorage.removeItem('apiKey');
+        window.location.href = 'index.html';
+      }
+    });
   });
 });
