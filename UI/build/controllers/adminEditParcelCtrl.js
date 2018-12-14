@@ -2,23 +2,81 @@
 
 var btnEditLocation = document.querySelector('#btn-edit-location');
 var btnEditStatus = document.querySelector('#btn-edit-status');
+var btnCancelEdit = document.querySelector('.btn-cancel');
+
+// get the query string
+var queryString = decodeURIComponent(window.location.search);
+queryString = queryString.substring(1);
+var params = queryString.split('&');
+var parcelId = params.toString().split('=')[1];
 
 // event to edit present location
-btnEditLocation.addEventListener(function (e) {
+btnEditLocation.addEventListener('click', function (e) {
   e.preventDefault();
   var presentLocation = document.querySelector('#from').value;
 
   if (!presentLocation) {
     swal('Oops!!', 'The present location is required', 'error');
-  } else {}
+  } else if (!Number.isInteger(parseInt(parcelId, 10))) {
+    swal('Oops!!', 'The parcel id must be a number', 'error');
+  } else {
+    var parcel = new Parcel();
+
+    parcel.editPresentLocation(parcelId, presentLocation).then(function (result) {
+      if (result.status === 'success') {
+        swal('Success', 'Present location edited successfully', 'success');
+      } else if (result.status === 'fail') {
+        swal('Oops!!', '' + result.message, 'error');
+      } else if (result.auth === 'missing') {
+        swal('Not Authorized!!', 'Authentication key is required', 'error').then(function () {
+          window.location.href = 'index.html';
+        });
+      } else if (result.auth === 'invalid') {
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error').then(function () {
+          window.location.href = 'index.html';
+        });
+      }
+    });
+  }
 });
 
 // event to edit parcel status
-btnEditStatus.addEventListener(function (e) {
+btnEditStatus.addEventListener('click', function (e) {
   e.preventDefault();
   var newStatus = document.querySelector('#status').value;
 
   if (!newStatus) {
     swal('Oops!!', 'The new status is required', 'error');
-  } else {}
+  } else if (!Number.isInteger(parseInt(parcelId, 10))) {
+    swal('Oops!!', 'The parcel id must be a number', 'error');
+  } else {
+    var parcel = new Parcel();
+
+    parcel.editStatus(parcelId, newStatus).then(function (result) {
+      if (result.status === 'success') {
+        swal('Success', 'Parcel status edited successfully', 'success');
+      } else if (result.status === 'fail') {
+        swal('Oops!!', '' + result.message, 'error');
+      } else if (result.auth === 'missing') {
+        swal('Not Authorized!!', 'Authentication key is required', 'error').then(function () {
+          window.location.href = 'index.html';
+        });
+      } else if (result.auth === 'invalid') {
+        swal('Not Authorized!!', 'Authentication key is invalid', 'error').then(function () {
+          window.location.href = 'index.html';
+        });
+      }
+    });
+  }
+});
+
+btnCancelEdit.addEventListener('click', function (e) {
+  e.preventDefault();
+  swal('Are you sure you want to do this?', {
+    buttons: ['No', true]
+  }).then(function (value) {
+    if (value) {
+      window.location.href = 'adminProfile.html';
+    }
+  });
 });
