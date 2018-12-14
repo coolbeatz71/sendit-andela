@@ -1,0 +1,622 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories. You can find out more about  SendIT at [https://coolbeatz71.github.io/sendit-andela/UI](https://coolbeatz71.github.io/sendit-andela/UI)",
+    "version": "1.0.0",
+    "title": "sendit-andela",
+    "contact": {
+      "email": "sigmacool@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "https://sendit-rest-api.herokuapp.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "auth",
+      "description": "User Authentication"
+    },
+    {
+      "name": "admin",
+      "description": "Admin Authentication"
+    },
+    {
+      "name": "users",
+      "description": "Users routes"
+    },
+    {
+      "name": "parcels",
+      "description": "Parcel delivery orders routes"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/auth/signUp": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Create a user account",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user-signUp-info"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful"
+          },
+          "409": {
+            "description": "The entered email is already used by an account"
+          },
+          "400": {
+            "description": "Error message"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login a user to his account",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/login-info"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          },
+          "404": {
+            "description": "User not found, Incorrect email or password"
+          },
+          "400": {
+            "description": "Error message"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/admin/login": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Login an admin to his account",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/login-info"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          },
+          "404": {
+            "description": "Admin not found, Incorrect email or password"
+          },
+          "400": {
+            "description": "Error message"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/parcels": {
+      "post": {
+        "tags": [
+          "parcels"
+        ],
+        "summary": "Create a new parcel delivery order",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Create an Order object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/parcel-info"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful"
+          },
+          "400": {
+            "description": "Fill all required fields"
+          },
+          "401": {
+            "description": "Not authorized, invalid authentication key"
+          },
+          "403": {
+            "description": "Not authorized, authentication key is required"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "parcels"
+        ],
+        "summary": "Get the list of all parcel delivery orders",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          },
+          "401": {
+            "description": "Not authorized, invalid authentication key"
+          },
+          "403": {
+            "description": "Not authorized, authentication key is required"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/parcels/{parcelId}": {
+      "get": {
+        "tags": [
+          "parcels"
+        ],
+        "summary": "Get details of a specific parcel delivery order",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parcelId",
+            "in": "path",
+            "description": "ID of a parcel delivery order",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          },
+          "404": {
+            "description": "No parcel found with this parcel Id"
+          },
+          "401": {
+            "description": "Not authorized, invalid authentication key"
+          },
+          "403": {
+            "description": "Not authorized, authentication key is required"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/parcels/{parcelId}/destination": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Edit the destination of a specific parcel delivery order",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parcelId",
+            "in": "path",
+            "description": "ID of the parcel order that needs to be updated",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/parcel-destination"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          },
+          "404": {
+            "description": "No parcel order found with this id"
+          },
+          "400": {
+            "description": "Invalid inputs"
+          },
+          "401": {
+            "description": "Not authorized to edit destination of this parcel order"
+          },
+          "403": {
+            "description": "Not authorized, authentication key is required"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/parcels/{parcelId}/status": {
+      "put": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Update the status of a specific parcel delivery order",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parcelId",
+            "in": "path",
+            "description": "ID of the parcel order that needs to be updated",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/parcel-status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          },
+          "404": {
+            "description": "No parcel order found with this id"
+          },
+          "400": {
+            "description": "Invalid inputs"
+          },
+          "403": {
+            "description": "Not authorized, authentication key is required"
+          },
+          "403": {
+            "description": "Forbidden, Invalid admin authentication key"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/parcels/{parcelId}/presentLocation": {
+      "put": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Update the present location of a specific parcel delivery order",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parcelId",
+            "in": "path",
+            "description": "ID of the order that needs to be updated",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/parcel-PresentLocation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          },
+          "404": {
+            "description": "No parcel order found with this id"
+          },
+          "400": {
+            "description": "Invalid inputs"
+          },
+          "403": {
+            "description": "Not authorized, authentication key is required"
+          },
+          "403": {
+            "description": "Forbidden, Invalid admin authentication key"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/parcels/{parcelId}/cancel": {
+      "put": {
+        "tags": [
+          "parcels"
+        ],
+        "summary": "Cancel a specific parcel delivery order",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parcelId",
+            "in": "path",
+            "description": "ID of the order that needs to be cancelled",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          },
+          "404": {
+            "description": "No parcel order found with this id"
+          },
+          "400": {
+            "description": "Invalid inputs"
+          },
+          "401": {
+            "description": "Not authorized to cancel of this parcel order"
+          },
+          "403": {
+            "description": "Not authorized, Authentication Key is required"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/users/{userId}/parcels": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get a list of all parcel delivery orders by a specific user",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          },
+          "401": {
+            "description": "Not authorized, invalid authentication key"
+          },
+          "403": {
+            "description": "Not authorized, authentication key is required"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/users/parcels/count": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get the number of parcel delivery orders by a specific user",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          },
+          "401": {
+            "description": "Not authorized, invalid authentication key"
+          },
+          "403": {
+            "description": "Not authorized, authentication key is required"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    },
+    "/admin/parcels/count": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Get the number of parcel delivery orders for all users",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          },
+          "401": {
+            "description": "Not authorized, invalid authentication key"
+          },
+          "403": {
+            "description": "Not authorized, authentication key is required"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "JsonWebToken": {
+      "type": "apiKey",
+      "name": "Bearer Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "parcel-info": {
+      "type": "object",
+      "properties": {
+        "parcelName": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "pickupLocation": {
+          "type": "string"
+        },
+        "destination": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "string"
+        }
+      }
+    },
+    "parcel-destination": {
+      "type": "object",
+      "properties": {
+        "destination": {
+          "type": "string"
+        }
+      }
+    },
+    "parcel-PresentLocation": {
+      "type": "object",
+      "properties": {
+        "presentLocation": {
+          "type": "string"
+        }
+      }
+    },
+    "parcel-status": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "user-signUp-info": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "login-info": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
