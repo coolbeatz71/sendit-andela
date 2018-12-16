@@ -562,7 +562,7 @@
           "type": "string"
         },
         "weight": {
-          "type": "string"
+          "type": "double"
         }
       }
     },
