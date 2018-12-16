@@ -1,5 +1,13 @@
 const endPoint = `${apiUrl.domain}${apiUrl.resource}`;
 class User {
+  /**
+   * sign Up the user
+   * @param  string firstName
+   * @param  string lastName
+   * @param  string email
+   * @param  string password
+   * @return object
+   */
   signUp(firstName, lastName, email, password) {
     if (!firstName || !lastName || !email || !password) {
       return false;
@@ -22,6 +30,12 @@ class User {
       });
   }
 
+  /**
+   * signIn the user to his account
+   * @param  string email
+   * @param  string password
+   * @return object
+   */
   signIn(email, password) {
     if (!email || !password) {
       return false;

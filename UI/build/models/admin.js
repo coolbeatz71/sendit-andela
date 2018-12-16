@@ -13,6 +13,13 @@ var Admin = function () {
 
   _createClass(Admin, [{
     key: 'signIn',
+
+    /**
+     * sign In the admin
+     * @param  string email
+     * @param  string password
+     * @return object
+     */
     value: function signIn(email, password) {
       if (!email || !password) {
         return false;
