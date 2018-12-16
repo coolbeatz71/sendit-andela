@@ -58,7 +58,7 @@ git push -u origin master
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
 
 ## Documentation
-For the documentation, find it [here](https://sendit-rest-api.herokuapp.com/api/V1/)
+For the documentation, find it [here](https://sendit-rest-api.herokuapp.com/api/v1/docs)
 
 ## Authors
 * **Mutombo Jean-Vincent**
