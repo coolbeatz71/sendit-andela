@@ -13,10 +13,21 @@ var Parcel = function () {
 
   _createClass(Parcel, [{
     key: 'getApiKey',
+
+    /**
+     * get the api from localStorage
+     * @return string
+     */
     value: function getApiKey() {
       var apiKey = localStorage.getItem('apiKey');
       return apiKey;
     }
+
+    /**
+     * get the user Id from localStorage
+     * @return string
+     */
+
   }, {
     key: 'getUserId',
     value: function getUserId() {
@@ -24,6 +35,12 @@ var Parcel = function () {
       var userId = userData.id;
       return userId;
     }
+
+    /**
+     * send HTTP request to get all parcels
+     * @return Promise
+     */
+
   }, {
     key: 'getAllParcel',
     value: function getAllParcel() {
@@ -33,6 +50,17 @@ var Parcel = function () {
         return result;
       });
     }
+
+    /**
+     * send HTTP request to create new parcel
+     * @param  string parcelName
+     * @param  string description
+     * @param  string pickupLocation
+     * @param  string destination
+     * @param  string weight
+     * @return Promise
+     */
+
   }, {
     key: 'createParcel',
     value: function createParcel(parcelName, description, pickupLocation, destination, weight) {
@@ -50,6 +78,12 @@ var Parcel = function () {
         return result;
       });
     }
+
+    /**
+     * send HTTP request to get parcel for a user
+     * @return Promise
+     */
+
   }, {
     key: 'getAllParcelByUser',
     value: function getAllParcelByUser() {
@@ -60,6 +94,13 @@ var Parcel = function () {
         return result;
       });
     }
+
+    /**
+     * get HTTP request to get parcel by ID
+     * @param  int parcelId
+     * @return Promise
+     */
+
   }, {
     key: 'getParcelById',
     value: function getParcelById(parcelId) {
@@ -70,6 +111,12 @@ var Parcel = function () {
         return result;
       });
     }
+
+    /**
+     * send HTTP request to count parcels for a user
+     * @return Promise
+     */
+
   }, {
     key: 'countParcelByUser',
     value: function countParcelByUser() {
@@ -79,6 +126,12 @@ var Parcel = function () {
         return result;
       });
     }
+
+    /**
+     * send HTTP request to count parcels for all user
+     * @return Promise
+     */
+
   }, {
     key: 'countParcelByAdmin',
     value: function countParcelByAdmin() {
@@ -88,6 +141,14 @@ var Parcel = function () {
         return result;
       });
     }
+
+    /**
+     * send HTTP request to edit parcel destination by user
+     * @param  int parcelId
+     * @param  string newDestination
+     * @return Promise
+     */
+
   }, {
     key: 'editDestination',
     value: function editDestination(parcelId, newDestination) {
@@ -100,6 +161,14 @@ var Parcel = function () {
         return result;
       });
     }
+
+    /**
+     * send HTTP request to edit parcel present location by admin
+     * @param  int parcelId
+     * @param  string presentLocation
+     * @return Promise
+     */
+
   }, {
     key: 'editPresentLocation',
     value: function editPresentLocation(parcelId, presentLocation) {
@@ -112,6 +181,14 @@ var Parcel = function () {
         return result;
       });
     }
+
+    /**
+     * send HTTP request to edit parcel status by admin
+     * @param  int parcelId
+     * @param  string status
+     * @return Promise
+     */
+
   }, {
     key: 'editStatus',
     value: function editStatus(parcelId, status) {
@@ -124,6 +201,13 @@ var Parcel = function () {
         return result;
       });
     }
+
+    /**
+     * send HTTP request to cancel parcel delivery order
+     * @param  int parcelId
+     * @return promise
+     */
+
   }, {
     key: 'cancelParcel',
     value: function cancelParcel(parcelId) {

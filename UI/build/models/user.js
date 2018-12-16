@@ -13,6 +13,15 @@ var User = function () {
 
   _createClass(User, [{
     key: 'signUp',
+
+    /**
+     * sign Up the user
+     * @param  string firstName
+     * @param  string lastName
+     * @param  string email
+     * @param  string password
+     * @return object
+     */
     value: function signUp(firstName, lastName, email, password) {
       if (!firstName || !lastName || !email || !password) {
         return false;
@@ -33,6 +42,14 @@ var User = function () {
         return result;
       });
     }
+
+    /**
+     * signIn the user to his account
+     * @param  string email
+     * @param  string password
+     * @return object
+     */
+
   }, {
     key: 'signIn',
     value: function signIn(email, password) {

@@ -7,7 +7,6 @@ queryString = queryString.substring(1);
 const params = queryString.split('&');
 let parcelId = params.toString().split('=')[1];
 
-
 // get the parcel details for a user
 window.addEventListener('load', () => {
   if (!Number.isInteger(parseInt(parcelId, 10))) {

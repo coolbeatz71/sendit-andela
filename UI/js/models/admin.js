@@ -1,5 +1,11 @@
 const endPoint = `${apiUrl.domain}${apiUrl.resource}`;
 class Admin {
+  /**
+   * sign In the admin
+   * @param  string email
+   * @param  string password
+   * @return object
+   */
   signIn(email, password) {
     if (!email || !password) {
       return false;
