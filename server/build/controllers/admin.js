@@ -73,7 +73,7 @@ var AdminCtrl = function () {
         if (login === _constant2.default.INVALID_EMAIL || login === _constant2.default.INVALID_PASSWORD) {
           response.status(404).json({
             status: 'fail',
-            message: 'Admin not found, Incorrect email or password'
+            message: 'User not found, Incorrect email or password'
           });
         } else {
           response.status(200).json({
