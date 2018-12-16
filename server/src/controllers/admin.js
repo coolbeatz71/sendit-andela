@@ -45,7 +45,7 @@ export default class AdminCtrl {
       if (login === constants.INVALID_EMAIL || login === constants.INVALID_PASSWORD) {
         response.status(404).json({
           status: 'fail',
-          message: 'User not found, Incorrect email or password',
+          message: 'Admin not found, Incorrect email or password',
         });
       } else {
         response.status(200).json({

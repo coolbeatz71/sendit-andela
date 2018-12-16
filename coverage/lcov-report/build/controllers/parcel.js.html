@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">88.89% </span>
+        <span class="strong">85.56% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>80/90</span>
+        <span class='fraction'>77/90</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">69.23% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>27/39</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">83.33% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>10/12</span>
+        <span class='fraction'>9/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">89.47% </span>
+        <span class="strong">85.53% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>68/76</span>
+        <span class='fraction'>65/76</span>
       </div>
     </div>
   </div>
@@ -282,7 +282,11 @@
 237
 238
 239
-240</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+240
+241
+242
+243
+244</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -322,10 +326,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -373,6 +377,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -405,6 +410,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -442,6 +448,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -491,6 +498,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -560,11 +568,11 @@ var ParcelCtrl = function () {
      * @param  Response response
      * @return object json
      */
-    value: async function getAllParcels(request, response) {
-      var parcel = new _parcel2.default();
-      var getParcel = await parcel.getAllParcel();
+    value: async function <span class="fstat-no" title="function not covered" >getAllParcels(</span>request, response) {
+      var parcel = <span class="cstat-no" title="statement not covered" >new _parcel2.default();</span>
+      var getParcel = <span class="cstat-no" title="statement not covered" >await parcel.getAllParcel();</span>
 &nbsp;
-      response.status(200).json({
+<span class="cstat-no" title="statement not covered" >      response.status(200).json({</span>
         status: 'success',
         parcel: getParcel
       });
@@ -609,6 +617,7 @@ var ParcelCtrl = function () {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (errors) {
 <span class="cstat-no" title="statement not covered" >        response.status(400).json({</span>
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
@@ -641,6 +650,7 @@ var ParcelCtrl = function () {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (errors) {
 <span class="cstat-no" title="statement not covered" >        response.status(400).json({</span>
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
@@ -682,6 +692,7 @@ var ParcelCtrl = function () {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (errors) {
 <span class="cstat-no" title="statement not covered" >        response.status(400).json({</span>
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
@@ -731,6 +742,7 @@ var ParcelCtrl = function () {
       if (errors) {
         response.status(400).json({
           status: 'fail',
+          error: 'validation',
           message: errors
         });
       } else {
@@ -766,7 +778,7 @@ exports.default = ParcelCtrl;</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 04 2018 00:39:35 GMT+0200 (South Africa Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Dec 16 2018 06:01:09 GMT+0200 (South Africa Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>
